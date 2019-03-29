@@ -1,0 +1,38 @@
+{
+    "generator-jhipster": {
+        "promptValues": {
+            "packageName": "com.mitrais.cdc",
+            "nativeLanguage": "en"
+        },
+        "jhipsterVersion": "5.8.2",
+        "applicationType": "monolith",
+        "baseName": "1stopClick",
+        "packageName": "com.mitrais.cdc",
+        "packageFolder": "com/mitrais/cdc",
+        "serverPort": "8080",
+        "authenticationType": "jwt",
+        "cacheProvider": "ehcache",
+        "enableHibernateCache": false,
+        "websocket": false,
+        "databaseType": "mongodb",
+        "devDatabaseType": "mongodb",
+        "prodDatabaseType": "mongodb",
+        "searchEngine": false,
+        "messageBroker": false,
+        "serviceDiscoveryType": "eureka",
+        "buildTool": "maven",
+        "enableSwaggerCodegen": false,
+        "jwtSecretKey": "ZTBlYzgzNDJkNjU4ODdjOWY5ZWQ2YjcyZDJjNmE4NmQ1YmVjMDg1NTdmMzVmZDczODQ3Y2ZkMDVlNGUyMWIyYWQ4NjlkZTNiYTc1NDg5Mjc2ZDUxNTY1MmFkNmZmNzUwNmFmMzE2ZTM1NmM3MGY0NzYyMzRjYzZhNGRmZTI5ZmM=",
+        "clientFramework": "angularX",
+        "useSass": true,
+        "clientPackageManager": "npm",
+        "testFrameworks": ["cucumber"],
+        "jhiPrefix": "jhi",
+        "entitySuffix": "",
+        "dtoSuffix": "DTO",
+        "otherModules": [],
+        "enableTranslation": true,
+        "nativeLanguage": "en",
+        "languages": ["en", "id"]
+    }
+}
