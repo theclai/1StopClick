@@ -44,7 +44,7 @@ spring:
             indent-output: true
     data:
         mongodb:
-            uri: mongodb://localhost:27017
+            uri: mongodb://localhost:27087
             database: 1stopClick
     mail:
         host: localhost
