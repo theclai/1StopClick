@@ -131,5 +131,5 @@
         "idexists": "{{ entityName }} yang baru tidak boleh menggunakan id yang sudah ada",
         "idnull": "ID Tidak Valid"
     },
-    "footer": "Ini bagian footer"
+    "footer": "1StopClick - Hak cipta dilindungi Undang-undang - 2019"
 }

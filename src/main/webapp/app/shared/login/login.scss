@@ -1,0 +1,25 @@
+/* ==========================================================================
+Login Modal styles
+========================================================================== */
+
+.facebook-img {
+    height: 45px;
+    width: 45px;
+    display: inline-block;
+    vertical-align: middle;
+    background: url('../../../content/images/facebook_logo.png') no-repeat center center;
+    background-size: contain;
+}
+
+.google-img {
+    height: 45px;
+    width: 45px;
+    display: inline-block;
+    vertical-align: middle;
+    background: url('../../../content/images/google_logo.png') no-repeat center center;
+    background-size: contain;
+}
+
+.modal-content {
+    width: 570px;
+}
