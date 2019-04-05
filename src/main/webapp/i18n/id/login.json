@@ -14,6 +14,8 @@
         },
         "password": {
             "forgot": "Apakah anda lupa passsword?"
-        }
+        },
+        "OR": "Atau",
+        "loginSocial": "Login dengan"
     }
 }
