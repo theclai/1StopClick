@@ -8,7 +8,8 @@ import { StateStorageService } from 'app/core/auth/state-storage.service';
 
 @Component({
     selector: 'jhi-login-modal',
-    templateUrl: './login.component.html'
+    templateUrl: './login.component.html',
+    styleUrls: ['login.scss']
 })
 export class JhiLoginModalComponent implements AfterViewInit {
     authenticationError: boolean;
@@ -83,5 +84,13 @@ export class JhiLoginModalComponent implements AfterViewInit {
     requestResetPassword() {
         this.activeModal.dismiss('to state requestReset');
         this.router.navigate(['/reset', 'request']);
+    }
+
+    loginWithFacebook() {
+        console.log('login with facebook');
+    }
+
+    loginWithGoogle() {
+        console.log('login with Google');
     }
 }
