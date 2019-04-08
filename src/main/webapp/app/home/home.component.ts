@@ -48,7 +48,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.loadAll();
-        console.log(this.categories);
         this.accountService.identity().then((account: Account) => {
             this.account = account;
         });

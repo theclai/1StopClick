@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiLanguageService } from 'ng-jhipster';
+import { JhiLanguageService, JhiEventManager } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 
 import { VERSION } from 'app/app.constants';
@@ -15,11 +15,13 @@ import { ProfileService } from 'app/layouts/profiles/profile.service';
 })
 export class NavbarComponent implements OnInit {
     inProduction: boolean;
+    account: Account;
     isNavbarCollapsed: boolean;
     languages: any[];
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    loggedIn: boolean;
 
     constructor(
         private loginService: LoginService,
@@ -27,6 +29,7 @@ export class NavbarComponent implements OnInit {
         private languageHelper: JhiLanguageHelper,
         private sessionStorage: SessionStorageService,
         private accountService: AccountService,
+        private eventManager: JhiEventManager,
         private loginModalService: LoginModalService,
         private profileService: ProfileService,
         private router: Router
@@ -44,6 +47,11 @@ export class NavbarComponent implements OnInit {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
+
+        this.accountService.identity().then((account: Account) => {
+            this.account = account;
+        });
+        this.registerAuthenticationSuccess();
     }
 
     changeLanguage(languageKey: string) {
@@ -75,5 +83,13 @@ export class NavbarComponent implements OnInit {
 
     getImageUrl() {
         return this.isAuthenticated() ? this.accountService.getImageUrl() : null;
+    }
+
+    registerAuthenticationSuccess() {
+        this.eventManager.subscribe('authenticationSuccess', message => {
+            this.accountService.identity().then(account => {
+                this.account = account;
+            });
+        });
     }
 }
