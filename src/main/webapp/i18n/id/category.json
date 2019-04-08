@@ -1,0 +1,21 @@
+{
+    "App": {
+        "category": {
+            "home": {
+                "title": "Categories",
+                "createLabel": "Buat Category baru",
+                "createOrEditLabel": "Buat atau edit Category"
+            },
+            "created": "Category dengan id {{ param }} telah dibuat",
+            "updated": "Category dengan id {{ param }} telah diperbaharui",
+            "deleted": "Category dengan id {{ param }} telah dihapus",
+            "delete": {
+                "question": "Apakah anda yakin ingin menghapus Category {{ id }}?"
+            },
+            "detail": {
+                "title": "Category"
+            },
+            "categoryName": "Category Name"
+        }
+    }
+}

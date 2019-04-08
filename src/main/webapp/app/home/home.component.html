@@ -1,4 +1,5 @@
 <div class="row">
+        
     <div class="col-md-3" style="padding-top:20px;">
         <div class="sticky-top">
             <div class="list-group">
@@ -6,15 +7,17 @@
                  routerLink="/"
                  [class.active]="category === null" 
                  jhiTranslate="home.allCategories"
+                 (click)="currentCategory(null)"
                 >
                   All Categories
                 </a>
-                <!-- <a class="list-group-item list-group-item-action"  
-                  *ngFor="let c of categories" 
+                <a class="list-group-item list-group-item-action"  
+                  *ngFor="let c of categories " 
                   routerLink="/" 
+                  (click)="currentCategory(c.categoryName)"
                   [queryParams]="{category : c.categoryName }"
                   [class.active]="category === c.categoryName"
-                >{{c.categoryName}}</a> -->
+                >{{c.categoryName}}</a>
             </div>
         </div>
     </div>
