@@ -39,6 +39,12 @@
                             <span jhiTranslate="global.menu.entities.category">Category</span>
                         </a>
                     </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="product" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.product">Product</span>
+                        </a>
+                    </li>
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                 </ul>
             </li>
@@ -112,9 +118,12 @@
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
                   <span *ngIf="!getImageUrl()">
                     <fa-icon icon="user"></fa-icon>
-                    <span jhiTranslate="global.menu.account.main">
+                    <span jhiTranslate="global.menu.account.main" *ngIf="!isAuthenticated()">
                       Account
                     </span>
+                    <span *ngIf="isAuthenticated()">
+                        {{account.login | titlecase}}
+                      </span>
                   </span>
                   <span *ngIf="getImageUrl()">
                       <img [src]="getImageUrl()" class="profile-image rounded-circle" alt="Avatar">
