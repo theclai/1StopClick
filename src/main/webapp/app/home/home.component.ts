@@ -1,8 +1,9 @@
+import { Account } from './../core/user/account.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService, JhiParseLinks } from 'ng-jhipster';
 
-import { LoginModalService, AccountService, Account } from 'app/core';
+import { LoginModalService, AccountService } from 'app/core';
 import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category/category.service';
