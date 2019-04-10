@@ -51,7 +51,7 @@
             "info": {
                 "authenticated": {
                     "prefix": "Jika anda ingin ",
-                    "link": "masuk",
+                    "link": "Masuk disini. ",
                     "suffix": ", anda bisa coba menggunakan akun yang sudah ada:<br/>- Administrator (username=\"admin\" and password=\"admin\") <br/>- User (username=\"user\" and password=\"user\")."
                 },
                 "register": {
