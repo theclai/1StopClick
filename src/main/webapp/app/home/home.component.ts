@@ -9,6 +9,8 @@ import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category/category.service';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { Subscription } from 'rxjs';
+import { IProduct } from 'app/shared/model/product.model';
+import { ProductService } from 'app/entities/product';
 
 @Component({
     selector: 'jhi-home',
@@ -27,10 +29,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     predicate: string;
     reverse: any;
     categorySubscription: Subscription;
+    productSubscription: Subscription;
+    product: IProduct[];
 
     constructor(
         private accountService: AccountService,
         protected categoryService: CategoryService,
+        protected productService: ProductService,
         private loginModalService: LoginModalService,
         private eventManager: JhiEventManager,
         protected parseLinks: JhiParseLinks,
@@ -38,6 +43,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     ) {
         this.category = null;
         this.categories = [];
+        this.product = [];
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.page = 0;
         this.links = {
@@ -58,6 +64,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         if (this.categorySubscription) {
             this.categorySubscription.unsubscribe();
+        }
+        if (this.productSubscription) {
+            this.productSubscription.unsubscribe();
         }
     }
 
@@ -88,6 +97,9 @@ export class HomeComponent implements OnInit, OnDestroy {
                 (res: HttpResponse<ICategory[]>) => this.paginateCategories(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
+        this.productSubscription = this.productService.query().subscribe((res: HttpResponse<IProduct[]>) => {
+            this.paginateProducts(res.body, res.headers);
+        });
     }
 
     protected onError(errorMessage: string) {
@@ -100,6 +112,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         for (let i = 0; i < data.length; i++) {
             this.categories.push(data[i]);
         }
+    }
+    protected paginateProducts(data: IProduct[], headers: HttpHeaders) {
+        this.links = this.parseLinks.parse(headers.get('link'));
+        this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
+        for (let i = 0; i < data.length; i++) {
+            this.product.push(data[i]);
+        }
+        console.log(this.product);
     }
 
     sort() {
