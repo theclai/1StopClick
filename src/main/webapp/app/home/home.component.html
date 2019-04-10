@@ -22,7 +22,22 @@
         </div>
     </div>
     <div class="col-md-9">
-        <h1 class="display-4" jhiTranslate="home.title"></h1>
+        <div class="row">
+        <ng-container *ngFor="let product of product; let i = index">
+            <div class="col" style="padding-top:20px;">
+                <div class="card" style="width: 280px;" >
+                    <img class="card-img-top" [src]="product.imageUrl" alt="{{product.title}}" *ngIf="product.imageUrl" style="width: 100%;height: 300px;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{product.productName}}</h5>
+                        <p class="card-text">{{product.price | currency:'Rp. '}}</p>
+                        <span class="badge badge-pill badge-primary">{{product.category.categoryName}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100" *ngIf="(i + 1)%3 === 0"></div>
+        </ng-container>
+    </div>
+        <!-- <h1 class="display-4" jhiTranslate="home.title"></h1>
         <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>
 
         <div [ngSwitch]="isAuthenticated()">
@@ -39,6 +54,6 @@
                 <span jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>&nbsp;
                 <a class="alert-link" routerLink="register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
