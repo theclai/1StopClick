@@ -11,6 +11,8 @@ import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { Subscription } from 'rxjs';
 import { IProduct } from 'app/shared/model/product.model';
 import { ProductService } from 'app/entities/product';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'jhi-home',
@@ -31,6 +33,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     categorySubscription: Subscription;
     productSubscription: Subscription;
     product: IProduct[];
+    filteredProduct: IProduct[];
+    filter: string;
 
     constructor(
         private accountService: AccountService,
@@ -39,7 +43,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         private loginModalService: LoginModalService,
         private eventManager: JhiEventManager,
         protected parseLinks: JhiParseLinks,
-        protected jhiAlertService: JhiAlertService
+        protected jhiAlertService: JhiAlertService,
+        private router: ActivatedRoute
     ) {
         this.category = null;
         this.categories = [];
@@ -97,9 +102,25 @@ export class HomeComponent implements OnInit, OnDestroy {
                 (res: HttpResponse<ICategory[]>) => this.paginateCategories(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
-        this.productSubscription = this.productService.query().subscribe((res: HttpResponse<IProduct[]>) => {
-            this.paginateProducts(res.body, res.headers);
-        });
+
+        this.productSubscription = this.productService
+            .query()
+            .pipe(
+                switchMap((res: HttpResponse<IProduct[]>) => {
+                    this.paginateProducts(res.body, res.headers);
+                    return this.router.queryParamMap;
+                })
+            )
+            .subscribe(param => {
+                this.filter = param.get('category');
+                if (this.filter) {
+                    this.filteredProduct = this.product.filter(p =>
+                        p.category.categoryName.toLowerCase().includes(this.filter.toLowerCase())
+                    );
+                } else {
+                    this.filteredProduct = this.product;
+                }
+            });
     }
 
     protected onError(errorMessage: string) {
@@ -119,7 +140,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         for (let i = 0; i < data.length; i++) {
             this.product.push(data[i]);
         }
-        console.log(this.product);
+        this.filteredProduct = this.product;
     }
 
     sort() {
