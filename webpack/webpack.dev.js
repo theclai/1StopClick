@@ -26,7 +26,8 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
                 '/swagger-resources',
                 '/v2/api-docs',
                 '/h2-console',
-                '/auth'
+                '/auth',
+                '/oauth2'
             ],
             target: `http${options.tls ? 's' : ''}://127.0.0.1:8080`,
             secure: false,

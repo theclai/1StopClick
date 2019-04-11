@@ -1,5 +1,6 @@
 package com.mitrais.cdc.security.jwt;
 
+import com.mitrais.cdc.config.ApplicationProperties;
 import com.mitrais.cdc.security.AuthoritiesConstants;
 import io.github.jhipster.config.JHipsterProperties;
 import io.jsonwebtoken.io.Decoders;
@@ -29,7 +30,9 @@ public class JWTFilterTest {
     @Before
     public void setup() {
         JHipsterProperties jHipsterProperties = new JHipsterProperties();
-        tokenProvider = new TokenProvider(jHipsterProperties);
+        ApplicationProperties applicationProperties = new ApplicationProperties();
+        
+        tokenProvider = new TokenProvider(jHipsterProperties, applicationProperties);
         ReflectionTestUtils.setField(tokenProvider, "key",
             Keys.hmacShaKeyFor(Decoders.BASE64
                 .decode("fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8")));

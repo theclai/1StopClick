@@ -1,3 +1,4 @@
+import { OAuth2RedirectHandler } from './core/auth/oauth2-redirect.handler';
 import './vendor.ts';
 
 import { NgModule } from '@angular/core';
@@ -40,7 +41,15 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         AppEntityModule,
         AppAppRoutingModule
     ],
-    declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+    declarations: [
+        JhiMainComponent,
+        NavbarComponent,
+        ErrorComponent,
+        PageRibbonComponent,
+        ActiveMenuDirective,
+        FooterComponent,
+        OAuth2RedirectHandler
+    ],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
@@ -63,6 +72,7 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
             multi: true
         }
     ],
+    entryComponents: [OAuth2RedirectHandler],
     bootstrap: [JhiMainComponent]
 })
 export class AppAppModule {

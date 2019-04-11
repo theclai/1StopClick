@@ -3,6 +3,7 @@ package com.mitrais.cdc.domain;
 import com.mitrais.cdc.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mitrais.cdc.model.AuthProvider;
 import org.apache.commons.lang3.StringUtils;
 import javax.validation.constraints.Email;
 import org.springframework.data.annotation.Id;
@@ -79,6 +80,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
+    
+    @NotNull
+    //@Enumerated(EnumType.STRING)
+    private AuthProvider provider;
+
+    @Field("provider_id")
+    private String providerId;
 
     public String getId() {
         return id;
@@ -183,6 +191,22 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public AuthProvider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(AuthProvider provider) {
+        this.provider = provider;
+    }
+
+    public String getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(String providerId) {
+        this.providerId = providerId;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.mitrais.cdc.security.jwt;
 
+import com.mitrais.cdc.config.ApplicationProperties;
 import com.mitrais.cdc.security.AuthoritiesConstants;
 
 import java.security.Key;
@@ -27,12 +28,15 @@ public class TokenProviderTest {
     private final long ONE_MINUTE = 60000;
     private Key key;
     private JHipsterProperties jHipsterProperties;
+    private ApplicationProperties applicationProperties;
     private TokenProvider tokenProvider;
 
     @Before
     public void setup() {
         jHipsterProperties = Mockito.mock(JHipsterProperties.class);
-        tokenProvider = new TokenProvider(jHipsterProperties);
+        applicationProperties = Mockito.mock(ApplicationProperties.class);
+        
+        tokenProvider = new TokenProvider(jHipsterProperties, applicationProperties);
         key = Keys.hmacShaKeyFor(Decoders.BASE64
             .decode("fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8"));
 
