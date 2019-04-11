@@ -2,7 +2,7 @@ import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { JhiEventManager } from 'ng-jhipster';
-
+import { FACEBOOK_AUTH_URL, GOOGLE_AUTH_URL } from 'app/app.constants';
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 
@@ -28,6 +28,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
         public activeModal: NgbActiveModal
     ) {
         this.credentials = {};
+        console.log('GOOGLE_AUTH_URL', GOOGLE_AUTH_URL);
     }
 
     ngAfterViewInit() {

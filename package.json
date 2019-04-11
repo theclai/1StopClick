@@ -64,9 +64,12 @@
         "mini-css-extract-plugin": "0.5.0",
         "moment-locales-webpack-plugin": "1.0.7",
         "optimize-css-assets-webpack-plugin": "5.0.1",
+        "postcss-loader": "3.0.0",
         "prettier": "1.16.4",
         "reflect-metadata": "0.1.13",
         "rimraf": "2.6.3",
+        "sass": "1.17.0",
+        "sass-loader": "7.1.0",
         "simple-progress-webpack-plugin": "1.1.2",
         "style-loader": "0.23.1",
         "terser-webpack-plugin": "1.2.2",
@@ -77,18 +80,15 @@
         "tslint-config-prettier": "1.18.0",
         "tslint-loader": "3.6.0",
         "typescript": "3.2.4",
-        "sass": "1.17.0",
-        "sass-loader": "7.1.0",
-        "postcss-loader": "3.0.0",
-        "xml2js": "0.4.19",
         "webpack": "4.29.3",
         "webpack-cli": "3.2.3",
-        "webpack-dev-server": "3.1.14",
+        "webpack-dev-server": "^2.9.7",
         "webpack-merge": "4.2.1",
         "webpack-notifier": "1.7.0",
         "webpack-visualizer-plugin": "0.1.11",
         "workbox-webpack-plugin": "3.6.3",
-        "write-file-webpack-plugin": "4.5.0"
+        "write-file-webpack-plugin": "4.5.0",
+        "xml2js": "0.4.19"
     },
     "engines": {
         "node": ">=8.9.0"
@@ -119,7 +119,7 @@
         "webpack:prod:main": "npm run webpack -- --config webpack/webpack.prod.js --profile",
         "webpack:prod": "npm run cleanup && npm run webpack:prod:main && npm run clean-www",
         "webpack:test": "npm run test",
-        "webpack-dev-server": "node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+        "webpack-dev-server": "node --max_old_space_size=8192 node_modules/webpack-dev-server/bin/webpack-dev-server.js",
         "webpack": "node --max_old_space_size=8192 node_modules/webpack/bin/webpack.js"
     },
     "jestSonar": {

@@ -1,5 +1,6 @@
 package com.mitrais.cdc.security.jwt;
 
+import com.mitrais.cdc.config.ApplicationProperties;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.*;
@@ -14,6 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import io.github.jhipster.config.JHipsterProperties;
@@ -21,7 +23,8 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
-@Component
+//@Component
+@Service
 public class TokenProvider {
 
     private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
@@ -35,8 +38,11 @@ public class TokenProvider {
     private long tokenValidityInMillisecondsForRememberMe;
 
     private final JHipsterProperties jHipsterProperties;
+    
+    private ApplicationProperties appProperties;
 
-    public TokenProvider(JHipsterProperties jHipsterProperties) {
+    public TokenProvider(JHipsterProperties jHipsterProperties, ApplicationProperties appProperties) {
+        this.appProperties = appProperties;
         this.jHipsterProperties = jHipsterProperties;
     }
 
@@ -115,5 +121,14 @@ public class TokenProvider {
             log.trace("JWT token compact of handler are invalid trace: {}", e);
         }
         return false;
+    }
+
+    public String getUserIdFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(appProperties.getAuth().getTokenSecret())
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject();
     }
 }
