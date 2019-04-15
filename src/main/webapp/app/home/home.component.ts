@@ -11,7 +11,7 @@ import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { Subscription } from 'rxjs';
 import { IProduct } from 'app/shared/model/product.model';
 import { ProductService } from 'app/entities/product';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
@@ -34,7 +34,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     productSubscription: Subscription;
     product: IProduct[];
     filteredProduct: IProduct[];
+    searchedProduct: IProduct[];
     filter: string;
+    searchValue: any;
 
     constructor(
         private accountService: AccountService,
@@ -46,7 +48,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         protected jhiAlertService: JhiAlertService,
         private router: ActivatedRoute
     ) {
-        this.category = null;
+        this.searchValue = null;
         this.categories = [];
         this.product = [];
         this.itemsPerPage = ITEMS_PER_PAGE;
@@ -59,6 +61,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.category = this.router.snapshot.queryParamMap.get('category');
         this.loadAll();
         this.accountService.identity().then((account: Account) => {
             this.account = account;
@@ -91,7 +94,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.modalRef = this.loginModalService.open();
     }
 
-    loadAll() {
+    protected loadAll() {
         this.categorySubscription = this.categoryService
             .query({
                 page: this.page,
@@ -114,11 +117,12 @@ export class HomeComponent implements OnInit, OnDestroy {
             .subscribe(param => {
                 this.filter = param.get('category');
                 if (this.filter) {
-                    this.filteredProduct = this.product.filter(p =>
-                        p.category.categoryName.toLowerCase().includes(this.filter.toLowerCase())
-                    );
+                    this.applyCategoryFilter();
                 } else {
                     this.filteredProduct = this.product;
+                }
+                if (this.searchValue) {
+                    this.applySearchFilter();
                 }
             });
     }
@@ -153,5 +157,39 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     currentCategory(data) {
         this.category = data;
+    }
+
+    searchProduct(query: any) {
+        if (this.filter !== null) {
+            this.applyCategoryFilter();
+            if (query.value.trim() !== '') {
+                this.searchValue = query.value;
+                this.applySearchFilter();
+            }
+        } else {
+            if (query.value.trim() !== '') {
+                this.searchValue = query.value;
+                this.applySearchFilter();
+            }
+        }
+        query.value = '';
+    }
+
+    resetSearch() {
+        if (this.filter) {
+            this.applyCategoryFilter();
+        } else {
+            this.filteredProduct = this.product;
+        }
+        this.searchValue = null;
+    }
+
+    protected applyCategoryFilter() {
+        this.filteredProduct = this.product.filter(p => p.category.categoryName.toLowerCase().includes(this.filter.toLowerCase()));
+    }
+    protected applySearchFilter() {
+        // comes second if both filter are applied
+        this.searchedProduct = this.filteredProduct.filter(p => p.productName.toLowerCase().includes(this.searchValue.toLowerCase()));
+        this.filteredProduct = this.searchedProduct;
     }
 }

@@ -1,5 +1,25 @@
 <div class="row">
-        
+    <div class="col-md-3">
+            <form class="form-inline my-6 my-lg-0">
+                    <input class="form-control mr-sm-6" 
+                           type="search" 
+                           placeholder="Search products..." 
+                           aria-label="Search" 
+                           style="width: 345px;" 
+                           #search
+                           (keyup.enter)="searchProduct(search)"
+                           
+                >
+                </form>
+    </div>
+    <div class="col-md-9"> 
+        <button type="button" class="btn btn-primary active"  *ngIf="searchValue && searchValue!==''">
+            {{searchValue}} 
+            <span class="badge badge-light" (click)="resetSearch()">X</span>
+        </button>
+    </div>
+</div>
+<div class="row">
     <div class="col-md-3" style="padding-top:20px;">
         <div class="sticky-top">
             <div class="list-group">
@@ -21,13 +41,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-9">
-<!--             <h1 class="display-4" jhiTranslate="home.title"></h1>    
- -->            <div [ngSwitch]="isAuthenticated()">
-                <!-- <div class="alert alert-success" *ngSwitchCase="true">
-                    <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message"
-                        [translateValues]="{username: account.login}"> You are logged in as user "{{account.login}}". </span>
-                </div> -->
+    <div class="col-md-9" style="margin-top: 5px;"> <div [ngSwitch]="isAuthenticated()">
                 <div class="alert alert-warning" *ngSwitchCase="false">
                         <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">Sign in here. </a><span jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>&nbsp;
                     <a class="alert-link" routerLink="register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
