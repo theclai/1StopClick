@@ -15,6 +15,7 @@
             "follow": "ikuti @java_hipster di Twitter"
         },
         "like": "Jika anda menyukai JHipster, jangan lupa beri kami bintang di",
-        "github": "GitHub"
+        "github": "GitHub",
+        "notFound": "Produk tidak ditemukan"
     }
 }
