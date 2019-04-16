@@ -1,28 +1,21 @@
 <div class="row">
-    <div class="col-md-3">
-            <form class="form-inline my-6 my-lg-0">
-                    <input class="form-control mr-sm-6" 
-                           type="search" 
-                           placeholder="Search products..." 
-                           aria-label="Search" 
-                           style="width: 345px;" 
-                           #search
-                           (keyup.enter)="searchProduct(search)"
-                           
-                >
-                </form>
-    </div>
-    <div class="col-md-9"> 
-        <button type="button" class="btn btn-primary active"  *ngIf="searchValue && searchValue!==''">
-            {{searchValue}} 
-            <span class="badge badge-light" (click)="resetSearch()">X</span>
-        </button>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-3" style="padding-top:20px;">
+    <div class="col-md-3" style="padding-top:10px;" >
         <div class="sticky-top">
-            <div class="list-group">
+            <form class="form-inline my-6 my-lg-0">
+                <input class="form-control mr-sm-6" 
+                    type="search" 
+                    placeholder="Search products..." 
+                    aria-label="Search" 
+                    style="width: 80%;" 
+                    #search
+                    (keyup.enter)="searchProduct(search)"
+                >
+            </form><br>
+            <button type="button" class="btn btn-light btn-sm active"  *ngIf="searchValue && searchValue!==''" >
+                    {{searchValue}} 
+                    <span class="badge badge-light" (click)="resetSearch()">X</span>
+            </button>
+            <div class="list-group" style="margin-top:20px;">
                 <a class="list-group-item list-group-item-action"
                  routerLink="/"
                  [class.active]="category === null" 
@@ -38,7 +31,7 @@
                   [queryParams]="{category : c.categoryName }"
                   [class.active]="category === c.categoryName"
                 >{{c.categoryName}}</a>
-            </div>
+            </div> 
         </div>
     </div>
     <div class="col-md-9" style="margin-top: 5px;"> <div [ngSwitch]="isAuthenticated()">
@@ -60,6 +53,11 @@
                 </div>
             </div>
             <div class="w-100" *ngIf="(i + 1)%3 === 0"></div>
+        </ng-container>
+        <ng-container *ngIf="filteredProduct?.length < 1">
+            <div class="col" style="padding-top:20px;">
+                <p jhiTranslate="home.notFound">Product not found</p>
+            </div>
         </ng-container>
     </div>
         
