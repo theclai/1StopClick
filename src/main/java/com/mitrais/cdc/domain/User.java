@@ -81,7 +81,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
     
-    @NotNull
+    //@NotNull
     //@Enumerated(EnumType.STRING)
     private AuthProvider provider;
 
