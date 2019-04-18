@@ -34,7 +34,7 @@
                     <label class="form-control-label" jhiTranslate="App.productReview.product" for="field_product">Product</label>
                     <select class="form-control" id="field_product" name="product" [(ngModel)]="productReview.product" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="productOption.id === productReview.product?.id ? productReview.product : productOption" *ngFor="let productOption of products; trackBy: trackProductById">{{productOption.id}}</option>
+                        <option [ngValue]="productOption.id === productReview.product?.id ? productReview.product : productOption" *ngFor="let productOption of products; trackBy: trackProductById">{{productOption.productName}}</option>
                     </select>
                 </div>
             </div>
