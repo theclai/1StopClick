@@ -269,7 +269,7 @@ public class UserService {
     }
 
     public Optional<User> getUserWithAuthorities() {
-        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin);
+        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLoginOrEmail);
     }
 
     /**
