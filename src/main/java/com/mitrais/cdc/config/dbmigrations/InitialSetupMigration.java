@@ -46,6 +46,8 @@ public class InitialSetupMigration {
         systemUser.setCreatedDate(Instant.now());
         systemUser.getAuthorities().add(adminAuthority);
         systemUser.getAuthorities().add(userAuthority);
+        systemUser.setProviderId("");
+        systemUser.setProvider(null);
         mongoTemplate.save(systemUser);
 
         User anonymousUser = new User();
@@ -59,6 +61,8 @@ public class InitialSetupMigration {
         anonymousUser.setLangKey("en");
         anonymousUser.setCreatedBy(systemUser.getLogin());
         anonymousUser.setCreatedDate(Instant.now());
+        anonymousUser.setProviderId("");
+        anonymousUser.setProvider(null);
         mongoTemplate.save(anonymousUser);
 
         User adminUser = new User();
@@ -74,6 +78,8 @@ public class InitialSetupMigration {
         adminUser.setCreatedDate(Instant.now());
         adminUser.getAuthorities().add(adminAuthority);
         adminUser.getAuthorities().add(userAuthority);
+        adminUser.setProviderId("");
+        adminUser.setProvider(null);
         mongoTemplate.save(adminUser);
 
         User userUser = new User();
@@ -88,6 +94,8 @@ public class InitialSetupMigration {
         userUser.setCreatedBy(systemUser.getLogin());
         userUser.setCreatedDate(Instant.now());
         userUser.getAuthorities().add(userAuthority);
+        userUser.setProviderId("");
+        userUser.setProvider(null);
         mongoTemplate.save(userUser);
     }
 }
