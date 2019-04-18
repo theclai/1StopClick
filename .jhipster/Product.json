@@ -11,7 +11,7 @@
             ],
             "otherEntityField": "categoryName",
             "otherEntityRelationshipName": "product",
-            "otherEntityRelationshipNameUndefined": true
+            "otherEntityRelationshipNameUndefined": false
         }
     ],
     "fields": [

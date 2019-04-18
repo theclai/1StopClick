@@ -9,6 +9,7 @@
                 "main": "Entities",
                 "category": "Category",
                 "product": "Product",
+                "productReview": "Product Review",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

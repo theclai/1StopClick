@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="productReview">
+            <h2><span jhiTranslate="App.productReview.detail.title">Product Review</span> {{productReview.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="App.productReview.rating">Rating</span></dt>
+                <dd>
+                    <span>{{productReview.rating}}</span>
+                </dd>
+                <dt><span jhiTranslate="App.productReview.date">Date</span></dt>
+                <dd>
+                    <span>{{productReview.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="App.productReview.ipAddress">Ip Address</span></dt>
+                <dd>
+                    <span>{{productReview.ipAddress}}</span>
+                </dd>
+                <dt><span jhiTranslate="App.productReview.product">Product</span></dt>
+                <dd>
+                    <div *ngIf="productReview.product">
+                        <a [routerLink]="['/product', productReview.product?.id, 'view']">{{productReview.product?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/product-review', productReview.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

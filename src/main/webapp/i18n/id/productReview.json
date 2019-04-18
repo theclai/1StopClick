@@ -1,0 +1,24 @@
+{
+    "App": {
+        "productReview": {
+            "home": {
+                "title": "Product Reviews",
+                "createLabel": "Buat Product Review baru",
+                "createOrEditLabel": "Buat atau edit Product Review"
+            },
+            "created": "Product Review dengan id {{ param }} telah dibuat",
+            "updated": "Product Review dengan id {{ param }} telah diperbaharui",
+            "deleted": "Product Review dengan id {{ param }} telah dihapus",
+            "delete": {
+                "question": "Apakah anda yakin ingin menghapus Product Review {{ id }}?"
+            },
+            "detail": {
+                "title": "Product Review"
+            },
+            "rating": "Rating",
+            "date": "Date",
+            "ipAddress": "Ip Address",
+            "product": "Product"
+        }
+    }
+}
