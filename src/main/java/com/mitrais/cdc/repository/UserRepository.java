@@ -6,6 +6,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,9 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
     Optional<User> findOneByLogin(String login);
+
+    @Query("{'$or':[ {'login': ?0}, {'email': ?0}]}")
+    Optional<User> findOneByLoginOrEmail(String login);
 
     Page<User> findAllByLoginNot(Pageable pageable, String login);
 }

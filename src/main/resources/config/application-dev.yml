@@ -128,7 +128,7 @@ jhipster:
 
 application:
     auth:
-        tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+        tokenSecret: ZTBlYzgzNDJkNjU4ODdjOWY5ZWQ2YjcyZDJjNmE4NmQ1YmVjMDg1NTdmMzVmZDczODQ3Y2ZkMDVlNGUyMWIyYWQ4NjlkZTNiYTc1NDg5Mjc2ZDUxNTY1MmFkNmZmNzUwNmFmMzE2ZTM1NmM3MGY0NzYyMzRjYzZhNGRmZTI5ZmM=
         tokenExpirationMsec: 864000000
     oauth2:
         # After successfully authenticating with the OAuth2 Provider,

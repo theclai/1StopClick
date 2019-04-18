@@ -17,7 +17,8 @@ export class JhiLoginModalComponent implements AfterViewInit {
     rememberMe: boolean;
     username: string;
     credentials: any;
-
+    public GOOGLE_AUTH_URL = GOOGLE_AUTH_URL;
+    public FACEBOOK_AUTH_URL = FACEBOOK_AUTH_URL;
     constructor(
         private eventManager: JhiEventManager,
         private loginService: LoginService,
@@ -28,7 +29,6 @@ export class JhiLoginModalComponent implements AfterViewInit {
         public activeModal: NgbActiveModal
     ) {
         this.credentials = {};
-        console.log('GOOGLE_AUTH_URL', GOOGLE_AUTH_URL);
     }
 
     ngAfterViewInit() {
