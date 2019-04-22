@@ -46,7 +46,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         private eventManager: JhiEventManager,
         protected parseLinks: JhiParseLinks,
         protected jhiAlertService: JhiAlertService,
-        private router: ActivatedRoute
+        private router: ActivatedRoute,
+        private route: Router
     ) {
         this.searchValue = null;
         this.categories = [];
@@ -192,5 +193,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         // comes second if both filter are applied
         this.searchedProduct = this.filteredProduct.filter(p => p.productName.toLowerCase().includes(this.searchValue.toLowerCase()));
         this.filteredProduct = this.searchedProduct;
+    }
+
+    productDetail(productID) {
+        this.route.navigate(['product-info', productID]);
     }
 }

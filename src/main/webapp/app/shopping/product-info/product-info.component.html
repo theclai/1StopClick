@@ -1,0 +1,12 @@
+<div class="row" *ngFor="let p of product">
+    <div class="col-3"></div>
+    <div class="col-6-md-auto">
+        <h4 *ngIf="p.productName">{{p.productName}} <span class="badge badge-pill badge-primary">{{p.category.categoryName}}</span></h4>
+        <img class="card-img-top" [src]="p.imageUrl" alt="{{p.productName}}" style="width: 300px;height: 400px;">
+      </div>
+      <div class="col" style="padding-top: 35px;">
+        <h5 class="card-title">{{p.productName}} </h5>
+        <p class="card-text">{{p.price | currency:'Rp. '}}</p>
+      </div>
+</div>
+
