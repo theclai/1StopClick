@@ -44,11 +44,11 @@
         <ng-container *ngFor="let product of filteredProduct; let i = index">
             <div class="col" style="padding-top:20px;">
                 <div class="card" style="width: 280px;" >
-                    <img class="card-img-top" [src]="product.imageUrl" alt="{{product.title}}" *ngIf="product.imageUrl" style="width: 100%;height: 300px;">
+                    <img class="card-img-top" [src]="product.imageUrl" alt="{{product.title}}" *ngIf="product.imageUrl" style="width: 100%;height: 300px;" (click)="productDetail(product.id)">
                     <div class="card-body">
-                        <h5 class="card-title">{{product.productName}}</h5>
-                        <p class="card-text">{{product.price | currency:'Rp. '}}</p>
-                        <span class="badge badge-pill badge-primary">{{product.category.categoryName}}</span>
+                        <h6 class="card-title">{{product.productName}} <span class="badge badge-pill badge-primary">{{product.category.categoryName}}</span></h6>
+                        <p class="card-text">{{product.price | currency:'Rp. '}} </p>
+                        <button class="btn btn-primary btn-sm" (click)="productDetail(product.id)">More info</button>                    
                     </div>
                 </div>
             </div>
