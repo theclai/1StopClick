@@ -1,3 +1,4 @@
+import { AppShoppingModule } from './shopping/shopping.module';
 import { OAuth2RedirectHandler } from './core/auth/oauth2-redirect.handler';
 import './vendor.ts';
 
@@ -39,6 +40,7 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         AppAccountModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
         AppEntityModule,
+        AppShoppingModule,
         AppAppRoutingModule
     ],
     declarations: [
