@@ -1,7 +1,5 @@
 # 1stopClick
 
-This application was generated using JHipster 5.8.2, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v5.8.2](https://www.jhipster.tech/documentation-archive/v5.8.2).
-
 ## Development
 
 Before you can build this project, you must install and configure the following dependencies on your machine:
@@ -155,26 +153,4 @@ Then run:
 
 For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`jhipster docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
 
-## Continuous Integration (optional)
 
-To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
-
-[jhipster homepage and latest documentation]: https://www.jhipster.tech
-[jhipster 5.8.2 archive]: https://www.jhipster.tech/documentation-archive/v5.8.2
-[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v5.8.2/development/
-[service discovery and configuration with the jhipster-registry]: https://www.jhipster.tech/documentation-archive/v5.8.2/microservices-architecture/#jhipster-registry
-[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v5.8.2/docker-compose
-[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v5.8.2/production/
-[running tests page]: https://www.jhipster.tech/documentation-archive/v5.8.2/running-tests/
-[code quality page]: https://www.jhipster.tech/documentation-archive/v5.8.2/code-quality/
-[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v5.8.2/setting-up-ci/
-[node.js]: https://nodejs.org/
-[yarn]: https://yarnpkg.org/
-[webpack]: https://webpack.github.io/
-[angular cli]: https://cli.angular.io/
-[browsersync]: http://www.browsersync.io/
-[jest]: https://facebook.github.io/jest/
-[jasmine]: http://jasmine.github.io/2.0/introduction.html
-[protractor]: https://angular.github.io/protractor/
-[leaflet]: http://leafletjs.com/
-[definitelytyped]: http://definitelytyped.org/
