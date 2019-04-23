@@ -14,8 +14,12 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
     productID: any;
     product: IProduct[];
     productSubscription: Subscription;
+    quantity: number[];
+    selectedQuantity = 1;
+
     constructor(private router: ActivatedRoute, private productService: ProductService) {
         this.product = [];
+        this.quantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     }
 
     ngOnInit() {
@@ -34,5 +38,8 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
         this.productSubscription = this.productService.find(productId).subscribe((res: HttpResponse<IProduct>) => {
             this.product.push(res.body);
         });
+    }
+    addToCart(product) {
+        console.log(product, this.selectedQuantity);
     }
 }

@@ -1,12 +1,15 @@
 <div class="row" *ngFor="let p of product">
     <div class="col-3"></div>
     <div class="col-6-md-auto">
-        <h4 *ngIf="p.productName">{{p.productName}} <span class="badge badge-pill badge-primary">{{p.category.categoryName}}</span></h4>
         <img class="card-img-top" [src]="p.imageUrl" alt="{{p.productName}}" style="width: 300px;height: 400px;">
       </div>
-      <div class="col" style="padding-top: 35px;">
-        <h5 class="card-title">{{p.productName}} </h5>
-        <p class="card-text">{{p.price | currency:'Rp. '}}</p>
+      <div class="col" >
+        <h4>{{p.productName}} <span class="badge badge-pill badge-primary">{{p.category.categoryName}}</span></h4>
+        <h5 class="card-text" style="color: chocolate">{{p.price | currency:'Rp. '}}</h5>
+        <select [(ngModel)]="selectedQuantity">
+            <option [value]="q" *ngFor="let q of quantity">{{q}}</option>
+        </select>
+        <button class="btn btn-primary btn-sm" (click)="addToCart(p)">Add to cart</button>
       </div>
 </div>
 
