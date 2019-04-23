@@ -4,7 +4,7 @@
 
     <groupId>com.mitrais.cdc</groupId>
     <artifactId>1-stop-click</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>war</packaging>
     <name>1 Stop Click</name>
 
