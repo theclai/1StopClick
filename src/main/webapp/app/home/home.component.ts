@@ -174,7 +174,6 @@ export class HomeComponent implements OnInit, OnDestroy {
             }
         }
         query.value = '';
-        console.log('filtered product>>>>', this.filteredProduct);
     }
 
     resetSearch() {
