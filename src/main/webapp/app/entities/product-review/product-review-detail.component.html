@@ -17,11 +17,19 @@
                 <dd>
                     <span>{{productReview.ipAddress}}</span>
                 </dd>
+                <dt><span jhiTranslate="App.productReview.review">Review</span></dt>
+                <dd>
+                    <span>{{productReview.review}}</span>
+                </dd>
                 <dt><span jhiTranslate="App.productReview.product">Product</span></dt>
                 <dd>
                     <div *ngIf="productReview.product">
                         <a [routerLink]="['/product', productReview.product?.id, 'view']">{{productReview.product?.id}}</a>
                     </div>
+                </dd>
+                <dt><span jhiTranslate="App.productReview.user">User</span></dt>
+                <dd>
+                    {{productReview.user?.login}}
                 </dd>
             </dl>
 

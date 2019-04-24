@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="productOrder">
+            <h2><span jhiTranslate="App.productOrder.detail.title">Product Order</span> {{productOrder.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="App.productOrder.placeDate">Place Date</span></dt>
+                <dd>
+                    <span>{{productOrder.placeDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="App.productOrder.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'App.Orderstatus.' + productOrder.status}}">{{productOrder.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="App.productOrder.code">Code</span></dt>
+                <dd>
+                    <span>{{productOrder.code}}</span>
+                </dd>
+                <dt><span jhiTranslate="App.productOrder.user">User</span></dt>
+                <dd>
+                    <span *ngFor="let user of productOrder.users; let last = last">
+                        {{user.login}}{{last ? '' : ', '}}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/product-order', productOrder.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

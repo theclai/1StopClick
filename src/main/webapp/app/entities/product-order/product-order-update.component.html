@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-product-order-heading" jhiTranslate="App.productOrder.home.createOrEditLabel">Create or edit a Product Order</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!productOrder.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="productOrder.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.productOrder.placeDate" for="field_placeDate">Place Date</label>
+                    <div class="d-flex">
+                        <input id="field_placeDate" type="datetime-local" class="form-control" name="placeDate" [(ngModel)]="placeDate" placeholder="YYYY-MM-DD HH:mm"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.productOrder.status" for="field_status">Status</label>
+                    <select class="form-control" name="status" [(ngModel)]="productOrder.status" id="field_status" >
+                        <option value="COMPLETED">{{'App.Orderstatus.COMPLETED' | translate}}</option>
+                        <option value="PENDING">{{'App.Orderstatus.PENDING' | translate}}</option>
+                        <option value="CANCELLED">{{'App.Orderstatus.CANCELLED' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.productOrder.code" for="field_code">Code</label>
+                    <input type="text" class="form-control" name="code" id="field_code"
+                        [(ngModel)]="productOrder.code" />
+                </div>
+
+                <div class="form-group">
+                    <label jhiTranslate="App.productOrder.user" for="field_user">User</label>
+                    <select class="form-control" id="field_user" multiple name="user" [(ngModel)]="productOrder.users">
+                        <option [ngValue]="getSelected(productOrder.users, userOption)" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

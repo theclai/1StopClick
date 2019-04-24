@@ -9,6 +9,15 @@
             "otherEntityField": "id",
             "otherEntityRelationshipNameUndefined": false,
             "otherEntityRelationshipName": "productReview"
+        },
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "productReview",
+            "otherEntityRelationshipNameUndefined": false
         }
     ],
     "fields": [
@@ -22,6 +31,10 @@
         },
         {
             "fieldName": "ipAddress",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "review",
             "fieldType": "String"
         }
     ],
