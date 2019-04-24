@@ -1,0 +1,22 @@
+{
+    "App": {
+        "shoppingCart": {
+            "home": {
+                "title": "Shopping Carts",
+                "createLabel": "Buat Shopping Cart baru",
+                "createOrEditLabel": "Buat atau edit Shopping Cart"
+            },
+            "created": "Shopping Cart dengan id {{ param }} telah dibuat",
+            "updated": "Shopping Cart dengan id {{ param }} telah diperbaharui",
+            "deleted": "Shopping Cart dengan id {{ param }} telah dihapus",
+            "delete": {
+                "question": "Apakah anda yakin ingin menghapus Shopping Cart {{ id }}?"
+            },
+            "detail": {
+                "title": "Shopping Cart"
+            },
+            "date": "Date",
+            "orderItem": "Order Item"
+        }
+    }
+}

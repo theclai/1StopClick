@@ -10,6 +10,8 @@ import { IProduct } from 'app/shared/model/product.model';
 import { ProductService } from 'app/entities/product';
 import { IProductOrder } from 'app/shared/model/product-order.model';
 import { ProductOrderService } from 'app/entities/product-order';
+import { IShoppingCart } from 'app/shared/model/shopping-cart.model';
+import { ShoppingCartService } from 'app/entities/shopping-cart';
 
 @Component({
     selector: 'jhi-order-item-update',
@@ -23,11 +25,14 @@ export class OrderItemUpdateComponent implements OnInit {
 
     productorders: IProductOrder[];
 
+    shoppingcarts: IShoppingCart[];
+
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected orderItemService: OrderItemService,
         protected productService: ProductService,
         protected productOrderService: ProductOrderService,
+        protected shoppingCartService: ShoppingCartService,
         protected activatedRoute: ActivatedRoute
     ) {}
 
@@ -50,6 +55,13 @@ export class OrderItemUpdateComponent implements OnInit {
                 map((response: HttpResponse<IProductOrder[]>) => response.body)
             )
             .subscribe((res: IProductOrder[]) => (this.productorders = res), (res: HttpErrorResponse) => this.onError(res.message));
+        this.shoppingCartService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<IShoppingCart[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IShoppingCart[]>) => response.body)
+            )
+            .subscribe((res: IShoppingCart[]) => (this.shoppingcarts = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -87,6 +99,10 @@ export class OrderItemUpdateComponent implements OnInit {
     }
 
     trackProductOrderById(index: number, item: IProductOrder) {
+        return item.id;
+    }
+
+    trackShoppingCartById(index: number, item: IShoppingCart) {
         return item.id;
     }
 }

@@ -19,7 +19,8 @@
             "totalPrice": "Total Price",
             "status": "Status",
             "product": "Product",
-            "productOrder": "Product Order"
+            "productOrder": "Product Order",
+            "shoppingCart": "Shopping Cart"
         }
     }
 }

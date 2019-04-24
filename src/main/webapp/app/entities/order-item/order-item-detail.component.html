@@ -29,6 +29,12 @@
                         <a [routerLink]="['/product-order', orderItem.productOrder?.id, 'view']">{{orderItem.productOrder?.id}}</a>
                     </div>
                 </dd>
+                <dt><span jhiTranslate="App.orderItem.shoppingCart">Shopping Cart</span></dt>
+                <dd>
+                    <div *ngIf="orderItem.shoppingCart">
+                        <a [routerLink]="['/shopping-cart', orderItem.shoppingCart?.id, 'view']">{{orderItem.shoppingCart?.id}}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"
