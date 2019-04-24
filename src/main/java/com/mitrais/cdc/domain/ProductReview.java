@@ -31,10 +31,17 @@ public class ProductReview implements Serializable {
     @Field("ip_address")
     private String ipAddress;
 
+    @Field("review")
+    private String review;
+
     @DBRef
     @Field("product")
     @JsonIgnoreProperties("productReviews")
     private Product product;
+
+    @DBRef
+    @Field("user")
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
@@ -84,6 +91,19 @@ public class ProductReview implements Serializable {
         this.ipAddress = ipAddress;
     }
 
+    public String getReview() {
+        return review;
+    }
+
+    public ProductReview review(String review) {
+        this.review = review;
+        return this;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
     public Product getProduct() {
         return product;
     }
@@ -95,6 +115,19 @@ public class ProductReview implements Serializable {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public ProductReview user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -125,6 +158,7 @@ public class ProductReview implements Serializable {
             ", rating=" + getRating() +
             ", date='" + getDate() + "'" +
             ", ipAddress='" + getIpAddress() + "'" +
+            ", review='" + getReview() + "'" +
             "}";
     }
 }

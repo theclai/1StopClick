@@ -25,7 +25,7 @@ describe('Service Tests', () => {
             httpMock = injector.get(HttpTestingController);
             currentDate = moment();
 
-            elemDefault = new ProductReview('ID', 0, currentDate, 'AAAAAAA');
+            elemDefault = new ProductReview('ID', 0, currentDate, 'AAAAAAA', 'AAAAAAA');
         });
 
         describe('Service methods', async () => {
@@ -72,7 +72,8 @@ describe('Service Tests', () => {
                     {
                         rating: 1,
                         date: currentDate.format(DATE_FORMAT),
-                        ipAddress: 'BBBBBB'
+                        ipAddress: 'BBBBBB',
+                        review: 'BBBBBB'
                     },
                     elemDefault
                 );
@@ -96,7 +97,8 @@ describe('Service Tests', () => {
                     {
                         rating: 1,
                         date: currentDate.format(DATE_FORMAT),
-                        ipAddress: 'BBBBBB'
+                        ipAddress: 'BBBBBB',
+                        review: 'BBBBBB'
                     },
                     elemDefault
                 );

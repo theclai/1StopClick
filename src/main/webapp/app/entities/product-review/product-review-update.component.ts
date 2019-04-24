@@ -9,6 +9,7 @@ import { IProductReview } from 'app/shared/model/product-review.model';
 import { ProductReviewService } from './product-review.service';
 import { IProduct } from 'app/shared/model/product.model';
 import { ProductService } from 'app/entities/product';
+import { IUser, UserService } from 'app/core';
 
 @Component({
     selector: 'jhi-product-review-update',
@@ -19,12 +20,15 @@ export class ProductReviewUpdateComponent implements OnInit {
     isSaving: boolean;
 
     products: IProduct[];
+
+    users: IUser[];
     dateDp: any;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected productReviewService: ProductReviewService,
         protected productService: ProductService,
+        protected userService: UserService,
         protected activatedRoute: ActivatedRoute
     ) {}
 
@@ -40,6 +44,13 @@ export class ProductReviewUpdateComponent implements OnInit {
                 map((response: HttpResponse<IProduct[]>) => response.body)
             )
             .subscribe((res: IProduct[]) => (this.products = res), (res: HttpErrorResponse) => this.onError(res.message));
+        this.userService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IUser[]>) => response.body)
+            )
+            .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -73,6 +84,10 @@ export class ProductReviewUpdateComponent implements OnInit {
     }
 
     trackProductById(index: number, item: IProduct) {
+        return item.id;
+    }
+
+    trackUserById(index: number, item: IUser) {
         return item.id;
     }
 }
