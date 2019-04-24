@@ -43,6 +43,11 @@ public class OrderItem implements Serializable {
     @JsonIgnoreProperties("orderItems")
     private ProductOrder productOrder;
 
+    @DBRef
+    @Field("shoppingCart")
+    @JsonIgnoreProperties("orderItems")
+    private ShoppingCart shoppingCart;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
         return id;
@@ -115,6 +120,19 @@ public class OrderItem implements Serializable {
 
     public void setProductOrder(ProductOrder productOrder) {
         this.productOrder = productOrder;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public OrderItem shoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+        return this;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -8,11 +8,19 @@
             "relationshipType": "many-to-one",
             "otherEntityField": "id",
             "otherEntityRelationshipName": "orderItem",
-            "otherEntityRelationshipNameUndefined": true
+            "otherEntityRelationshipNameUndefined": false
         },
         {
             "relationshipName": "productOrder",
             "otherEntityName": "productOrder",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "orderItem",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "shoppingCart",
+            "otherEntityName": "shoppingCart",
             "relationshipType": "many-to-one",
             "otherEntityField": "id",
             "otherEntityRelationshipName": "orderItem",
