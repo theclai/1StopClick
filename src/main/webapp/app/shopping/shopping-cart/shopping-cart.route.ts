@@ -3,7 +3,7 @@ import { Route } from '@angular/router';
 import { ShoppingCartComponent } from './shopping-cart.component';
 
 export const shoppingCartRoute: Route = {
-    path: 'shopping-cart',
+    path: 'cart',
     component: ShoppingCartComponent,
     data: {
         authorities: [],
