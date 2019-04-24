@@ -18,7 +18,9 @@
             "rating": "Rating",
             "date": "Date",
             "ipAddress": "Ip Address",
-            "product": "Product"
+            "review": "Review",
+            "product": "Product",
+            "user": "User"
         }
     }
 }

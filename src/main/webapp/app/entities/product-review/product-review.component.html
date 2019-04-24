@@ -18,7 +18,9 @@
             <th jhiSortBy="rating"><span jhiTranslate="App.productReview.rating">Rating</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="date"><span jhiTranslate="App.productReview.date">Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="ipAddress"><span jhiTranslate="App.productReview.ipAddress">Ip Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="review"><span jhiTranslate="App.productReview.review">Review</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="product.id"><span jhiTranslate="App.productReview.product">Product</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="user.login"><span jhiTranslate="App.productReview.user">User</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -28,10 +30,14 @@
                 <td>{{productReview.rating}}</td>
                 <td>{{productReview.date | date:'mediumDate'}}</td>
                 <td>{{productReview.ipAddress}}</td>
+                <td>{{productReview.review}}</td>
                 <td>
                     <div *ngIf="productReview.product">
                         <a [routerLink]="['../product', productReview.product?.id, 'view' ]" >{{productReview.product?.id}}</a>
                     </div>
+                </td>
+                <td>
+                    {{productReview.user?.login}}
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">

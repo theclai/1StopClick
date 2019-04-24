@@ -50,6 +50,9 @@ public class ProductReviewResourceIntTest {
     private static final String DEFAULT_IP_ADDRESS = "AAAAAAAAAA";
     private static final String UPDATED_IP_ADDRESS = "BBBBBBBBBB";
 
+    private static final String DEFAULT_REVIEW = "AAAAAAAAAA";
+    private static final String UPDATED_REVIEW = "BBBBBBBBBB";
+
     @Autowired
     private ProductReviewRepository productReviewRepository;
 
@@ -94,7 +97,8 @@ public class ProductReviewResourceIntTest {
         ProductReview productReview = new ProductReview()
             .rating(DEFAULT_RATING)
             .date(DEFAULT_DATE)
-            .ipAddress(DEFAULT_IP_ADDRESS);
+            .ipAddress(DEFAULT_IP_ADDRESS)
+            .review(DEFAULT_REVIEW);
         return productReview;
     }
 
@@ -121,6 +125,7 @@ public class ProductReviewResourceIntTest {
         assertThat(testProductReview.getRating()).isEqualTo(DEFAULT_RATING);
         assertThat(testProductReview.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testProductReview.getIpAddress()).isEqualTo(DEFAULT_IP_ADDRESS);
+        assertThat(testProductReview.getReview()).isEqualTo(DEFAULT_REVIEW);
     }
 
     @Test
@@ -153,7 +158,8 @@ public class ProductReviewResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(productReview.getId())))
             .andExpect(jsonPath("$.[*].rating").value(hasItem(DEFAULT_RATING)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].ipAddress").value(hasItem(DEFAULT_IP_ADDRESS.toString())));
+            .andExpect(jsonPath("$.[*].ipAddress").value(hasItem(DEFAULT_IP_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].review").value(hasItem(DEFAULT_REVIEW.toString())));
     }
     
     @Test
@@ -168,7 +174,8 @@ public class ProductReviewResourceIntTest {
             .andExpect(jsonPath("$.id").value(productReview.getId()))
             .andExpect(jsonPath("$.rating").value(DEFAULT_RATING))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
-            .andExpect(jsonPath("$.ipAddress").value(DEFAULT_IP_ADDRESS.toString()));
+            .andExpect(jsonPath("$.ipAddress").value(DEFAULT_IP_ADDRESS.toString()))
+            .andExpect(jsonPath("$.review").value(DEFAULT_REVIEW.toString()));
     }
 
     @Test
@@ -190,7 +197,8 @@ public class ProductReviewResourceIntTest {
         updatedProductReview
             .rating(UPDATED_RATING)
             .date(UPDATED_DATE)
-            .ipAddress(UPDATED_IP_ADDRESS);
+            .ipAddress(UPDATED_IP_ADDRESS)
+            .review(UPDATED_REVIEW);
 
         restProductReviewMockMvc.perform(put("/api/product-reviews")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -204,6 +212,7 @@ public class ProductReviewResourceIntTest {
         assertThat(testProductReview.getRating()).isEqualTo(UPDATED_RATING);
         assertThat(testProductReview.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testProductReview.getIpAddress()).isEqualTo(UPDATED_IP_ADDRESS);
+        assertThat(testProductReview.getReview()).isEqualTo(UPDATED_REVIEW);
     }
 
     @Test
