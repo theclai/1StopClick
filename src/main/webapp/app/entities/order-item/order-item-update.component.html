@@ -42,6 +42,13 @@
                         <option [ngValue]="productOrderOption.id === orderItem.productOrder?.id ? orderItem.productOrder : productOrderOption" *ngFor="let productOrderOption of productorders; trackBy: trackProductOrderById">{{productOrderOption.id}}</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.orderItem.shoppingCart" for="field_shoppingCart">Shopping Cart</label>
+                    <select class="form-control" id="field_shoppingCart" name="shoppingCart" [(ngModel)]="orderItem.shoppingCart" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="shoppingCartOption.id === orderItem.shoppingCart?.id ? orderItem.shoppingCart : shoppingCartOption" *ngFor="let shoppingCartOption of shoppingcarts; trackBy: trackShoppingCartById">{{shoppingCartOption.id}}</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

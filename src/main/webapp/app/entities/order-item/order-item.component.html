@@ -20,6 +20,7 @@
             <th jhiSortBy="status"><span jhiTranslate="App.orderItem.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="product.id"><span jhiTranslate="App.orderItem.product">Product</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="productOrder.id"><span jhiTranslate="App.orderItem.productOrder">Product Order</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="shoppingCart.id"><span jhiTranslate="App.orderItem.shoppingCart">Shopping Cart</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -37,6 +38,11 @@
                 <td>
                     <div *ngIf="orderItem.productOrder">
                         <a [routerLink]="['../product-order', orderItem.productOrder?.id, 'view' ]" >{{orderItem.productOrder?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="orderItem.shoppingCart">
+                        <a [routerLink]="['../shopping-cart', orderItem.shoppingCart?.id, 'view' ]" >{{orderItem.shoppingCart?.id}}</a>
                     </div>
                 </td>
                 <td class="text-right">
