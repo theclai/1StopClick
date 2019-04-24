@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
-import com.mitrais.cdc.domain.enumeration.Orderstatus;
+import com.mitrais.cdc.domain.enumeration.OrderStatus;
 
 /**
  * A ProductOrder.
@@ -30,7 +30,7 @@ public class ProductOrder implements Serializable {
     private Instant placeDate;
 
     @Field("status")
-    private Orderstatus status;
+    private OrderStatus status;
 
     @Field("code")
     private String code;
@@ -67,16 +67,16 @@ public class ProductOrder implements Serializable {
         this.placeDate = placeDate;
     }
 
-    public Orderstatus getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public ProductOrder status(Orderstatus status) {
+    public ProductOrder status(OrderStatus status) {
         this.status = status;
         return this;
     }
 
-    public void setStatus(Orderstatus status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 

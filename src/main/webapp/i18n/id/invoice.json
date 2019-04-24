@@ -12,12 +12,9 @@
             "delete": {
                 "question": "Apakah anda yakin ingin menghapus Invoice {{ id }}?"
             },
-            "detail": {
-                "title": "Invoice"
-            },
+            "detail": "Detail",
             "code": "Code",
             "date": "Date",
-            "detail": "Detail",
             "status": "Status",
             "paymentMethod": "Payment Method",
             "paymentDate": "Payment Date",
