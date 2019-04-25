@@ -1,5 +1,5 @@
-import { ShoppingCartService } from './../../shared/services/shopping-cart.service';
 import { Component, OnInit } from '@angular/core';
+import { ShoppingCartService } from 'app/entities/shopping-cart';
 
 @Component({
     selector: 'jhi-shopping-cart',

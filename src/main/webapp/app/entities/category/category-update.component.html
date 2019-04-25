@@ -19,6 +19,12 @@
                         This field is required.
                         </small>
                     </div>
+                    <div [hidden]="!isExists">
+                        <small class="form-text text-danger"
+                        [hidden]="!isExists">
+                        Category name already existed!
+                        </small>
+                    </div>
                 </div>
 
             </div>
