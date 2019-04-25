@@ -37,7 +37,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.mitrais.cdc.domain.enumeration.Orderstatus;
+import com.mitrais.cdc.domain.enumeration.OrderStatus;
 /**
  * Test class for the ProductOrderResource REST controller.
  *
@@ -50,8 +50,8 @@ public class ProductOrderResourceIntTest {
     private static final Instant DEFAULT_PLACE_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_PLACE_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final Orderstatus DEFAULT_STATUS = Orderstatus.COMPLETED;
-    private static final Orderstatus UPDATED_STATUS = Orderstatus.PENDING;
+    private static final OrderStatus DEFAULT_STATUS = OrderStatus.COMPLETED;
+    private static final OrderStatus UPDATED_STATUS = OrderStatus.PENDING;
 
     private static final String DEFAULT_CODE = "AAAAAAAAAA";
     private static final String UPDATED_CODE = "BBBBBBBBBB";
