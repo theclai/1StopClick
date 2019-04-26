@@ -18,7 +18,8 @@
             "productName": "Product Name",
             "price": "Price",
             "imageUrl": "Image Url",
-            "category": "Category"
+            "category": "Category",
+            "productDiscount": "Product Discount"
         }
     }
 }

@@ -8,6 +8,8 @@ import { IProduct } from 'app/shared/model/product.model';
 import { ProductService } from './product.service';
 import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category';
+import { IProductDiscount } from 'app/shared/model/product-discount.model';
+import { ProductDiscountService } from 'app/entities/product-discount';
 
 @Component({
     selector: 'jhi-product-update',
@@ -19,10 +21,13 @@ export class ProductUpdateComponent implements OnInit {
 
     categories: ICategory[];
 
+    productdiscounts: IProductDiscount[];
+
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected productService: ProductService,
         protected categoryService: CategoryService,
+        protected productDiscountService: ProductDiscountService,
         protected activatedRoute: ActivatedRoute
     ) {}
 
@@ -38,6 +43,13 @@ export class ProductUpdateComponent implements OnInit {
                 map((response: HttpResponse<ICategory[]>) => response.body)
             )
             .subscribe((res: ICategory[]) => (this.categories = res), (res: HttpErrorResponse) => this.onError(res.message));
+        this.productDiscountService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<IProductDiscount[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IProductDiscount[]>) => response.body)
+            )
+            .subscribe((res: IProductDiscount[]) => (this.productdiscounts = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -71,6 +83,10 @@ export class ProductUpdateComponent implements OnInit {
     }
 
     trackCategoryById(index: number, item: ICategory) {
+        return item.id;
+    }
+
+    trackProductDiscountById(index: number, item: IProductDiscount) {
         return item.id;
     }
 }
