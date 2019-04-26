@@ -39,6 +39,11 @@ public class Product implements Serializable {
     @JsonIgnoreProperties("products")
     private Category category;
 
+    @DBRef
+    @Field("productDiscount")
+    @JsonIgnoreProperties("products")
+    private ProductDiscount productDiscount;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
         return id;
@@ -98,6 +103,19 @@ public class Product implements Serializable {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public ProductDiscount getProductDiscount() {
+        return productDiscount;
+    }
+
+    public Product productDiscount(ProductDiscount productDiscount) {
+        this.productDiscount = productDiscount;
+        return this;
+    }
+
+    public void setProductDiscount(ProductDiscount productDiscount) {
+        this.productDiscount = productDiscount;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

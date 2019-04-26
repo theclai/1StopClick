@@ -15,6 +15,7 @@
                 "invoice": "Invoice",
                 "shipment": "Shipment",
                 "shoppingCart": "Shopping Cart",
+                "productDiscount": "Product Discount",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

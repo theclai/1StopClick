@@ -12,6 +12,14 @@
             "otherEntityField": "categoryName",
             "otherEntityRelationshipName": "product",
             "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "productDiscount",
+            "otherEntityName": "productDiscount",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "product",
+            "otherEntityRelationshipNameUndefined": true
         }
     ],
     "fields": [
