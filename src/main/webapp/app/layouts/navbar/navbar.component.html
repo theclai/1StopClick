@@ -14,8 +14,8 @@
                     <span routerLink="shopping-cart">
                             <fa-icon icon="shopping-cart"></fa-icon>
                             <span> Cart </span>
-                            <span class="badge badge-warning">0</span>
-                        </span>
+<!--                              <span class="badge badge-warning" *ngIf="cart$ | async as cart" >{{cart}}</span>
+ -->                         </span>
                 </a>
             </li>
             <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
