@@ -7,6 +7,8 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { VERSION } from 'app/app.constants';
 import { JhiLanguageHelper, AccountService, LoginModalService, LoginService } from 'app/core';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { ShoppingCartService, ShoppingCartComponent } from 'app/entities/shopping-cart';
+import { IOrderItem } from 'app/shared/model/order-item.model';
 
 @Component({
     selector: 'jhi-navbar',
@@ -22,6 +24,10 @@ export class NavbarComponent implements OnInit {
     modalRef: NgbModalRef;
     version: string;
     loggedIn: boolean;
+    shoppingCart$: any;
+    orderItem: any;
+    totalItem: any;
+    quantity: number;
 
     constructor(
         private loginService: LoginService,
@@ -32,13 +38,15 @@ export class NavbarComponent implements OnInit {
         private eventManager: JhiEventManager,
         private loginModalService: LoginModalService,
         private profileService: ProfileService,
-        private router: Router
+        private router: Router,
+        private shoppingCartService: ShoppingCartService
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
+        this.orderItem = [];
     }
 
-    ngOnInit() {
+    async ngOnInit() {
         this.languageHelper.getAll().then(languages => {
             this.languages = languages;
         });
@@ -52,6 +60,29 @@ export class NavbarComponent implements OnInit {
             this.account = account;
         });
         this.registerAuthenticationSuccess();
+        const cartId = localStorage.getItem('cartId');
+        if (cartId) {
+            /* await this.shoppingCartService.find(cartId).subscribe((res: HttpResponse<IShoppingCart>) => {
+                this.shoppingCart(res.body.orderItems);
+                console.log('order item >>>>' , this.orderItem);
+            }); */
+        } else {
+            /*             this.quantity = 0;
+             */
+        }
+    }
+    getTotalQuantity() {
+        this.totalItem = this.orderItem.map(t => t.quantity);
+        let itemCount = 0;
+        for (let id = 0; id < this.totalItem.length; id++) {
+            itemCount += this.totalItem[id];
+        }
+        this.quantity = itemCount;
+    }
+    shoppingCart(data: IOrderItem[]) {
+        for (let i = 0; i < data.length; i++) {
+            this.orderItem.push(data[i]);
+        }
     }
 
     changeLanguage(languageKey: string) {

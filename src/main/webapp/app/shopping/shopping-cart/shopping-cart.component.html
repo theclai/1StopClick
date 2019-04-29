@@ -1,30 +1,38 @@
 <div class="row">
-  <div class="col-3"></div>
-  <div class="col-6-md-auto">
+  <div class="col-2"></div>
+  <div class="col-md-auto">
   <h2>Shopping Cart</h2>
-  <ng-container *ngIf="carts as cart; else emptyData">
-      <p> You have {{cart.totalItemCount}} items in your shopping cart</p>
-      <table class="table" >
+  <ng-container *ngIf="orderItem as cart">
+      <p *ngIf="!isEmpty"> You have {{quantity}} items in your shopping cart</p>
+      <table class="table" *ngIf="!isEmpty">
           <thead>
               <tr>
                 <th></th>
                 <th scope="col" class="text-left">Product</th>
+                <th scope="col" class="text-left">Category</th>
                 <th scope="col" class="text-center">Quantity</th>
                 <th scope="col" class="text-center">Price</th>
+                <th scope="col" class="text-center">Total Price</th>
                 <th scope="col" class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let productId of cart.ProductId" >
-                <td>
-                  <img class="img-thumbnail" [src]="productId.Product.imageURL">
-                </td>
-                <td class="text-justify">{{productId.Product.title}}</td>
-                <td class="text-center">{{productId.quantity}}</td>
-                <td class="text-center">{{productId.Product.price * productId.quantity | currency:'Rp. '}}</td>
+              <tr *ngFor="let x of cart" >
+                  <td>
+                      <img style="
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 100%;
+                    " [src]="x.product.imageUrl">
+                    </td>
+                <td class="text-justify">{{x.product.productName}}</td>
+                <td class="text-center"><span class="badge badge-pill badge-primary">{{x.product.category.categoryName}}</span></td>
+                <td class="text-center">{{x.quantity}}</td>
+                <td class="text-center">{{x.product.price | currency:'Rp. '}}</td>
+                <td class="text-center">{{x.quantity * x.product.price | currency:'Rp. '}}</td>
                 <td class="text-center">
-                  <button class="btn btn-light" (click)="removeFromCart(productId.Product)">-</button>&nbsp;
-                  <button class="btn btn-light" (click)="addToCart(productId.Product)">+</button>&nbsp;
+                  <button class="btn btn-light" (click)="removeFromCart(x)">-</button>&nbsp;
+                  <button class="btn btn-light" (click)="addToCart(x)">+</button>&nbsp;
                 </td>
                 </tr>
             </tbody>
@@ -37,13 +45,15 @@
                 </td>
                 <td></td>
                 <td></td>
-                <td class="text-center"><p style="font-weight:bold">{{cart.totalPrice | currency:'Rp. '}}</p></td>
+                <td></td>
+                <td></td>
+                <td class="text-center"><p style="font-weight:bold">{{totalPrice | currency:'Rp. '}}</p></td>
                 <td class="text-center">
                     <button class="btn btn-danger" (click)="clearShoppingCart()">Clear Shopping Cart</button></td>
               </tr>
             </tfoot>
       </table>
   </ng-container>
-  <ng-template #emptyData>You have 0 items in your shopping cart</ng-template>
+  <p *ngIf="isEmpty">You have 0 items in your shopping cart</p>
 </div>
 </div>

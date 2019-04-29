@@ -1,0 +1,28 @@
+{
+    "App": {
+        "productDiscount": {
+            "home": {
+                "title": "Product Discounts",
+                "createLabel": "Create a new Product Discount",
+                "createOrEditLabel": "Create or edit a Product Discount"
+            },
+            "created": "A new Product Discount is created with identifier {{ param }}",
+            "updated": "A Product Discount is updated with identifier {{ param }}",
+            "deleted": "A Product Discount is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Product Discount {{ id }}?"
+            },
+            "detail": {
+                "title": "Product Discount"
+            },
+            "discountValue": "Discount Value",
+            "discountUnit": "Discount Unit",
+            "date": "Date",
+            "voucherCode": "Voucher Code",
+            "minimumOrderValue": "Minimum Order Value",
+            "maximumDiscountValue": "Maximum Discount Value",
+            "isRedemAllowed": "Is Redem Allowed",
+            "product": "Product"
+        }
+    }
+}

@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="productDiscount">
+            <h2><span jhiTranslate="App.productDiscount.detail.title">Product Discount</span> {{productDiscount.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="App.productDiscount.discountValue">Discount Value</span></dt>
+                <dd>
+                    <span>{{productDiscount.discountValue}}</span>
+                </dd>
+                <dt><span jhiTranslate="App.productDiscount.discountUnit">Discount Unit</span></dt>
+                <dd>
+                    <span>{{productDiscount.discountUnit}}</span>
+                </dd>
+                <dt><span jhiTranslate="App.productDiscount.date">Date</span></dt>
+                <dd>
+                    <span>{{productDiscount.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="App.productDiscount.voucherCode">Voucher Code</span></dt>
+                <dd>
+                    <span>{{productDiscount.voucherCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="App.productDiscount.minimumOrderValue">Minimum Order Value</span></dt>
+                <dd>
+                    <span>{{productDiscount.minimumOrderValue}}</span>
+                </dd>
+                <dt><span jhiTranslate="App.productDiscount.maximumDiscountValue">Maximum Discount Value</span></dt>
+                <dd>
+                    <span>{{productDiscount.maximumDiscountValue}}</span>
+                </dd>
+                <dt><span jhiTranslate="App.productDiscount.isRedemAllowed">Is Redem Allowed</span></dt>
+                <dd>
+                    <span>{{productDiscount.isRedemAllowed}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/product-discount', productDiscount.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
