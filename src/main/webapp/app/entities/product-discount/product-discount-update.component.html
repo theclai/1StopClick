@@ -1,0 +1,61 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-product-discount-heading" jhiTranslate="App.productDiscount.home.createOrEditLabel">Create or edit a Product Discount</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!productDiscount.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="productDiscount.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.productDiscount.discountValue" for="field_discountValue">Discount Value</label>
+                    <input type="number" class="form-control" name="discountValue" id="field_discountValue"
+                        [(ngModel)]="productDiscount.discountValue" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.productDiscount.discountUnit" for="field_discountUnit">Discount Unit</label>
+                    <input type="text" class="form-control" name="discountUnit" id="field_discountUnit"
+                        [(ngModel)]="productDiscount.discountUnit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.productDiscount.date" for="field_date">Date</label>
+                    <div class="d-flex">
+                        <input id="field_date" type="datetime-local" class="form-control" name="date" [(ngModel)]="date" placeholder="YYYY-MM-DD HH:mm"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.productDiscount.voucherCode" for="field_voucherCode">Voucher Code</label>
+                    <input type="text" class="form-control" name="voucherCode" id="field_voucherCode"
+                        [(ngModel)]="productDiscount.voucherCode" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.productDiscount.minimumOrderValue" for="field_minimumOrderValue">Minimum Order Value</label>
+                    <input type="number" class="form-control" name="minimumOrderValue" id="field_minimumOrderValue"
+                        [(ngModel)]="productDiscount.minimumOrderValue" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.productDiscount.maximumDiscountValue" for="field_maximumDiscountValue">Maximum Discount Value</label>
+                    <input type="number" class="form-control" name="maximumDiscountValue" id="field_maximumDiscountValue"
+                        [(ngModel)]="productDiscount.maximumDiscountValue" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.productDiscount.isRedemAllowed" for="field_isRedemAllowed">Is Redem Allowed</label>
+                    <input type="checkbox" class="form-control" name="isRedemAllowed" id="field_isRedemAllowed"
+                        [(ngModel)]="productDiscount.isRedemAllowed" />
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+{
+    "App": {
+        "productDiscount": {
+            "home": {
+                "title": "Product Discounts",
+                "createLabel": "Buat Product Discount baru",
+                "createOrEditLabel": "Buat atau edit Product Discount"
+            },
+            "created": "Product Discount dengan id {{ param }} telah dibuat",
+            "updated": "Product Discount dengan id {{ param }} telah diperbaharui",
+            "deleted": "Product Discount dengan id {{ param }} telah dihapus",
+            "delete": {
+                "question": "Apakah anda yakin ingin menghapus Product Discount {{ id }}?"
+            },
+            "detail": {
+                "title": "Product Discount"
+            },
+            "discountValue": "Discount Value",
+            "discountUnit": "Discount Unit",
+            "date": "Date",
+            "voucherCode": "Voucher Code",
+            "minimumOrderValue": "Minimum Order Value",
+            "maximumDiscountValue": "Maximum Discount Value",
+            "isRedemAllowed": "Is Redem Allowed",
+            "product": "Product"
+        }
+    }
+}
