@@ -33,6 +33,7 @@
                 <td class="text-center">
                   <button class="btn btn-light" (click)="removeFromCart(x)">-</button>&nbsp;
                   <button class="btn btn-light" (click)="addToCart(x)">+</button>&nbsp;
+                  <button class="btn btn-danger" (click)="deleteFromCart(x)"><fa-icon icon="trash-alt"></fa-icon></button>&nbsp;
                 </td>
                 </tr>
             </tbody>
@@ -48,8 +49,8 @@
                 <td></td>
                 <td></td>
                 <td class="text-center"><p style="font-weight:bold">{{totalPrice | currency:'Rp. '}}</p></td>
-                <td class="text-center">
-                    <button class="btn btn-danger" (click)="clearShoppingCart()">Clear Shopping Cart</button></td>
+                <td class="text-right">
+                    <button class="btn btn-danger" (click)="clearShoppingCart()"><fa-icon icon="trash-alt"></fa-icon> Clear All</button></td>
               </tr>
             </tfoot>
       </table>

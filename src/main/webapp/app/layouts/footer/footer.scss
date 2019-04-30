@@ -23,3 +23,22 @@
     background: url('../../../content/images/user-icon.png') no-repeat center center;
     background-size: contain;
 }
+
+.paypal-img {
+    height: 100px;
+    width: 200px;
+    display: inline-block;
+    background: url('../../../content/images/paypal-logo.png') no-repeat;
+    background-size: contain;
+}
+
+.row-style {
+    height: 250px;
+    background-color: #2f3030;
+    padding-top: 20px;
+}
+
+.col-style {
+    color: #c3c6c9;
+    padding-left: 20px;
+}

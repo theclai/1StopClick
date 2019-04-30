@@ -62,6 +62,11 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
             itemCount += totalItem[id];
         }
         this.quantity = itemCount;
+        if (this.quantity === 0) {
+            this.isEmpty = true;
+        } else {
+            this.isEmpty = false;
+        }
     }
     protected shoppingCart(data: IOrderItem[]) {
         for (let i = 0; i < data.length; i++) {
@@ -77,18 +82,23 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         }
     }
     async deleteFromCart(x: OrderItem) {
-        const cartId = localStorage.getItem('cartId');
-        const newDateString = moment().format('DD/MM/YYYY');
-        const dateMoment = moment(newDateString, 'DD/MM/YYYY');
-        await this.orderItemService.delete(x.id).subscribe();
-        const a = this.orderItem.findIndex(item => item.id === x.id);
-        this.orderItem.splice(a, 1);
-        const shoppingCart = {
-            id: cartId,
-            date: dateMoment,
-            orderItems: this.orderItem
-        };
-        await this.shoppingCartService.update(shoppingCart).subscribe();
+        const result = confirm('Remove this item from your Shopping Cart?');
+        if (result) {
+            const cartId = localStorage.getItem('cartId');
+            const newDateString = moment().format('DD/MM/YYYY');
+            const dateMoment = moment(newDateString, 'DD/MM/YYYY');
+            await this.orderItemService.delete(x.id).subscribe();
+            const a = this.orderItem.findIndex(item => item.id === x.id);
+            this.orderItem.splice(a, 1);
+            const shoppingCart = {
+                id: cartId,
+                date: dateMoment,
+                orderItems: this.orderItem
+            };
+            await this.shoppingCartService.update(shoppingCart).subscribe();
+            this.getTotalQuantity();
+            this.getTotalPrice();
+        }
     }
     protected updateQuantity(x: OrderItem, arg0: number) {
         const currQuantity = x.quantity;
@@ -107,20 +117,23 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         });
     }
     async clearShoppingCart() {
-        const cartId = localStorage.getItem('cartId');
-        const newDateString = moment().format('DD/MM/YYYY');
-        const dateMoment = moment(newDateString, 'DD/MM/YYYY');
-        const shoppingCart = {
-            id: cartId,
-            date: dateMoment,
-            orderItems: []
-        };
-        for (let i = 0; i < this.orderItem.length; i++) {
-            // tslint:disable-next-line: prefer-const
-            let orderItemId = this.orderItem[i].id;
-            await this.orderItemService.delete(orderItemId).subscribe();
+        const result = confirm('Are you sure?');
+        if (result) {
+            const cartId = localStorage.getItem('cartId');
+            const newDateString = moment().format('DD/MM/YYYY');
+            const dateMoment = moment(newDateString, 'DD/MM/YYYY');
+            const shoppingCart = {
+                id: cartId,
+                date: dateMoment,
+                orderItems: []
+            };
+            for (let i = 0; i < this.orderItem.length; i++) {
+                // tslint:disable-next-line: prefer-const
+                let orderItemId = this.orderItem[i].id;
+                await this.orderItemService.delete(orderItemId).subscribe();
+            }
+            await this.shoppingCartService.update(shoppingCart).subscribe();
+            this.isEmpty = true;
         }
-        await this.shoppingCartService.update(shoppingCart).subscribe();
-        this.isEmpty = true;
     }
 }
