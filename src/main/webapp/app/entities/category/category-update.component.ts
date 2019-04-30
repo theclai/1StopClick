@@ -64,13 +64,11 @@ export class CategoryUpdateComponent implements OnInit {
         for (let i = 0; i < data.length; i++) {
             this.categories.push(data[i]);
         }
-        const exist = this.categories.filter(({ categoryName }) =>
-            this.category.categoryName.toLowerCase().includes(categoryName.toLowerCase())
-        );
-        if (exist.length > 0) {
-            this.isExists = true;
-        } else {
+        const exist = this.categories.find(x => x.categoryName.toLowerCase() === this.category.categoryName.toLowerCase());
+        if (exist === undefined) {
             this.isExists = false;
+        } else {
+            this.isExists = true;
         }
         if (!this.isExists) {
             if (this.category.id !== undefined) {

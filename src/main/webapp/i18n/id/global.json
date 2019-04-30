@@ -4,6 +4,7 @@
         "browsehappy": "Anda menggunakan peramban versi lama. Silakan <a href=\"http://browsehappy.com/?locale=en\">perbaharui peramban anda</a> untuk meningkatkan kenyamanan anda.",
         "menu": {
             "home": "Beranda",
+            "cart": "Keranjang",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entitas",
@@ -95,7 +96,15 @@
         "ribbon": {
             "dev": "Pengembangan"
         },
-        "item-count": "Menampilkan {{first}} - {{second}} dari {{total}} item."
+        "item-count": "Menampilkan {{first}} - {{second}} dari {{total}} item.",
+        "footer": {
+            "help": "Bantuan",
+            "term": "Syarat dan Ketentuan",
+            "policy": "Kebijakan Privasi",
+            "complain": "Komplain Pesanan",
+            "contactus": "Hubungi Kami",
+            "guide": "Panduan Keamanan"
+        }
     },
     "entity": {
         "action": {
@@ -139,6 +148,5 @@
         "emailexists": "Email sudah digunakan!",
         "idexists": "{{ entityName }} yang baru tidak boleh menggunakan id yang sudah ada",
         "idnull": "ID Tidak Valid"
-    },
-    "footer": "1StopClick - Hak cipta dilindungi Undang-undang - 2019"
+    }
 }
