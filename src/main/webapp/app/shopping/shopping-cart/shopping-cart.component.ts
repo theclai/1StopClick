@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ShoppingCartService } from 'app/entities/shopping-cart';
 import { IShoppingCart } from 'app/shared/model/shopping-cart.model';
@@ -5,7 +6,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { IOrderItem, OrderItem } from 'app/shared/model/order-item.model';
 import { Subscription, Observable } from 'rxjs';
 import { OrderItemService } from 'app/entities/order-item';
-import moment = require('moment');
+import * as moment from 'moment';
 
 @Component({
     selector: 'jhi-shopping-cart',
@@ -19,7 +20,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     isEmpty: boolean;
     shoppingCartSubscription: Subscription;
 
-    constructor(private shoppingCartService: ShoppingCartService, private orderItemService: OrderItemService) {
+    constructor(private shoppingCartService: ShoppingCartService, private orderItemService: OrderItemService, private router: Router) {
         this.orderItem = [];
         this.isEmpty = false;
     }
@@ -32,7 +33,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
                 console.log('order item >>>>', this.orderItem);
                 this.getTotalQuantity();
                 this.getTotalPrice();
-                this.isEmpty = false;
             },
             (res: HttpErrorResponse) => this.onError(res.status)
         );
@@ -135,5 +135,9 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
             await this.shoppingCartService.update(shoppingCart).subscribe();
             this.isEmpty = true;
         }
+    }
+
+    checkout() {
+        this.router.navigate(['checkout']);
     }
 }

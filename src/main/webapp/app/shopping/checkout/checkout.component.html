@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="col md-5" style="margin-left: 50px;">
+      <h3 style="font-weight:bold">Personal Info</h3>
+      <form #f="ngForm">
+          <div class="form-group">
+              <label for="">Email Address *</label>
+              <input #email="ngModel" name="email" [(ngModel)]="order.email" type="text" class="form-control" readonly  placeholder="Email Address">
+              <!-- <div class="alert alert-danger" *ngIf="email.touched && email.invalid">
+                <div *ngIf="email.errors.required">Email is required.</div>
+              </div> -->
+            </div>
+          <div class="form-group">
+            <label for="name">Name *</label>
+            <input #name="ngModel" name="name" [(ngModel)]="order.name" type="text" class="form-control" readonly placeholder="Name"
+            >
+           <!--  <div class="alert alert-danger" *ngIf="firstName.touched && firstName.invalid">
+              <div *ngIf="firstName.errors.required">First Name is required.</div>
+            </div> -->
+          </div>
+            <div class="form-group">
+                <label for="paymentType">Choose Payment Method *</label>
+                <div class="row">
+                <div class="col-md-auto" *ngFor="let option of options" >               
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <input type="radio"
+                               name="radio"
+                               id="radio-{{option.id}}"
+                               [(ngModel)]="order.paymentType"
+                               [value]="option.value"
+                               required
+                               />
+                               &nbsp;{{option.name}}&nbsp;<span [class]="option.id"></span> 
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+                <label for="voucher">Got any voucher?</label> <input type="checkbox" id="voucherChecked" (click)="voucherChecked()"> 
+              <div class="row" *ngIf="isVoucherChecked">
+                <div class="col-10">
+                  <input #voucher="ngModel" name="voucher" [(ngModel)]="order.voucher" type="text" class="form-control" placeholder="Input your voucher here..." required>
+                </div>
+                <div class="col-md-auto" style="margin-left: -15px;">
+                  <button class="btn btn-info">Apply</button>
+                </div>
+              </div>                
+            </div><br>
+
+          <button 
+            [disabled]="!f.valid"
+            (click)="placeOrder()"
+            class="btn btn-primary btn-lg">Purchase</button>
+      </form>
+  </div>
+
+  <div class="col">
+      <h3 style="font-weight: bold">Order Summary</h3>
+      <ng-container *ngIf="orderItem as cart"><br>
+          <table class="table " >
+              <thead>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let x of cart" >
+                    <td class="text-justify">{{x.quantity}} x {{x.product.productName}} <span class="badge badge-pill badge-primary">{{x.product.category.categoryName}}</span></td>
+                    <td class="text-center">{{x.quantity * x.product.price | currency:'Rp. '}}</td>
+                    
+                    </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td><p style="font-weight:bold">Total</p></td>
+                    <td class="text-center"><p style="font-weight:bold">{{totalPrice | currency:'Rp. '}}</p></td>
+                  </tr>
+                </tfoot>
+          </table>
+      </ng-container>
+  </div>
+</div>
+

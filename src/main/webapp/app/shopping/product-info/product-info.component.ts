@@ -6,10 +6,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'app/entities/product';
 import { Subscription, Observable } from 'rxjs';
 import { IProduct } from 'app/shared/model/product.model';
-import { HttpResponse, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { OrderItem, OrderItemStatus, IOrderItem } from 'app/shared/model/order-item.model';
 import { IShoppingCart } from 'app/shared/model/shopping-cart.model';
-import moment = require('moment');
+import * as moment from 'moment';
 
 @Component({
     selector: 'jhi-product-info',
@@ -38,7 +38,7 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
         this.product = [];
         this.shoppingCart = {};
         this.orderItem = [];
-        this.quantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        this.quantity = [1];
     }
 
     ngOnInit() {
