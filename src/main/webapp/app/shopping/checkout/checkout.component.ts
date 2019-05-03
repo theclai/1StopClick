@@ -1,18 +1,19 @@
-import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { ProductDiscountService } from 'app/entities/product-discount';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OrderItem, IOrderItem } from 'app/shared/model/order-item.model';
 import { ShoppingCartService } from 'app/entities/shopping-cart';
 import { HttpResponse } from '@angular/common/http';
 import { IShoppingCart } from 'app/shared/model/shopping-cart.model';
 import { AccountService } from 'app/core';
+import { IProductDiscount } from 'app/shared/model/product-discount.model';
 
 @Component({
     selector: 'jhi-checkout',
     templateUrl: './checkout.component.html',
     styleUrls: ['checkout.scss']
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, OnDestroy {
     orderItem: OrderItem[];
     cartId: string;
     quantity: number;
@@ -27,12 +28,21 @@ export class CheckoutComponent implements OnInit {
         { value: 'paypal', id: 'paypal-icon', name: 'Paypal' },
         { value: 'free', id: 'visa-icon', name: 'Free (for test)' }
     ];
-    id: string;
     voucherTemp: boolean;
     isVoucherChecked: boolean;
+    productDiscount: IProductDiscount[];
+    voucherSubscription: Subscription;
+    voucherNotFound: boolean;
+    totalAfterDiscount: number;
+    voucherNotifNotFound: boolean;
 
-    constructor(private shoppingCartService: ShoppingCartService, private accountService: AccountService) {
+    constructor(
+        private shoppingCartService: ShoppingCartService,
+        private accountService: AccountService,
+        private productDiscountService: ProductDiscountService
+    ) {
         this.orderItem = [];
+        this.productDiscount = [];
         this.isEmpty = false;
     }
 
@@ -49,6 +59,8 @@ export class CheckoutComponent implements OnInit {
         });
         this.voucherTemp = true;
         this.isVoucherChecked = false;
+        this.voucherNotFound = true;
+        this.voucherNotifNotFound = false;
     }
     setOrder(account: any) {
         this.order.name = account.login;
@@ -79,15 +91,56 @@ export class CheckoutComponent implements OnInit {
             itemCount += this.orderItem[id].quantity * this.orderItem[id].product.price;
         }
         this.totalPrice = itemCount;
+        this.totalAfterDiscount = this.totalPrice - 0;
     }
 
     placeOrder() {
         console.log('shipping detail : ', this.order);
     }
 
+    ngOnDestroy() {
+        if (this.voucherSubscription) {
+            this.voucherSubscription.unsubscribe();
+        }
+    }
+
     voucherChecked() {
         const temp1 = this.isVoucherChecked;
         this.isVoucherChecked = this.voucherTemp;
         this.voucherTemp = temp1;
+        if (!this.isVoucherChecked) {
+            this.order.voucher = null;
+            this.voucherNotFound = true;
+            this.totalAfterDiscount = this.totalPrice - 0;
+        }
+    }
+
+    applyVoucher(voucher) {
+        this.productDiscount = [];
+        this.loadAll(voucher);
+    }
+
+    loadAll(voucher) {
+        this.voucherSubscription = this.productDiscountService
+            .query({})
+            .subscribe((res: HttpResponse<IProductDiscount[]>) => this.allProductDiscount(res.body, voucher));
+    }
+    allProductDiscount(body: IProductDiscount[], voucher: string): void {
+        for (let i = 0; i < body.length; i++) {
+            this.productDiscount.push(body[i]);
+        }
+        this.productDiscount = this.productDiscount.filter(data => data.voucherCode.toLowerCase() === voucher.toLowerCase());
+        if (this.productDiscount.length < 1) {
+            this.voucherNotFound = true;
+            this.voucherNotifNotFound = true;
+            this.totalAfterDiscount = this.totalPrice - 0;
+            setTimeout(() => {
+                this.voucherNotifNotFound = false;
+            }, 3000);
+        } else {
+            this.voucherNotFound = false;
+            const discVoucher = this.productDiscount.find(data => data.voucherCode.toLowerCase() === voucher.toLowerCase()).discountValue;
+            this.totalAfterDiscount = this.totalPrice - discVoucher;
+        }
     }
 }

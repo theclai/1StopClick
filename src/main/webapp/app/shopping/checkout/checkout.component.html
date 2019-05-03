@@ -46,9 +46,12 @@
                   <input #voucher="ngModel" name="voucher" [(ngModel)]="order.voucher" type="text" class="form-control" placeholder="Input your voucher here..." required>
                 </div>
                 <div class="col-md-auto" style="margin-left: -15px;">
-                  <button class="btn btn-info">Apply</button>
+                  <button class="btn btn-info" (click)="applyVoucher(voucher.value)">Apply</button>
                 </div>
-              </div>                
+              </div>   
+              <div class="alert alert-danger" *ngIf="voucherNotifNotFound">
+                <div>Voucher not found</div>
+              </div>              
             </div><br>
 
           <button 
@@ -73,9 +76,19 @@
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td><p style="font-weight:bold">Total</p></td>
+                    <td><p style="font-weight:bold">Sub Total</p></td>
                     <td class="text-center"><p style="font-weight:bold">{{totalPrice | currency:'Rp. '}}</p></td>
                   </tr>
+                  <ng-container *ngIf="!voucherNotFound" >
+                  <tr *ngFor="let p of productDiscount">
+                      <td><p style="font-weight:bold">Voucher apply ({{p.voucherCode}})</p></td>
+                      <td class="text-center"><p style="font-weight:bold; color: green">-{{p.discountValue | currency:'Rp. '}}</p></td>
+                    </tr>
+                  </ng-container>
+                  <tr>
+                      <td><p style="font-weight:bold">Total</p></td>
+                      <td class="text-center"><p style="font-weight:bold">{{totalAfterDiscount | currency:'Rp. '}}</p></td>
+                    </tr>
                 </tfoot>
           </table>
       </ng-container>
