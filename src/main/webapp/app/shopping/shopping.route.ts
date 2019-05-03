@@ -1,8 +1,7 @@
 import { Routes } from '@angular/router';
-import { productInfoRoute } from './';
-import { shoppingCartRoute } from './shopping-cart/shopping-cart.route';
+import { productInfoRoute, shoppingCartRoute, checkoutRoute } from './';
 
-const SHOPPING_ROUTES = [productInfoRoute, shoppingCartRoute];
+const SHOPPING_ROUTES = [productInfoRoute, shoppingCartRoute, checkoutRoute];
 export const shoppingState: Routes = [
     {
         path: '',
