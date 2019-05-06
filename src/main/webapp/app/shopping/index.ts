@@ -4,4 +4,8 @@ export * from './shopping-cart/shopping-cart.component';
 export * from './shopping-cart/shopping-cart.route';
 export * from './checkout/checkout.component';
 export * from './checkout/checkout.route';
+export * from './purchase-confirmation/purchase-confirmation.component';
+export * from './purchase-confirmation/purchase-confirmation.route';
+export * from './payment/payment.component';
+export * from './payment/payment.route';
 export * from './shopping.route';

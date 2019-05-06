@@ -30,7 +30,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         this.shoppingCartSubscription = this.shoppingCartService.find(cartId).subscribe(
             (res: HttpResponse<IShoppingCart>) => {
                 this.shoppingCart(res.body.orderItems);
-                console.log('order item >>>>', this.orderItem);
                 this.getTotalQuantity();
                 this.getTotalPrice();
             },
