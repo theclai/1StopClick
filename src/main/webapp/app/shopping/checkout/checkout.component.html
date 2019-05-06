@@ -5,17 +5,11 @@
           <div class="form-group">
               <label for="">Email Address *</label>
               <input #email="ngModel" name="email" [(ngModel)]="order.email" type="text" class="form-control" readonly  placeholder="Email Address">
-              <!-- <div class="alert alert-danger" *ngIf="email.touched && email.invalid">
-                <div *ngIf="email.errors.required">Email is required.</div>
-              </div> -->
             </div>
           <div class="form-group">
             <label for="name">Name *</label>
             <input #name="ngModel" name="name" [(ngModel)]="order.name" type="text" class="form-control" readonly placeholder="Name"
             >
-           <!--  <div class="alert alert-danger" *ngIf="firstName.touched && firstName.invalid">
-              <div *ngIf="firstName.errors.required">First Name is required.</div>
-            </div> -->
           </div>
             <div class="form-group">
                 <label for="paymentType">Choose Payment Method *</label>
@@ -43,10 +37,10 @@
                 <label for="voucher">Got any voucher?</label> <input type="checkbox" id="voucherChecked" (click)="voucherChecked()"> 
               <div class="row" *ngIf="isVoucherChecked">
                 <div class="col-10">
-                  <input #voucher="ngModel" name="voucher" [(ngModel)]="order.voucher" type="text" class="form-control" placeholder="Input your voucher here..." required>
+                  <input #voucher="ngModel" name="voucher" [(ngModel)]="order.voucher" type="text" [readonly] ="!voucherNotFound" class="form-control" placeholder="Input your voucher here..." required>
                 </div>
                 <div class="col-md-auto" style="margin-left: -15px;">
-                  <button class="btn btn-info" (click)="applyVoucher(voucher.value)">Apply</button>
+                  <button class="btn btn-info" (click)="applyVoucher(voucher.value)" [disabled] ="!voucherNotFound">Apply</button>
                 </div>
               </div>   
               <div class="alert alert-danger" *ngIf="voucherNotifNotFound">

@@ -48,6 +48,7 @@
                         <option value="PAID">{{'App.InvoiceStatus.PAID' | translate}}</option>
                         <option value="ISSUED">{{'App.InvoiceStatus.ISSUED' | translate}}</option>
                         <option value="CANCELLED">{{'App.InvoiceStatus.CANCELLED' | translate}}</option>
+                        
                     </select>
                     <div [hidden]="!(editForm.controls.status?.dirty && editForm.controls.status?.invalid)">
                         <small class="form-text text-danger"
@@ -62,6 +63,8 @@
                         <option value="CREDIT_CARD">{{'App.PaymentMethod.CREDIT_CARD' | translate}}</option>
                         <option value="CASH_ON_DELIVERY">{{'App.PaymentMethod.CASH_ON_DELIVERY' | translate}}</option>
                         <option value="PAYPAL">{{'App.PaymentMethod.PAYPAL' | translate}}</option>
+                        <option value="ONESTOPCLICK">{{'App.PaymentMethod.ONESTOPCLICK' | translate}}</option>
+                        <option value="FREE">{{'App.PaymentMethod.FREE' | translate}}</option>
                     </select>
                     <div [hidden]="!(editForm.controls.paymentMethod?.dirty && editForm.controls.paymentMethod?.invalid)">
                         <small class="form-text text-danger"

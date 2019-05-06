@@ -4,7 +4,9 @@
             "null": "",
             "CREDIT_CARD": "CREDIT_CARD",
             "CASH_ON_DELIVERY": "CASH_ON_DELIVERY",
-            "PAYPAL": "PAYPAL"
+            "PAYPAL": "PAYPAL",
+            "FREE": "FREE",
+            "ONESTOPCLICK": "ONESTOPCLICK"
         }
     }
 }

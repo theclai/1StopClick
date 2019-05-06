@@ -63,7 +63,7 @@ public class Invoice implements Serializable {
     private Set<Shipment> shipments = new HashSet<>();
     @DBRef
     @Field("productOrder")
-    @JsonIgnoreProperties("invoices")
+    @JsonIgnoreProperties({"invoices","orderItems", "users"})
     private ProductOrder productOrder;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
