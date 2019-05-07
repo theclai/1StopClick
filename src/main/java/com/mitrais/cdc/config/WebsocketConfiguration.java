@@ -10,6 +10,7 @@ import org.springframework.http.server.*;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.*;
 import org.springframework.web.socket.server.HandshakeInterceptor;
@@ -24,14 +25,28 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
     public static final String IP_ADDRESS = "IP_ADDRESS";
 
     private final JHipsterProperties jHipsterProperties;
+    private final ApplicationProperties applicationProperties;
 
-    public WebsocketConfiguration(JHipsterProperties jHipsterProperties) {
+    public WebsocketConfiguration(JHipsterProperties jHipsterProperties, ApplicationProperties applicationProperties) {
         this.jHipsterProperties = jHipsterProperties;
+        this.applicationProperties = applicationProperties;
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
+        config.enableStompBrokerRelay("/topic")
+            // load connection settings for the stomp broker
+            .setRelayHost(applicationProperties.getStompBroker().getUrl())
+            .setRelayPort(applicationProperties.getStompBroker().getPort())
+            // login for backend channels
+            .setSystemLogin(applicationProperties.getStompBroker().getUsername())
+            .setSystemPasscode(applicationProperties.getStompBroker().getPassword())
+            // login for user channels
+            .setClientLogin(applicationProperties.getStompBroker().getUsername())
+            .setClientPasscode(applicationProperties.getStompBroker().getPassword());
+
+        // required for RabbitMQ only
+        config.setPathMatcher(new AntPathMatcher("."));
     }
 
     @Override
