@@ -27,6 +27,7 @@ export class ProductOrderService {
 
     update(productOrder: IProductOrder): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(productOrder);
+        console.log('product orer during update : ', productOrder);
         return this.http
             .put<IProductOrder>(this.resourceUrl, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
