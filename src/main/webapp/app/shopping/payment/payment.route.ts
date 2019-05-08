@@ -3,7 +3,7 @@ import { PaymentComponent } from './payment.component';
 import { UserRouteAccessService } from 'app/core';
 
 export const paymentRoute: Route = {
-    path: 'checkout/payment',
+    path: 'checkout/payment/:invoiceId',
     component: PaymentComponent,
     data: {
         authorities: ['ROLE_USER'],

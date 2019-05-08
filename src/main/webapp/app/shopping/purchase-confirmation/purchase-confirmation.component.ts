@@ -48,7 +48,6 @@ export class PurchaseConfirmationComponent implements OnInit, OnDestroy {
     }
     generateInvoice(body: IInvoice) {
         this.invoice = body;
-        console.log(this.invoice);
         this.generateProductOrder(this.invoice.productOrder.id);
     }
 

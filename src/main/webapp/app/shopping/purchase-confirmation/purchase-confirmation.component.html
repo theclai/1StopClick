@@ -22,6 +22,10 @@
                 <td>{{invoice.paymentAmount | currency:'Rp. '}}</td>
             </tr>
             <tr>
+              <td class="table-light"><h6>Voucher Discount</h6></td>
+              <td style="color: green">{{invoice.productOrder.code}}</td>
+          </tr>
+            <tr>
                 <td class="table-light"><h6>Payment Method</h6></td>
                 <td>{{invoice.paymentMethod}}</td>
             </tr>

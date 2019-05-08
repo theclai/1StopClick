@@ -206,7 +206,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         if (!this.voucherNotFound) {
             this.productOrder.code = this.order.voucher;
         } else {
-            this.productOrder.code = 'No voucher';
+            this.productOrder.code = 'No Voucher';
         }
         this.subscribeToSaveResponse(this.productOrderService.create(this.productOrder));
     }
@@ -223,7 +223,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             if (statusPayment === Orderstatus.COMPLETED) {
                 this.route.navigate(['checkout/purchase-confirmation', this.invoiceId]);
             } else if (statusPayment === Orderstatus.PENDING) {
-                this.route.navigate(['checkout/payment']);
+                this.route.navigate(['checkout/payment', this.invoiceId]);
             }
         }, 1000);
     }
