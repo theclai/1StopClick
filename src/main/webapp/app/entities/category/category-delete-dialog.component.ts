@@ -1,3 +1,4 @@
+import { ProductService } from 'app/entities/product/product.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -6,6 +7,8 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from './category.service';
+import { IProduct } from 'app/shared/model/product.model';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
     selector: 'jhi-category-delete-dialog',
@@ -13,21 +16,48 @@ import { CategoryService } from './category.service';
 })
 export class CategoryDeleteDialogComponent {
     category: ICategory;
+    product: IProduct[];
+    isCategoryExist: IProduct;
+    errorDelete: boolean;
 
-    constructor(protected categoryService: CategoryService, public activeModal: NgbActiveModal, protected eventManager: JhiEventManager) {}
+    constructor(
+        protected categoryService: CategoryService,
+        public activeModal: NgbActiveModal,
+        protected eventManager: JhiEventManager,
+        private productService: ProductService
+    ) {
+        this.product = [];
+        this.errorDelete = false;
+    }
 
     clear() {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmDelete(id: string) {
-        this.categoryService.delete(id).subscribe(response => {
-            this.eventManager.broadcast({
-                name: 'categoryListModification',
-                content: 'Deleted an category'
-            });
-            this.activeModal.dismiss(true);
+    async confirmDelete(id: string) {
+        await this.productService.query().subscribe((res: HttpResponse<IProduct[]>) => {
+            for (let i = 0; i < res.body.length; i++) {
+                this.product.push(res.body[i]);
+            }
+            this.isCategoryExist = this.product.find(data => data.category.id === id);
+            this.checkCategory(this.isCategoryExist, id);
         });
+    }
+    checkCategory(isCategoryExist: IProduct, id: string) {
+        if (!isCategoryExist) {
+            this.categoryService.delete(id).subscribe(response => {
+                this.eventManager.broadcast({
+                    name: 'categoryListModification',
+                    content: 'Deleted an category'
+                });
+                this.activeModal.dismiss(true);
+            });
+        } else {
+            this.errorDelete = true;
+            setTimeout(() => {
+                this.errorDelete = false;
+            }, 5000);
+        }
     }
 }
 
