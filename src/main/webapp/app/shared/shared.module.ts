@@ -1,3 +1,4 @@
+import { ShoppingCartService } from './services/shopping-cart.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 
@@ -7,7 +8,7 @@ import { AppSharedLibsModule, AppSharedCommonModule, JhiLoginModalComponent, Has
 @NgModule({
     imports: [AppSharedLibsModule, AppSharedCommonModule],
     declarations: [JhiLoginModalComponent, HasAnyAuthorityDirective],
-    providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }],
+    providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }, ShoppingCartService],
     entryComponents: [JhiLoginModalComponent],
     exports: [AppSharedCommonModule, JhiLoginModalComponent, HasAnyAuthorityDirective],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

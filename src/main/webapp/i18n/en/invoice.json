@@ -12,9 +12,6 @@
             "delete": {
                 "question": "Are you sure you want to delete Invoice {{ id }}?"
             },
-            "detail": {
-                "title": "Invoice"
-            },
             "code": "Code",
             "date": "Date",
             "detail": "Detail",

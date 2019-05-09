@@ -1,9 +1,11 @@
+import { OrderItemService } from 'app/entities/order-item/order-item.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'app/entities/product';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { IProduct } from 'app/shared/model/product.model';
-import { HttpResponse, HttpHeaders } from '@angular/common/http';
+import { HttpResponse, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { OrderItem, OrderItemStatus, IOrderItem } from 'app/shared/model/order-item.model';
 
 @Component({
     selector: 'jhi-product-info',
@@ -17,7 +19,7 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
     quantity: number[];
     selectedQuantity = 1;
 
-    constructor(private router: ActivatedRoute, private productService: ProductService) {
+    constructor(private router: ActivatedRoute, private productService: ProductService, private orderItemService: OrderItemService) {
         this.product = [];
         this.quantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     }
@@ -39,7 +41,22 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
             this.product.push(res.body);
         });
     }
-    addToCart(product) {
-        console.log(product, this.selectedQuantity);
+
+    addToCart(product: IProduct) {
+        const orderItem: OrderItem = {};
+        orderItem.product = product;
+        orderItem.quantity = this.selectedQuantity;
+        orderItem.status = OrderItemStatus.AVAILABLE;
+        orderItem.totalPrice = this.selectedQuantity * product.price;
+        console.log('order item>>>>>>>>>>>>>>', orderItem);
+        if (orderItem.id !== undefined) {
+            this.subscribeToSaveResponse(this.orderItemService.update(orderItem));
+        } else {
+            this.subscribeToSaveResponse(this.orderItemService.create(orderItem));
+        }
+    }
+
+    protected subscribeToSaveResponse(result: Observable<HttpResponse<IOrderItem>>) {
+        result.subscribe((res: HttpResponse<IOrderItem>) => {});
     }
 }
