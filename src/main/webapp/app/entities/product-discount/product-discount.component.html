@@ -1,0 +1,74 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="App.productDiscount.home.title">Product Discounts</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product-discount" [routerLink]="['/product-discount/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="App.productDiscount.home.createLabel">
+            Create new Product Discount
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="productDiscounts">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="discountValue"><span jhiTranslate="App.productDiscount.discountValue">Discount Value</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="discountUnit"><span jhiTranslate="App.productDiscount.discountUnit">Discount Unit</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="date"><span jhiTranslate="App.productDiscount.date">Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="voucherCode"><span jhiTranslate="App.productDiscount.voucherCode">Voucher Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="minimumOrderValue"><span jhiTranslate="App.productDiscount.minimumOrderValue">Minimum Order Value</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="maximumDiscountValue"><span jhiTranslate="App.productDiscount.maximumDiscountValue">Maximum Discount Value</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="isRedemAllowed"><span jhiTranslate="App.productDiscount.isRedemAllowed">Is Redem Allowed</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let productDiscount of productDiscounts ;trackBy: trackId">
+                <td><a [routerLink]="['/product-discount', productDiscount.id, 'view' ]">{{productDiscount.id}}</a></td>
+                <td>{{productDiscount.discountValue}}</td>
+                <td>{{productDiscount.discountUnit}}</td>
+                <td>{{productDiscount.date | date:'medium'}}</td>
+                <td>{{productDiscount.voucherCode}}</td>
+                <td>{{productDiscount.minimumOrderValue}}</td>
+                <td>{{productDiscount.maximumDiscountValue}}</td>
+                <td>{{productDiscount.isRedemAllowed}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/product-discount', productDiscount.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/product-discount', productDiscount.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'product-discount', { outlets: { popup: productDiscount.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="productDiscounts && productDiscounts.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

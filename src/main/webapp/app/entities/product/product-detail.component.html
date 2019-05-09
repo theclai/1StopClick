@@ -23,6 +23,12 @@
                         <a [routerLink]="['/category', product.category?.id, 'view']">{{product.category?.categoryName}}</a>
                     </div>
                 </dd>
+                <dt><span jhiTranslate="App.product.productDiscount">Product Discount</span></dt>
+                <dd>
+                    <div *ngIf="product.productDiscount">
+                        <a [routerLink]="['/product-discount', product.productDiscount?.id, 'view']">{{product.productDiscount?.id}}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

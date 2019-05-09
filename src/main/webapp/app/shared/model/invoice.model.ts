@@ -11,7 +11,9 @@ export const enum InvoiceStatus {
 export const enum PaymentMethod {
     CREDIT_CARD = 'CREDIT_CARD',
     CASH_ON_DELIVERY = 'CASH_ON_DELIVERY',
-    PAYPAL = 'PAYPAL'
+    PAYPAL = 'PAYPAL',
+    ONESTOPCLICK = 'ONESTOPCLICK',
+    FREE = 'FREE'
 }
 
 export interface IInvoice {

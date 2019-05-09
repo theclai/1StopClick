@@ -19,6 +19,7 @@
             <th jhiSortBy="price"><span jhiTranslate="App.product.price">Price</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="imageUrl"><span jhiTranslate="App.product.imageUrl">Image Url</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="category.categoryName"><span jhiTranslate="App.product.category">Category</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="productDiscount.id"><span jhiTranslate="App.product.productDiscount">Product Discount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -31,6 +32,11 @@
                 <td>
                     <div *ngIf="product.category">
                         <a [routerLink]="['../category', product.category?.id, 'view' ]" >{{product.category?.categoryName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="product.productDiscount">
+                        <a [routerLink]="['../product-discount', product.productDiscount?.id, 'view' ]" >{{product.productDiscount?.id}}</a>
                     </div>
                 </td>
                 <td class="text-right">

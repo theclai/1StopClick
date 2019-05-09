@@ -1,86 +1,81 @@
-
- <div class="row" >
-        <div class="col md-6" style="margin-left: 40px;">
-            <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-                <h2 id="jhi-product-heading" jhiTranslate="App.product.home.createOrEditLabel">Create or edit a Product</h2>
-                <div>
-                    <jhi-alert-error></jhi-alert-error>
-                    <div class="form-group" [hidden]="!product.id">
-                        <label for="id" jhiTranslate="global.field.id">ID</label>
-                        <input type="text" class="form-control" id="id" name="id"
-                            [(ngModel)]="product.id" readonly />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" jhiTranslate="App.product.productName" for="field_productName">Product Name</label>
-                        <input type="text" class="form-control" name="productName" id="field_productName"
-                            [(ngModel)]="product.productName" required/>
-                        <div [hidden]="!(editForm.controls.productName?.dirty && editForm.controls.productName?.invalid)">
-                            <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.productName?.errors?.required" jhiTranslate="entity.validation.required">
-                            This field is required.
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" jhiTranslate="App.product.price" for="field_price">Price</label>
-                        <input type="number" class="form-control" name="price" id="field_price" 
-                        [(ngModel)]="product.price" required min="0"/>
-                        <div [hidden]="!(editForm.controls.price?.dirty && editForm.controls.price?.invalid)">
-                            <small class="form-text text-danger"
-                                [hidden]="!editForm.controls.price?.errors?.number" jhiTranslate="entity.validation.number">
-                                This field should be a number.
-                            </small>
-                            <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.price?.errors?.required" jhiTranslate="entity.validation.required">
-                            This field is required.
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" jhiTranslate="App.product.imageUrl" for="field_imageUrl">Image Url</label>
-                        <input type="text" class="form-control" name="imageUrl" id="field_imageUrl"
-                            [(ngModel)]="product.imageUrl" required/>
-                        <div [hidden]="!(editForm.controls.imageUrl?.dirty && editForm.controls.imageUrl?.invalid)">
-                            <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.imageUrl?.errors?.required" jhiTranslate="entity.validation.required">
-                            This field is required.
-                            </small>
-                        </div>
-                    </div>
-    
-                    <div class="form-group">
-                        <label class="form-control-label" jhiTranslate="App.product.category" for="field_category">Category</label>
-                        <select class="form-control" id="field_category" name="category" [(ngModel)]="product.category"  required>
-                            <option *ngIf="!editForm.value.category" [ngValue]="null" selected></option>
-                            <option [ngValue]="categoryOption.id === product.category?.id ? product.category : categoryOption" *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.categoryName}}</option>
-                        </select>
-                    </div>
-                    <div [hidden]="!(editForm.controls.category?.dirty && editForm.controls.category?.invalid)">
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-product-heading" jhiTranslate="App.product.home.createOrEditLabel">Create or edit a Product</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!product.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="product.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.product.productName" for="field_productName">Product Name</label>
+                    <input type="text" class="form-control" name="productName" id="field_productName"
+                        [(ngModel)]="product.productName" required/>
+                    <div [hidden]="!(editForm.controls.productName?.dirty && editForm.controls.productName?.invalid)">
                         <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.category?.errors?.required" jhiTranslate="entity.validation.required">
-                            This field is required.
+                        [hidden]="!editForm.controls.productName?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
                         </small>
                     </div>
                 </div>
-                <div>
-                    <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
-                        <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-                    </button>
-                    <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-                        <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    
-    <div class="col md-6" style="margin-left: 40px;">
-            <h3 *ngIf="product.productName">Preview</h3>
-            <div class="card"  *ngIf="product.productName"  style="width: 50%;height: 70%;">
-                    <img class="card-img-top" [src]="product.imageUrl" alt="{{product.productName}}" *ngIf="product.imageUrl" style="width: 100%;height: 100%;">
-                    <div class="card-body">
-                      <h5 class="card-title">{{product.productName}} <span class="badge badge-pill badge-primary">{{product.category.categoryName}}</span></h5>
-                      <p class="card-text">{{product.price | currency:'Rp. '}}</p>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.product.price" for="field_price">Price</label>
+                    <input type="number" class="form-control" name="price" id="field_price"
+                        [(ngModel)]="product.price" required/>
+                    <div [hidden]="!(editForm.controls.price?.dirty && editForm.controls.price?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.price?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.price?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
                     </div>
-            </div>   
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.product.imageUrl" for="field_imageUrl">Image Url</label>
+                    <input type="text" class="form-control" name="imageUrl" id="field_imageUrl"
+                        [(ngModel)]="product.imageUrl" required/>
+                    <div [hidden]="!(editForm.controls.imageUrl?.dirty && editForm.controls.imageUrl?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.imageUrl?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.product.category" for="field_category">Category</label>
+                    <select class="form-control" id="field_category" name="category" [(ngModel)]="product.category"  required>
+                        <option *ngIf="!editForm.value.category" [ngValue]="null" selected></option>
+                        <option [ngValue]="categoryOption.id === product.category?.id ? product.category : categoryOption" *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.categoryName}}</option>
+                    </select>
+                </div>
+                <div [hidden]="!(editForm.controls.category?.dirty && editForm.controls.category?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.category?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.product.productDiscount" for="field_productDiscount">Product Discount</label>
+                    <select class="form-control" id="field_productDiscount" name="productDiscount" [(ngModel)]="product.productDiscount" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="productDiscountOption.id === product.productDiscount?.id ? product.productDiscount : productDiscountOption" *ngFor="let productDiscountOption of productdiscounts; trackBy: trackProductDiscountById">{{productDiscountOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
     </div>
-    </div>
+</div>

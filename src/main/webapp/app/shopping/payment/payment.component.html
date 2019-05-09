@@ -1,0 +1,50 @@
+<div class="row" style="text-align: center; padding-top: 30px;" >
+    <div class="col">
+      <h2 style="font-weight: bold">Purchase Payment</h2>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 50px;">
+    <div class="col-3"></div>
+    <div class="col-6">
+      <h6>Your purchase is not completed yet...</h6>
+      <table class="table table-bordered" *ngIf="invoice" style="margin-top:20px;">
+            <tbody>
+              <tr>
+                  <td class="table-light"><h6>Invoice Amount</h6></td>
+                  <td>{{invoice.paymentAmount | currency:'Rp. '}}</td>
+              </tr>
+              <tr>
+                <td class="table-light"><h6>Invoice Amount (USD)</h6></td>
+                <td>{{invoice.paymentAmount / 15000 | currency:'USD '}}</td>
+            </tr>
+              <tr>
+                  <td class="table-light"><h6>Payment Method</h6></td>
+                  <td>{{invoice.paymentMethod | titlecase}}</td>
+              </tr>
+              <tr>
+                  <td class="table-light"><h6>Payment Status</h6></td>
+                  <td>{{invoice.productOrder.status}}</td>
+              </tr>
+            </tbody>
+      </table>
+    </div>
+  </div>
+  <ng-container *ngIf="!afterSuccessPayment">
+  <div class="row" style="text-align: center; padding-top: 20px;" >
+    <div class="col-3"></div>
+    <div class="col-md-auto">
+        <button class="btn btn-danger btn-lg" style="border-radius: 7%;">Cancel Order</button>
+      </div>
+      <div class="col-md-auto">
+        <button class="btn btn-warning btn-lg" style="border-radius: 7%;" (click)="makePayment(invoice.paymentAmount)">Continue with {{invoice.paymentMethod | titlecase}}</button>
+      </div>      
+    </div>
+    </ng-container>
+    <ng-container *ngIf="afterSuccessPayment">
+      <div class="row" style="text-align: center; padding-top: 20px;" >
+        <div class="col-3"></div>
+        <div class="col-md-auto">
+          <h4>Generating invoice...</h4>
+        </div>
+      </div>
+    </ng-container>

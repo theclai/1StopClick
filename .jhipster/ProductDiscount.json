@@ -1,0 +1,49 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "product",
+            "otherEntityName": "product",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "productDiscount"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "discountValue",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "discountUnit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "voucherCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "minimumOrderValue",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "maximumDiscountValue",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "isRedemAllowed",
+            "fieldType": "Boolean"
+        }
+    ],
+    "dto": "no",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "product_discount",
+    "databaseType": "mongodb",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

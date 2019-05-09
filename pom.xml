@@ -309,6 +309,12 @@
             <artifactId>cucumber-spring</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Paypal SDK -->
+        <dependency>
+    		<groupId>com.paypal.sdk</groupId>
+    		<artifactId>rest-api-sdk</artifactId>
+	    	<version>1.13.1</version>
+		</dependency>
         <!--websocket-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
