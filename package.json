@@ -23,6 +23,7 @@
         "@ngx-translate/http-loader": "4.0.0",
         "bootstrap": "4.2.1",
         "core-js": "2.6.4",
+        "jquery": "^3.3.1",
         "moment": "2.24.0",
         "ng-jhipster": "0.9.1",
         "ngx-cookie": "2.0.1",
@@ -37,7 +38,7 @@
     },
     "devDependencies": {
         "@angular/cli": "7.3.1",
-        "@angular/compiler-cli": "7.2.4",
+        "@angular/compiler-cli": "^7.2.15",
         "@ngtools/webpack": "7.3.1",
         "@types/jest": "24.0.0",
         "@types/node": "10.12.24",

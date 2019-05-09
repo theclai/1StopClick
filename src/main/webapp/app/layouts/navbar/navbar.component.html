@@ -189,6 +189,12 @@
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
                     <li *ngSwitchCase="true">
+                        <a class="dropdown-item" routerLink="chat" routerLinkActive="active" (click)="collapseNavbar()">
+                            <fa-icon icon="message" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.account.chat">Chat</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="true">
                         <a class="dropdown-item" routerLink="settings" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="wrench" fixedWidth="true"></fa-icon>
                             <span jhiTranslate="global.menu.account.settings">Settings</span>

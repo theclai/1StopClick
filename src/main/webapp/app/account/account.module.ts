@@ -13,6 +13,7 @@ import {
     SettingsComponent,
     accountState
 } from './';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
     imports: [AppSharedModule, RouterModule.forChild(accountState)],
@@ -23,7 +24,8 @@ import {
         PasswordStrengthBarComponent,
         PasswordResetInitComponent,
         PasswordResetFinishComponent,
-        SettingsComponent
+        SettingsComponent,
+        ChatComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
