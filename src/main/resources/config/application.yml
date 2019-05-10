@@ -179,3 +179,11 @@ jhipster:
 # ===================================================================
 
 # application:
+#application:
+#    stomp-broker:
+#        broker-url: 127.0.0.1
+#        port: 15672
+#        password: guest
+#        username: guest
+
+

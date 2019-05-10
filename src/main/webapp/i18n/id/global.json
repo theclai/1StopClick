@@ -26,7 +26,8 @@
                 "sessions": "Sesi",
                 "login": "Masuk",
                 "logout": "Keluar",
-                "register": "Daftar"
+                "register": "Daftar",
+                "chat": "Chat"
             },
             "admin": {
                 "main": "Administrasi",

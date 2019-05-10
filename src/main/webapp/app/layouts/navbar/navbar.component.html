@@ -108,6 +108,12 @@
                         </a>
                     </li>
                     <li>
+                        <a class="dropdown-item" routerLink="admin/jhi-tracker" routerLinkActive="active" (click)="collapseNavbar()">
+                            <fa-icon icon="eye" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.admin.tracker">User tracker</span>
+                        </a>
+                    </li>
+                    <li>
                         <a class="dropdown-item" routerLink="admin/jhi-metrics" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="tachometer-alt" fixedWidth="true"></fa-icon>
                             <span jhiTranslate="global.menu.admin.metrics">Metrics</span>
@@ -175,6 +181,12 @@
                   </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item" routerLink="chat" routerLinkActive="active" (click)="collapseNavbar()">
+                            <fa-icon icon="message" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.account.chat">Chat</span>
+                        </a>
+                    </li>
                     <li *ngSwitchCase="true">
                         <a class="dropdown-item" routerLink="settings" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="wrench" fixedWidth="true"></fa-icon>

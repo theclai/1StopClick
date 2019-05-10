@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { activateRoute, passwordRoute, passwordResetFinishRoute, passwordResetInitRoute, registerRoute, settingsRoute } from './';
 import { socialLoginRoute } from 'app/core/auth/social-login.route';
+import { chatRoute } from './chat/chat.route';
 
 const ACCOUNT_ROUTES = [
     activateRoute,
@@ -10,7 +11,8 @@ const ACCOUNT_ROUTES = [
     passwordResetInitRoute,
     registerRoute,
     settingsRoute,
-    socialLoginRoute
+    socialLoginRoute,
+    chatRoute
 ];
 
 export const accountState: Routes = [
