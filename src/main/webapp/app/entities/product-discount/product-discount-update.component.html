@@ -11,8 +11,13 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="App.productDiscount.discountValue" for="field_discountValue">Discount Value</label>
-                    <input type="number" class="form-control" name="discountValue" id="field_discountValue"
-                        [(ngModel)]="productDiscount.discountValue" />
+                    <input type="number" class="form-control" name="discountValue" id="field_discountValue" required
+                        [(ngModel)]="productDiscount.discountValue" #discValue="ngModel" />
+                        <div *ngIf="discValue.dirty && discValue.invalid">
+                            <small class="form-text text-danger" *ngIf="discValue.errors.required">
+                                Discount Value is required and must be in number.
+                            </small>
+                        </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="App.productDiscount.discountUnit" for="field_discountUnit">Discount Unit</label>
@@ -28,13 +33,23 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="App.productDiscount.voucherCode" for="field_voucherCode">Voucher Code</label>
-                    <input type="text" class="form-control" name="voucherCode" id="field_voucherCode"
-                        [(ngModel)]="productDiscount.voucherCode" />
+                    <input type="text" class="form-control" name="voucherCode" id="field_voucherCode" oninput="this.value = this.value.toUpperCase()"
+                        [(ngModel)]="productDiscount.voucherCode" #voucherCode="ngModel" required/>
+                        <div *ngIf="voucherCode.dirty && voucherCode.invalid">
+                            <small class="form-text text-danger" *ngIf="voucherCode.errors.required">
+                                Voucher Code is required.
+                            </small>
+                        </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="App.productDiscount.minimumOrderValue" for="field_minimumOrderValue">Minimum Order Value</label>
                     <input type="number" class="form-control" name="minimumOrderValue" id="field_minimumOrderValue"
-                        [(ngModel)]="productDiscount.minimumOrderValue" />
+                        [(ngModel)]="productDiscount.minimumOrderValue" #minOrder="ngModel" required/>
+                        <div *ngIf="minOrder.dirty && minOrder.invalid">
+                            <small class="form-text text-danger" *ngIf="minOrder.errors.required">
+                                Minimum Order Value is required and must be in number.
+                            </small>
+                        </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="App.productDiscount.maximumDiscountValue" for="field_maximumDiscountValue">Maximum Discount Value</label>

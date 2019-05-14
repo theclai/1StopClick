@@ -7,6 +7,7 @@ import { IOrderItem, OrderItem } from 'app/shared/model/order-item.model';
 import { Subscription, Observable } from 'rxjs';
 import { OrderItemService } from 'app/entities/order-item';
 import * as moment from 'moment';
+import { AccountService, IUser } from 'app/core';
 
 @Component({
     selector: 'jhi-shopping-cart',
@@ -19,22 +20,90 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     totalPrice: number;
     isEmpty: boolean;
     shoppingCartSubscription: Subscription;
+    anonymCartSub: Subscription;
+    orderItemAnonym: OrderItem;
+    updateCartSub: Subscription;
+    user: IUser;
+    account: Account;
+    anonymCartSub1: Subscription;
+    isProductExist: boolean;
 
-    constructor(private shoppingCartService: ShoppingCartService, private orderItemService: OrderItemService, private router: Router) {
+    constructor(
+        private shoppingCartService: ShoppingCartService,
+        private orderItemService: OrderItemService,
+        private router: Router,
+        private accountService: AccountService
+    ) {
         this.orderItem = [];
+        this.user = {};
         this.isEmpty = false;
+        this.orderItemAnonym = {};
     }
 
-    ngOnInit() {
-        const cartId = localStorage.getItem('cartId');
-        this.shoppingCartSubscription = this.shoppingCartService.find(cartId).subscribe(
-            (res: HttpResponse<IShoppingCart>) => {
-                this.shoppingCart(res.body.orderItems);
-                this.getTotalQuantity();
-                this.getTotalPrice();
-            },
-            (res: HttpErrorResponse) => this.onError(res.status)
-        );
+    async ngOnInit() {
+        this.isProductExist = false;
+        this.account = await this.accountService.identity().then((account: Account) => {
+            this.setAccount(account);
+            return (this.account = account);
+        });
+        setTimeout(() => {
+            const anonymCart = localStorage.getItem('anonymCartId');
+            const cartId = localStorage.getItem('cartId');
+            this.shoppingCartSubscription = this.shoppingCartService.find(cartId).subscribe(
+                (res: HttpResponse<IShoppingCart>) => {
+                    this.shoppingCart(res.body.orderItems);
+                    if (anonymCart) {
+                        if (anonymCart !== cartId) {
+                            this.getDataAnonymCartAndCombine(anonymCart, res.body);
+                        } else {
+                            const shop = res.body;
+                            shop.user = this.user;
+                            this.updateCartSub = this.shoppingCartService.update(shop).subscribe();
+                        }
+                    }
+                    this.getTotalQuantity();
+                    this.getTotalPrice();
+                },
+                (res: HttpErrorResponse) => this.onError(res.status)
+            );
+        }, 500);
+    }
+
+    setAccount(account: any) {
+        if (!(account === null)) {
+            this.user.login = account.login;
+            this.user.email = account.email;
+            this.user.id = account.id;
+        }
+    }
+    getDataAnonymCartAndCombine(anonymCart: string, shoppingCart: IShoppingCart) {
+        this.anonymCartSub = this.shoppingCartService.find(anonymCart).subscribe((res: HttpResponse<IShoppingCart>) => {
+            const dataAnonymCart = res.body.orderItems.pop();
+            this.shoppingCartAnonym(dataAnonymCart);
+            for (let x = 0; x < this.orderItem.length; x++) {
+                const productId = this.orderItem[x].product.id;
+                const productAnonym = this.orderItemAnonym.product.id;
+                if (productId === productAnonym) {
+                    this.isProductExist = true;
+                }
+            }
+            if (!this.isProductExist) {
+                this.orderItem.push(this.orderItemAnonym);
+            }
+            this.orderItem.sort((a, b) => (a.product.productName < b.product.productName ? -1 : 1));
+            shoppingCart.orderItems = this.orderItem;
+            shoppingCart.user = this.user;
+            this.updateCartSub = this.shoppingCartService.update(shoppingCart).subscribe(x => {
+                const anonymCartId = localStorage.getItem('anonymCartId');
+                this.anonymCartSub1 = this.shoppingCartService.delete(anonymCartId).subscribe();
+                localStorage.removeItem('anonymCartId');
+            });
+            this.getTotalQuantity();
+            this.getTotalPrice();
+        });
+    }
+    protected shoppingCartAnonym(data: IOrderItem) {
+        this.orderItemAnonym = data;
     }
     onError(status: number): void {
         if (status === 404) {
@@ -52,6 +121,15 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         if (this.shoppingCartSubscription) {
             this.shoppingCartSubscription.unsubscribe();
+        }
+        if (this.anonymCartSub) {
+            this.anonymCartSub.unsubscribe();
+        }
+        if (this.anonymCartSub1) {
+            this.anonymCartSub1.unsubscribe();
+        }
+        if (this.updateCartSub) {
+            this.updateCartSub.unsubscribe();
         }
     }
     public getTotalQuantity() {
@@ -71,6 +149,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         for (let i = 0; i < data.length; i++) {
             this.orderItem.push(data[i]);
         }
+        this.orderItem.sort((a, b) => (a.product.productName < b.product.productName ? -1 : 1));
     }
 
     removeFromCart(x: OrderItem) {
@@ -136,7 +215,17 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         }
     }
 
-    checkout() {
+    async checkout() {
+        const cartId = localStorage.getItem('cartId');
+        const newDateString = moment().format('DD/MM/YYYY');
+        const dateMoment = moment(newDateString, 'DD/MM/YYYY');
+        const shoppingCart = {
+            id: cartId,
+            date: dateMoment,
+            orderItems: this.orderItem,
+            user: this.user
+        };
+        await this.shoppingCartService.update(shoppingCart).subscribe();
         this.router.navigate(['checkout']);
     }
 }

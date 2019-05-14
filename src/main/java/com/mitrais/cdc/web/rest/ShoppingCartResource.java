@@ -1,5 +1,6 @@
 package com.mitrais.cdc.web.rest;
 import com.mitrais.cdc.domain.ShoppingCart;
+import com.mitrais.cdc.domain.User;
 import com.mitrais.cdc.service.ShoppingCartService;
 import com.mitrais.cdc.web.rest.errors.BadRequestAlertException;
 import com.mitrais.cdc.web.rest.util.HeaderUtil;
@@ -72,6 +73,7 @@ public class ShoppingCartResource {
         if (shoppingCart.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        
         ShoppingCart result = shoppingCartService.save(shoppingCart);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, shoppingCart.getId().toString()))

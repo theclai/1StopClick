@@ -23,7 +23,7 @@ import com.paypal.base.rest.PayPalRESTException;
 public class PaypalClient {
 
 	String clientId = "ARlJb5ZmwxHLAI41WDrTLn-3nQngSt7tJtgnQHk578VXFWGstXbOrQnaME0LvxLx-5rZ7OytXlDj5lbS";
-	String clientSecret = "EGn91uRcnTNh70kkLAR6wwEkgat49yia4Rw9WGDnf9eUBAvLw5iia5ng5uxhPA_trMYmos2JVAZh6BgH";
+	String clientSecret = "ELzPGfW2x5W7G81qntCO_GmXAlS-u0seGrggL0IBXHa8LTQi6Ltv-FtrLygO3gjf-3pLA4cxdN-PS_El";
 
 	public Map<String, Object> createPayment(String sum, String currentOrigin ,String returnUrl){
 		String completeURL = currentOrigin + "/#" + returnUrl;

@@ -6,6 +6,6 @@ export const productInfoRoute: Route = {
     component: ProductInfoComponent,
     data: {
         authorities: [],
-        pageTitle: 'Product info'
+        pageTitle: 'home.productInfo'
     }
 };

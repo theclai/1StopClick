@@ -9,7 +9,6 @@ export class FacebookShareComponent implements AfterViewInit {
     url;
     constructor() {
         this.url = document.location.href;
-        console.log(this.url);
         // for testing in localhost
         // this.url = 'http://ec2-18-136-126-56.ap-southeast-1.compute.amazonaws.com/#/product-info/5cbe7623a8dd0c126f92cd9f';
 

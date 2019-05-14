@@ -9,6 +9,10 @@
                 <dd>
                     <span>{{shoppingCart.date}}</span>
                 </dd>
+                <dt><span jhiTranslate="App.shoppingCart.user">User</span></dt>
+                <dd>
+                    {{shoppingCart.user?.login}}
+                </dd>
             </dl>
 
             <button type="submit"

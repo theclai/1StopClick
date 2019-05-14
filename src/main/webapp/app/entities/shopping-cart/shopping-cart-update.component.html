@@ -27,6 +27,13 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.shoppingCart.user" for="field_user">User</label>
+                    <select class="form-control" id="field_user" name="user" [(ngModel)]="shoppingCart.user" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="userOption.id === shoppingCart.user?.id ? shoppingCart.user : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

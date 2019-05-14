@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-2"></div>
   <div class="col-md-auto">
-  <h3 style="font-weight:bold">Shopping Cart</h3>
+  <h3 style="font-weight:bold" jhiTranslate="home.shoppingCart">Shopping Cart</h3>
   <ng-container *ngIf="orderItem as cart">
-      <p *ngIf="!isEmpty"> You have {{quantity}} items in your shopping cart</p>
+      <p *ngIf="!isEmpty" > You have {{quantity}} items in your shopping cart</p>
       <table class="table" *ngIf="!isEmpty">
           <thead>
               <tr>
@@ -55,6 +55,6 @@
             </tfoot>
       </table>
   </ng-container>
-  <p *ngIf="isEmpty">You have 0 items in your shopping cart</p>
+  <p *ngIf="isEmpty" >You have 0 items in your shopping cart</p>
 </div>
 </div>

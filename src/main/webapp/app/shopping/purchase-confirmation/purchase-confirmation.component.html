@@ -1,12 +1,12 @@
 <div class="row" style="text-align: center; padding-top: 30px;" >
   <div class="col">
-    <h2 style="font-weight: bold">Purchase Confirmation</h2>
+    <h2 style="font-weight: bold" jhiTranslate="home.purchaseConfirmation">Purchase Confirmation</h2>
   </div>
 </div>
 <div class="row" style="margin-top: 50px;">
   <div class="col-3"></div>
   <div class="col-6">
-    <h6>Thank you for your purchase!</h6>
+    <h6 jhiTranslate="home.thankyou">Thank you for your purchase!</h6>
     <table class="table table-bordered" *ngIf="invoice" style="margin-top:20px;">
           <tbody>
             <tr>
@@ -23,7 +23,7 @@
             </tr>
             <tr>
               <td class="table-light"><h6>Voucher Discount</h6></td>
-              <td style="color: green">{{invoice.productOrder.code}}</td>
+              <td style="color: green">{{invoice.productOrder.code | uppercase}}</td>
           </tr>
             <tr>
                 <td class="table-light"><h6>Payment Method</h6></td>

@@ -16,6 +16,7 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="date"><span jhiTranslate="App.shoppingCart.date">Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="user.login"><span jhiTranslate="App.shoppingCart.user">User</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -23,6 +24,9 @@
             <tr *ngFor="let shoppingCart of shoppingCarts ;trackBy: trackId">
                 <td><a [routerLink]="['/shopping-cart', shoppingCart.id, 'view' ]">{{shoppingCart.id}}</a></td>
                 <td>{{shoppingCart.date | date:'medium'}}</td>
+                <td>
+                    {{shoppingCart.user?.login}}
+                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

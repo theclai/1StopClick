@@ -5,10 +5,12 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService, JhiEventManager } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 import { VERSION } from 'app/app.constants';
-import { JhiLanguageHelper, AccountService, LoginModalService, LoginService } from 'app/core';
+import { JhiLanguageHelper, AccountService, LoginModalService, LoginService, IUser } from 'app/core';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { ShoppingCartService, ShoppingCartComponent } from 'app/entities/shopping-cart';
 import { IOrderItem } from 'app/shared/model/order-item.model';
+import { IShoppingCart, ShoppingCart } from 'app/shared/model/shopping-cart.model';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
     selector: 'jhi-navbar',
@@ -25,7 +27,7 @@ export class NavbarComponent implements OnInit {
     version: string;
     loggedIn: boolean;
     shoppingCart$: any;
-    orderItem: any;
+    userInCart: IUser;
     totalItem: any;
     quantity: number;
 
@@ -43,7 +45,7 @@ export class NavbarComponent implements OnInit {
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
-        this.orderItem = [];
+        this.userInCart = {};
     }
 
     async ngOnInit() {
@@ -60,29 +62,9 @@ export class NavbarComponent implements OnInit {
             this.account = account;
         });
         this.registerAuthenticationSuccess();
-        const cartId = localStorage.getItem('cartId');
-        if (cartId) {
-            /* await this.shoppingCartService.find(cartId).subscribe((res: HttpResponse<IShoppingCart>) => {
-                this.shoppingCart(res.body.orderItems);
-                console.log('order item >>>>' , this.orderItem);
-            }); */
-        } else {
-            /*             this.quantity = 0;
-             */
-        }
     }
-    getTotalQuantity() {
-        this.totalItem = this.orderItem.map(t => t.quantity);
-        let itemCount = 0;
-        for (let id = 0; id < this.totalItem.length; id++) {
-            itemCount += this.totalItem[id];
-        }
-        this.quantity = itemCount;
-    }
-    shoppingCart(data: IOrderItem[]) {
-        for (let i = 0; i < data.length; i++) {
-            this.orderItem.push(data[i]);
-        }
+    shoppingCart(data: IShoppingCart) {
+        this.userInCart = data.user;
     }
 
     changeLanguage(languageKey: string) {
@@ -102,9 +84,20 @@ export class NavbarComponent implements OnInit {
         this.modalRef = this.loginModalService.open();
     }
 
-    logout() {
+    async logout() {
         this.collapseNavbar();
         this.loginService.logout();
+        // const cartId = localStorage.getItem('cartId');
+        /*  if (cartId) {
+            await this.shoppingCartService.find(cartId).subscribe((res: HttpResponse<IShoppingCart>) => {
+                this.shoppingCart(res.body);
+            });
+        }
+        if (this.userInCart) {
+            localStorage.removeItem('cartId');
+        } */
+        localStorage.removeItem('anonymCartId');
+        localStorage.removeItem('cartId');
         this.router.navigate(['']);
     }
 

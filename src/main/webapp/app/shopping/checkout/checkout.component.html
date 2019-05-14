@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col md-5" style="margin-left: 50px;">
-      <h3 style="font-weight:bold">Personal Info</h3>
+      <h3 style="font-weight:bold" jhiTranslate="home.personalInfo">Personal Info</h3>
       <form #f="ngForm">
           <div class="form-group">
               <label for="">Email Address *</label>
@@ -37,17 +37,24 @@
                 <label for="voucher">Got any voucher?</label> <input type="checkbox" id="voucherChecked" (click)="voucherChecked()"> 
               <div class="row" *ngIf="isVoucherChecked">
                 <div class="col-10">
-                  <input #voucher="ngModel" name="voucher" [(ngModel)]="order.voucher" type="text" [readonly] ="!voucherNotFound" class="form-control" placeholder="Input your voucher here..." required>
+                  <input #voucher="ngModel" name="voucher" [(ngModel)]="order.voucher" type="text" [readonly] ="!voucherNotFound" 
+                  class="form-control" oninput="this.value = this.value.toUpperCase()" 
+                  placeholder="Input your voucher here..." required>
                 </div>
                 <div class="col-md-auto" style="margin-left: -15px;">
                   <button class="btn btn-info" (click)="applyVoucher(voucher.value)" [disabled] ="!voucherNotFound">Apply</button>
                 </div>
               </div>   
-              <div class="alert alert-danger" *ngIf="voucherNotifNotFound">
+              <div class="alert alert-danger col-10" *ngIf="voucherNotifNotFound" style="margin-top: 2px;">
                 <div>Voucher not found</div>
-              </div>              
+              </div>  
+              <div class="alert alert-danger col-10" *ngIf="isBelowMinOrder" style="margin-top: 2px;">
+                <div>You haven't reached the minimum order amount ({{minimumOrder | currency: 'Rp.'}}) to use this promo code</div>
+              </div> 
+              <div class="alert alert-success col-10" *ngIf="voucherApplied" style="margin-top: 2px;">
+                <div>Voucher applied!</div>
+              </div>                  
             </div><br>
-
           <button 
             [disabled]="!f.valid"
             (click)="placeOrder()"
@@ -56,7 +63,7 @@
   </div>
 
   <div class="col">
-      <h3 style="font-weight: bold">Order Summary</h3>
+      <h3 style="font-weight: bold" jhiTranslate="home.orderSummary">Order Summary</h3>
       <ng-container *ngIf="orderItem as cart"><br>
           <table class="table " >
               <thead>

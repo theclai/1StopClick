@@ -7,7 +7,7 @@ export const purchaseConfirmationRoute: Route = {
     component: PurchaseConfirmationComponent,
     data: {
         authorities: ['ROLE_USER'],
-        pageTitle: 'purchase confirmation'
+        pageTitle: 'home.purchaseConfirmation'
     },
     canActivate: [UserRouteAccessService]
 };

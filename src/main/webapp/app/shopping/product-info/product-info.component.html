@@ -9,7 +9,7 @@
         <select [(ngModel)]="selectedQuantity">
             <option [value]="q" *ngFor="let q of quantity">{{q}}</option>
         </select>
-        <button class="btn btn-primary btn-sm" (click)="addToCart(p)">Add to cart</button><br><br>
+        <button class="btn btn-primary btn-sm" (click)="addToCart(p)" jhiTranslate="home.addCart">Add to cart</button><br><br>
         <jhi-facebook-share></jhi-facebook-share>
       </div>
 </div>

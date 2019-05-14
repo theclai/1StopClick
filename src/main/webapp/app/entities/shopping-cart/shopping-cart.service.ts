@@ -71,8 +71,4 @@ export class ShoppingCartService {
         }
         return res;
     }
-
-    getData() {
-        console.log('aaaaaa');
-    }
 }

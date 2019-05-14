@@ -6,7 +6,17 @@
             "relationshipName": "orderItem",
             "otherEntityName": "orderItem",
             "relationshipType": "one-to-many",
-            "otherEntityRelationshipName": "shoppingCart"
+            "otherEntityRelationshipName": "shoppingCart",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "shoppingCart",
+            "otherEntityRelationshipNameUndefined": false
         }
     ],
     "fields": [

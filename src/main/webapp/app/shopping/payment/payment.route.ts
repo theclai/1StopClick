@@ -7,7 +7,7 @@ export const paymentRoute: Route = {
     component: PaymentComponent,
     data: {
         authorities: ['ROLE_USER'],
-        pageTitle: 'payment'
+        pageTitle: 'home.payment'
     },
     canActivate: [UserRouteAccessService]
 };

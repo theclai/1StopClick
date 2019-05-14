@@ -16,6 +16,15 @@
         },
         "like": "If you like JHipster, don't forget to give us a star on",
         "github": "GitHub",
-        "notFound": "Product not found"
+        "notFound": "Product not found",
+        "productInfo": "Product Info",
+        "shoppingCart": "Shopping Cart",
+        "checkout": "Checkout",
+        "payment": "Payment",
+        "purchaseConfirmation": "Purchase Confirmation",
+        "addCart": "Add to Cart",
+        "personalInfo": "Personal Info",
+        "orderSummary": "Order Summary",
+        "thankyou": "Thank you for your purchase!"
     }
 }

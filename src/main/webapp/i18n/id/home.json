@@ -16,6 +16,15 @@
         },
         "like": "Jika anda menyukai JHipster, jangan lupa beri kami bintang di",
         "github": "GitHub",
-        "notFound": "Produk tidak ditemukan"
+        "notFound": "Produk tidak ditemukan",
+        "productInfo": "Info Produk",
+        "shoppingCart": "Keranjang Belanja",
+        "checkout": "Checkout",
+        "payment": "Pembayaran",
+        "purchaseConfirmation": "Konfirmasi Pembayaran",
+        "addCart": "Tambah ke Keranjang",
+        "personalInfo": "Informasi Nasabah",
+        "orderSummary": "Detail Pesanan",
+        "thankyou": "Terimakasih atas pesanan anda!"
     }
 }

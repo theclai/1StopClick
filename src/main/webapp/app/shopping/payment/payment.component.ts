@@ -1,6 +1,8 @@
+import { ShoppingCartService } from 'app/entities/shopping-cart';
 import { ProductOrderService } from './../../entities/product-order/product-order.service';
 import { PaypalService } from './paypal.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { IInvoice, InvoiceStatus } from 'app/shared/model/invoice.model';
 import { InvoiceService } from 'app/entities/invoice';
@@ -29,13 +31,16 @@ export class PaymentComponent implements OnInit, OnDestroy {
     afterPayment: any;
     afterSuccessPayment: boolean;
     orderItem: IOrderItem[];
+    locationSubscription: Subscription;
 
     constructor(
         private invoiceService: InvoiceService,
         private route: ActivatedRoute,
         private router: Router,
         private paypalService: PaypalService,
-        private productOrderService: ProductOrderService
+        private productOrderService: ProductOrderService,
+        private shoppingCartService: ShoppingCartService,
+        private location: Location
     ) {
         this.initiatePaypalUrl = {};
         this.afterPayment = {};
@@ -59,6 +64,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
                 this.completePayment(this.paymentId, this.payerId);
             }
         });
+        this.locationSubscription = <Subscription>this.location.subscribe(() => x => console.log('location : ', x));
     }
     onError(status: number): void {
         if (status === 404) {
@@ -119,7 +125,25 @@ export class PaymentComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             this.router.navigate(['checkout/purchase-confirmation', this.invoiceId]);
         }, 1000);
+        const cartId = localStorage.getItem('cartId');
+        await this.shoppingCartService.delete(cartId).subscribe(x => {
+            localStorage.removeItem('cartId');
+        });
         await this.invoiceService.update(this.invoice).subscribe();
         await this.productOrderService.update(this.productOrder).subscribe();
+    }
+
+    async cancelOrder() {
+        const newDateString = moment().format('DD/MM/YYYY');
+        const dateMoment = moment(newDateString, 'DD/MM/YYYY');
+        this.invoice.status = InvoiceStatus.CANCELLED;
+        this.productOrder.status = Orderstatus.CANCELLED;
+        this.productOrder.placeDate = dateMoment;
+        await this.productOrderService.update(this.productOrder).subscribe();
+        await this.invoiceService.update(this.invoice).subscribe(x => {
+            setTimeout(() => {
+                this.router.navigate(['checkout']);
+            }, 750);
+        });
     }
 }

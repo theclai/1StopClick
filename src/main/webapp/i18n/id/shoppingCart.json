@@ -16,7 +16,8 @@
                 "title": "Shopping Cart"
             },
             "date": "Date",
-            "orderItem": "Order Item"
+            "orderItem": "Order Item",
+            "user": "User"
         }
     }
 }

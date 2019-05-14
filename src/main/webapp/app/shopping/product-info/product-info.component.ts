@@ -1,3 +1,5 @@
+import { IUser } from './../../core/user/user.model';
+import { AccountService } from 'app/core';
 import { ShoppingCart } from './../../shared/model/shopping-cart.model';
 import { ShoppingCartService } from './../../entities/shopping-cart/shopping-cart.service';
 import { OrderItemService } from 'app/entities/order-item/order-item.service';
@@ -27,23 +29,39 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
     orderId: string;
     shoppingCartSubscription: Subscription;
     orderItem: OrderItem[];
+    account: Account;
+    user: IUser;
 
     constructor(
         private router: ActivatedRoute,
         private route: Router,
         private productService: ProductService,
         private orderItemService: OrderItemService,
-        private shoppingCartService: ShoppingCartService
+        private shoppingCartService: ShoppingCartService,
+        private accountService: AccountService
     ) {
         this.product = [];
         this.shoppingCart = {};
         this.orderItem = [];
         this.quantity = [1];
+        this.user = {};
     }
 
-    ngOnInit() {
+    async ngOnInit() {
         this.productID = this.router.snapshot.paramMap.get('id');
         this.loadProduct(this.productID);
+
+        this.account = await this.accountService.identity().then((account: Account) => {
+            this.setAccount(account);
+            return (this.account = account);
+        });
+    }
+    setAccount(account: any) {
+        if (!(account === null)) {
+            this.user.login = account.login;
+            this.user.email = account.email;
+            this.user.id = account.id;
+        }
     }
 
     ngOnDestroy() {
@@ -108,12 +126,14 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
     protected onSaveSuccessCreatingShoppingCart(res, product: IProduct) {
         this.cart = res.body.id;
         localStorage.setItem('cartId', this.cart);
+        localStorage.setItem('anonymCartId', this.cart);
         const newDateString = moment().format('DD/MM/YYYY');
         const dateMoment = moment(newDateString, 'DD/MM/YYYY');
         const orderItem: OrderItem = {};
         this.shoppingCart = {
             id: this.cart,
-            date: dateMoment
+            date: dateMoment,
+            user: this.user
         };
         setTimeout(() => {
             orderItem.product = product;
@@ -142,6 +162,7 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
         this.shoppingCart = {
             id: res.shoppingCart.id,
             date: dateMoment,
+            user: this.user,
             orderItems: this.orderItem
         };
         this.addItemsToCart(this.shoppingCartService.update(this.shoppingCart));
@@ -153,7 +174,8 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
         this.shoppingCart = {
             id: res.shoppingCart.id,
             date: dateMoment,
-            orderItems: this.orderItem
+            orderItems: this.orderItem,
+            user: this.user
         };
         this.addItemsToCart(this.shoppingCartService.update(this.shoppingCart));
 

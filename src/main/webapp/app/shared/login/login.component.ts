@@ -1,3 +1,5 @@
+import { IShoppingCart } from './../model/shopping-cart.model';
+import { ShoppingCartService } from './../../entities/shopping-cart/shopping-cart.service';
 import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
@@ -5,6 +7,7 @@ import { JhiEventManager } from 'ng-jhipster';
 import { FACEBOOK_AUTH_URL, GOOGLE_AUTH_URL } from 'app/app.constants';
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
     selector: 'jhi-login-modal',
@@ -19,6 +22,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
     credentials: any;
     public GOOGLE_AUTH_URL = GOOGLE_AUTH_URL;
     public FACEBOOK_AUTH_URL = FACEBOOK_AUTH_URL;
+    shoppingCart: IShoppingCart[];
     constructor(
         private eventManager: JhiEventManager,
         private loginService: LoginService,
@@ -26,9 +30,11 @@ export class JhiLoginModalComponent implements AfterViewInit {
         private elementRef: ElementRef,
         private renderer: Renderer,
         private router: Router,
-        public activeModal: NgbActiveModal
+        public activeModal: NgbActiveModal,
+        private shoppingCartService: ShoppingCartService
     ) {
         this.credentials = {};
+        this.shoppingCart = [];
     }
 
     ngAfterViewInit() {
@@ -74,10 +80,20 @@ export class JhiLoginModalComponent implements AfterViewInit {
                 if (redirect == null) {
                     this.router.navigate(['']);
                 }
+                this.shoppingCartService.query({}).subscribe((res: HttpResponse<IShoppingCart[]>) => this.getShoppingCart(res.body));
             })
             .catch(() => {
                 this.authenticationError = true;
             });
+    }
+    getShoppingCart(body: IShoppingCart[]): void {
+        for (let i = 0; i < body.length; i++) {
+            this.shoppingCart.push(body[i]);
+        }
+        const cartExist = this.shoppingCart.find(data => data.user.login === this.username);
+        if (cartExist) {
+            localStorage.setItem('cartId', cartExist.id);
+        }
     }
 
     register() {

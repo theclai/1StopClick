@@ -2,6 +2,9 @@ package com.mitrais.cdc.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -32,6 +35,10 @@ public class ShoppingCart implements Serializable {
     @DBRef
     @Field("orderItem")
     private Set<OrderItem> orderItems = new HashSet<>();
+
+    @Field("user")
+	private User user;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
         return id;
@@ -77,6 +84,19 @@ public class ShoppingCart implements Serializable {
 
     public void setOrderItems(Set<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public ShoppingCart user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

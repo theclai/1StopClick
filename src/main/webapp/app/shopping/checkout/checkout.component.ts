@@ -34,7 +34,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     account: Account;
     productOrder: ProductOrder;
     public options = [
-        { value: PaymentMethod.ONESTOPCLICK, id: 'onestopclick-icon', name: 'OneStop Pay' },
+        // { value: PaymentMethod.ONESTOPCLICK, id: 'onestopclick-icon', name: 'OneStop Pay' },
         { value: PaymentMethod.PAYPAL, id: 'paypal-icon', name: 'Paypal' },
         { value: PaymentMethod.FREE, id: 'visa-icon', name: 'Free (for test)' }
     ];
@@ -52,6 +52,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     invoiceStatus: InvoiceStatus;
     paymentType: any;
     invoiceId: string;
+    isBelowMinOrder: boolean;
+    minimumOrder: number;
+    voucherApplied: boolean;
 
     constructor(
         private shoppingCartService: ShoppingCartService,
@@ -71,12 +74,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
 
     async ngOnInit() {
-        this.cartId = localStorage.getItem('cartId');
-        this.shoppingCartSubscription = this.shoppingCartService.find(this.cartId).subscribe((res: HttpResponse<IShoppingCart>) => {
-            this.shoppingCart(res.body.orderItems);
-            this.getTotalQuantity();
-            this.getTotalPrice();
-        });
+        setTimeout(() => {
+            this.cartId = localStorage.getItem('cartId');
+            this.shoppingCartSubscription = this.shoppingCartService.find(this.cartId).subscribe((res: HttpResponse<IShoppingCart>) => {
+                this.shoppingCart(res.body.orderItems);
+                this.getTotalQuantity();
+                this.getTotalPrice();
+            });
+        }, 750);
         this.account = await this.accountService.identity().then((account: Account) => {
             this.setOrder(account);
             return (this.account = account);
@@ -85,6 +90,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.isVoucherChecked = false;
         this.voucherNotFound = true;
         this.voucherNotifNotFound = false;
+        this.isBelowMinOrder = false;
     }
     setOrder(account: any) {
         this.order.name = account.login;
@@ -95,6 +101,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         for (let i = 0; i < data.length; i++) {
             this.orderItem.push(data[i]);
         }
+        this.orderItem.sort((a, b) => (a.product.productName < b.product.productName ? -1 : 1));
     }
 
     protected getTotalQuantity() {
@@ -171,54 +178,102 @@ export class CheckoutComponent implements OnInit, OnDestroy {
                 this.voucherNotifNotFound = false;
             }, 3000);
         } else {
-            this.voucherNotFound = false;
             const discVoucher = this.productDiscount.find(data => data.voucherCode.toLowerCase() === voucher.toLowerCase()).discountValue;
-            this.totalAfterDiscount = this.totalPrice - discVoucher;
+            this.minimumOrder = this.productDiscount.find(
+                data => data.voucherCode.toLowerCase() === voucher.toLowerCase()
+            ).minimumOrderValue;
+            if (this.totalPrice > this.minimumOrder) {
+                this.voucherNotFound = false;
+                this.totalAfterDiscount = this.totalPrice - discVoucher;
+                this.voucherApplied = true;
+                setTimeout(() => {
+                    this.voucherApplied = false;
+                }, 3000);
+            } else {
+                this.isBelowMinOrder = true;
+                setTimeout(() => {
+                    this.isBelowMinOrder = false;
+                }, 3000);
+            }
         }
     }
 
     placeOrder() {
-        const newDateString = moment().format('DD/MM/YYYY');
-        const dateMoment = moment(newDateString, 'DD/MM/YYYY');
         this.paymentType = this.order.paymentType;
-
         if (this.paymentType === PaymentMethod.ONESTOPCLICK) {
-            this.productOrder.status = Orderstatus.PENDING;
-            this.invoiceStatus = InvoiceStatus.ISSUED;
+            // not yet implemented
         } else if (this.paymentType === PaymentMethod.PAYPAL) {
             this.productOrder.status = Orderstatus.PENDING;
             this.invoiceStatus = InvoiceStatus.ISSUED;
+            const newDateString = moment().format('DD/MM/YYYY');
+            const dateMoment = moment(newDateString, 'DD/MM/YYYY');
+            this.users = [
+                {
+                    id: this.order.loginId,
+                    login: this.order.name,
+                    email: this.order.email
+                }
+            ];
+            this.productOrder.placeDate = dateMoment;
+            this.productOrder.users = this.users;
+            this.productOrder.orderItems = this.orderItem;
+            if (!this.voucherNotFound) {
+                this.productOrder.code = this.order.voucher;
+            } else {
+                this.productOrder.code = 'No Voucher';
+            }
+            this.subscribeToSaveResponsePAYPAL(this.productOrderService.create(this.productOrder));
         } else if (this.paymentType === PaymentMethod.FREE) {
             this.productOrder.status = Orderstatus.COMPLETED;
             this.invoiceStatus = InvoiceStatus.PAID;
-        }
-
-        this.users = [
-            {
-                id: this.order.loginId,
-                login: this.order.name,
-                email: this.order.email
+            const newDateString = moment().format('DD/MM/YYYY');
+            const dateMoment = moment(newDateString, 'DD/MM/YYYY');
+            this.users = [
+                {
+                    id: this.order.loginId,
+                    login: this.order.name,
+                    email: this.order.email
+                }
+            ];
+            this.productOrder.placeDate = dateMoment;
+            this.productOrder.users = this.users;
+            this.productOrder.orderItems = this.orderItem;
+            if (!this.voucherNotFound) {
+                this.productOrder.code = this.order.voucher;
+            } else {
+                this.productOrder.code = 'No Voucher';
             }
-        ];
-        this.productOrder.placeDate = dateMoment;
-        this.productOrder.users = this.users;
-        this.productOrder.orderItems = this.orderItem;
-        if (!this.voucherNotFound) {
-            this.productOrder.code = this.order.voucher;
-        } else {
-            this.productOrder.code = 'No Voucher';
+            this.subscribeToSaveResponseFREE(this.productOrderService.create(this.productOrder));
         }
-        this.subscribeToSaveResponse(this.productOrderService.create(this.productOrder));
     }
-    protected subscribeToSaveResponse(result: Observable<HttpResponse<IProductOrder>>) {
-        this.productOrderSubscription = result.subscribe((res: HttpResponse<IProductOrder>) => this.onSaveSuccess(res.body));
+    protected subscribeToSaveResponsePAYPAL(result: Observable<HttpResponse<IProductOrder>>) {
+        this.productOrderSubscription = result.subscribe((res: HttpResponse<IProductOrder>) => this.onSaveSuccessPAYPAL(res.body));
     }
-    onSaveSuccess(body: IProductOrder): void {
+    protected subscribeToSaveResponseFREE(result: Observable<HttpResponse<IProductOrder>>) {
+        this.productOrderSubscription = result.subscribe((res: HttpResponse<IProductOrder>) => this.onSaveSuccessFREE(res.body));
+    }
+    onSaveSuccessPAYPAL(body: IProductOrder): void {
+        this.createInvoice(body);
+        this.updateOrderItems(body);
+        setTimeout(() => {
+            // this.deleteSubscription = this.shoppingCartService.delete(this.cartId).subscribe();
+            // localStorage.removeItem('cartId');
+            localStorage.removeItem('anonymCartId');
+            const statusPayment = body.status;
+            if (statusPayment === Orderstatus.COMPLETED) {
+                this.route.navigate(['checkout/purchase-confirmation', this.invoiceId]);
+            } else if (statusPayment === Orderstatus.PENDING) {
+                this.route.navigate(['checkout/payment', this.invoiceId]);
+            }
+        }, 1000);
+    }
+    onSaveSuccessFREE(body: IProductOrder): void {
         this.createInvoice(body);
         this.updateOrderItems(body);
         setTimeout(() => {
             this.deleteSubscription = this.shoppingCartService.delete(this.cartId).subscribe();
             localStorage.removeItem('cartId');
+            localStorage.removeItem('anonymCartId');
             const statusPayment = body.status;
             if (statusPayment === Orderstatus.COMPLETED) {
                 this.route.navigate(['checkout/purchase-confirmation', this.invoiceId]);
