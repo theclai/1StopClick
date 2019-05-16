@@ -1,0 +1,78 @@
+<div class="row justify-content-center">
+    <div class="col-6">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-promoted-product-heading" jhiTranslate="App.promotedProduct.home.createOrEditLabel">Create or edit a Promoted Product</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!promotedProduct.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="promotedProduct.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.promotedProduct.createdDate" for="field_createdDate">Created Date</label>
+                    <div class="input-group">
+                        <input id="field_createdDate" readonly required [disabled]="promotedProduct.id" type="text" class="form-control" name="createdDate" ngbDatepicker  #createdDateDp="ngbDatepicker" [(ngModel)]="promotedProduct.createdDate"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" [disabled]="promotedProduct.id"  (click)="createdDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label"for="field_duration">Duration (in days)</label>
+                    <input type="number" class="form-control" name="duration" id="field_duration" oninput="this.value = Math.abs(this.value)"
+                        min="1" [(ngModel)]="promotedProduct.duration" [disabled]="promotedProduct.id && isExpired " required/>
+                    <div [hidden]="!(editForm.controls.duration?.dirty && editForm.controls.duration?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.duration?.errors?.required">
+                        This field is required and should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.promotedProduct.status" for="field_status">Status</label>
+                    <select class="form-control" [disabled]="promotedProduct.id && isExpired" name="status" [(ngModel)]="promotedProduct.status" id="field_status"  required>
+                        <option value="ACTIVE">{{'App.PromotedStatus.ACTIVE' | translate}}</option>
+                        <option value="EXPIRED">{{'App.PromotedStatus.EXPIRED' | translate}}</option>
+                    </select>
+                    <div [hidden]="!(editForm.controls.status?.dirty && editForm.controls.status?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.status?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="App.promotedProduct.promotedProduct" for="field_promotedProduct">Promoted Product</label>
+                    <select class="form-control" id="field_promotedProduct" [disabled]="promotedProduct.id" name="promotedProduct" [(ngModel)]="promotedProduct.promotedProduct" required>
+                        <option *ngIf="!editForm.value.promotedProduct" [ngValue]="null" selected></option>
+                        <option [ngValue]="productOption.id === promotedProduct.promotedProduct?.id ? promotedProduct.promotedProduct : productOption" *ngFor="let productOption of promotedproducts; trackBy: trackProductById">{{productOption.productName}}</option>
+                    </select>
+                </div>
+                <div [hidden]="!(editForm.controls.promotedProduct?.dirty && editForm.controls.promotedProduct?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.promotedProduct?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving || isExpired" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+
+                <div [hidden]="!isExists" style="margin-top: 5px;">
+                    <div class="alert alert-danger "
+                    [hidden]="!isExists">
+                    {{notifExist}} is still ACTIVE on promoted product!
+                </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

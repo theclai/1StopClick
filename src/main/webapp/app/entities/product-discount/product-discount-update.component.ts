@@ -16,8 +16,13 @@ export class ProductDiscountUpdateComponent implements OnInit {
     productDiscount: IProductDiscount;
     isSaving: boolean;
     date: string;
+    productDisc: IProductDiscount[];
+    isExists: boolean;
 
-    constructor(protected productDiscountService: ProductDiscountService, protected activatedRoute: ActivatedRoute) {}
+    constructor(protected productDiscountService: ProductDiscountService, protected activatedRoute: ActivatedRoute) {
+        this.productDisc = [];
+        this.isExists = false;
+    }
 
     ngOnInit() {
         this.isSaving = false;
@@ -33,12 +38,38 @@ export class ProductDiscountUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.productDiscount.date = this.date != null ? moment(this.date, DATE_TIME_FORMAT) : null;
         if (this.productDiscount.id !== undefined) {
             this.subscribeToSaveResponse(this.productDiscountService.update(this.productDiscount));
         } else {
-            this.subscribeToSaveResponse(this.productDiscountService.create(this.productDiscount));
+            this.checkExistingVoucherCode();
         }
+    }
+    protected async checkExistingVoucherCode() {
+        await this.productDiscountService.query().subscribe((res: HttpResponse<IProductDiscount[]>) => this.AllProductDiscount(res.body));
+    }
+    protected AllProductDiscount(data: IProductDiscount[]): void {
+        for (let i = 0; i < data.length; i++) {
+            this.productDisc.push(data[i]);
+        }
+        const exist = this.productDisc.find(x => x.voucherCode.toLowerCase() === this.productDiscount.voucherCode.toLowerCase());
+        if (exist === undefined) {
+            this.isExists = false;
+        } else {
+            this.isExists = true;
+        }
+        if (!this.isExists) {
+            this.productDiscount.date = this.date != null ? moment(this.date, DATE_TIME_FORMAT) : null;
+            if (this.productDiscount.id !== undefined) {
+                this.subscribeToSaveResponse(this.productDiscountService.update(this.productDiscount));
+            } else {
+                this.subscribeToSaveResponse(this.productDiscountService.create(this.productDiscount));
+            }
+        }
+
+        setTimeout(() => {
+            this.isExists = false;
+            this.isSaving = false;
+        }, 3000);
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IProductDiscount>>) {

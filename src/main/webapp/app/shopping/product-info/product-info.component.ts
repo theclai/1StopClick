@@ -1,5 +1,5 @@
 import { IUser } from './../../core/user/user.model';
-import { AccountService } from 'app/core';
+import { AccountService, LoginModalService, StateStorageService } from 'app/core';
 import { ShoppingCart } from './../../shared/model/shopping-cart.model';
 import { ShoppingCartService } from './../../entities/shopping-cart/shopping-cart.service';
 import { OrderItemService } from 'app/entities/order-item/order-item.service';
@@ -11,6 +11,7 @@ import { IProduct } from 'app/shared/model/product.model';
 import { HttpResponse } from '@angular/common/http';
 import { OrderItem, OrderItemStatus, IOrderItem } from 'app/shared/model/order-item.model';
 import { IShoppingCart } from 'app/shared/model/shopping-cart.model';
+import { NgbModalRef, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
 @Component({
@@ -31,6 +32,12 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
     orderItem: OrderItem[];
     account: Account;
     user: IUser;
+    modalRef: NgbModalRef;
+    myCarouselImages = [
+        'https://farm8.staticflickr.com/7575/15558990730_339784c63c_b.jpg',
+        'https://images-na.ssl-images-amazon.com/images/I/81xLbzSlFWL._SY606_.jpg',
+        'http://kissfmmedan.com/wp-content/uploads/2018/09/pubg-hero.jpg'
+    ];
 
     constructor(
         private router: ActivatedRoute,
@@ -38,13 +45,19 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
         private productService: ProductService,
         private orderItemService: OrderItemService,
         private shoppingCartService: ShoppingCartService,
-        private accountService: AccountService
+        private accountService: AccountService,
+        private stateStorageService: StateStorageService,
+        private loginModalService: LoginModalService,
+        private config: NgbCarouselConfig
     ) {
         this.product = [];
         this.shoppingCart = {};
         this.orderItem = [];
         this.quantity = [1];
         this.user = {};
+        this.config.showNavigationArrows = true;
+        this.config.pauseOnHover = true;
+        this.config.interval = 10000;
     }
 
     async ngOnInit() {
@@ -80,38 +93,46 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
     }
 
     async addToCart(product: IProduct) {
-        const cartId = localStorage.getItem('cartId');
-        const newDateString = moment().format('DD/MM/YYYY');
-        const dateMoment = moment(newDateString, 'DD/MM/YYYY');
-        let orderItem: OrderItem = {};
-        if (!cartId || cartId === undefined) {
-            this.shoppingCart = {
-                id: null,
-                date: dateMoment
-            };
-            await this.createShoppingCart(this.shoppingCartService.create(this.shoppingCart), product);
+        if (this.account === null) {
+            const currentUrl = this.route.url;
+            this.route.navigate(['accessdenied']);
+            this.stateStorageService.storeUrl(currentUrl);
+            this.modalRef = this.loginModalService.open();
+            return;
         } else {
-            this.shoppingCartSubscription = this.shoppingCartService.find(cartId).subscribe((res: HttpResponse<IShoppingCart>) => {
-                this.existingShoppingCart(res.body.orderItems);
-                if (this.orderItem.find(item => item.product.id === product.id)) {
-                    this.orderItem.find(item => item.product.id === product.id).quantity = this.selectedQuantity;
-                    orderItem = this.orderItem.find(item => item.product.id === product.id);
-                    this.subscribeToUpdateResponse(this.orderItemService.update(orderItem));
-                } else {
-                    this.shoppingCart = {
-                        id: cartId,
-                        date: dateMoment
-                    };
-                    setTimeout(() => {
-                        orderItem.product = product;
-                        orderItem.quantity = this.selectedQuantity;
-                        orderItem.status = OrderItemStatus.AVAILABLE;
-                        orderItem.totalPrice = this.selectedQuantity * product.price;
-                        orderItem.shoppingCart = this.shoppingCart;
-                        this.subscribeToSaveResponse(this.orderItemService.create(orderItem));
-                    }, 1000);
-                }
-            });
+            const cartId = localStorage.getItem('cartId');
+            const newDateString = moment().format('DD/MM/YYYY');
+            const dateMoment = moment(newDateString, 'DD/MM/YYYY');
+            let orderItem: OrderItem = {};
+            if (!cartId || cartId === undefined) {
+                this.shoppingCart = {
+                    id: null,
+                    date: dateMoment
+                };
+                await this.createShoppingCart(this.shoppingCartService.create(this.shoppingCart), product);
+            } else {
+                this.shoppingCartSubscription = this.shoppingCartService.find(cartId).subscribe((res: HttpResponse<IShoppingCart>) => {
+                    this.existingShoppingCart(res.body.orderItems);
+                    if (this.orderItem.find(item => item.product.id === product.id)) {
+                        this.orderItem.find(item => item.product.id === product.id).quantity = this.selectedQuantity;
+                        orderItem = this.orderItem.find(item => item.product.id === product.id);
+                        this.subscribeToUpdateResponse(this.orderItemService.update(orderItem));
+                    } else {
+                        this.shoppingCart = {
+                            id: cartId,
+                            date: dateMoment
+                        };
+                        setTimeout(() => {
+                            orderItem.product = product;
+                            orderItem.quantity = this.selectedQuantity;
+                            orderItem.status = OrderItemStatus.AVAILABLE;
+                            orderItem.totalPrice = this.selectedQuantity * product.price;
+                            orderItem.shoppingCart = this.shoppingCart;
+                            this.subscribeToSaveResponse(this.orderItemService.create(orderItem));
+                        }, 1000);
+                    }
+                });
+            }
         }
     }
     protected addItemsToCart(result: Observable<HttpResponse<IShoppingCart>>) {

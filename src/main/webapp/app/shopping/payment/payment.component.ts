@@ -2,7 +2,6 @@ import { ShoppingCartService } from 'app/entities/shopping-cart';
 import { ProductOrderService } from './../../entities/product-order/product-order.service';
 import { PaypalService } from './paypal.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { IInvoice, InvoiceStatus } from 'app/shared/model/invoice.model';
 import { InvoiceService } from 'app/entities/invoice';
@@ -32,6 +31,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     afterSuccessPayment: boolean;
     orderItem: IOrderItem[];
     locationSubscription: Subscription;
+    paypalSubs: Subscription;
 
     constructor(
         private invoiceService: InvoiceService,
@@ -39,8 +39,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
         private router: Router,
         private paypalService: PaypalService,
         private productOrderService: ProductOrderService,
-        private shoppingCartService: ShoppingCartService,
-        private location: Location
+        private shoppingCartService: ShoppingCartService
     ) {
         this.initiatePaypalUrl = {};
         this.afterPayment = {};
@@ -64,7 +63,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
                 this.completePayment(this.paymentId, this.payerId);
             }
         });
-        this.locationSubscription = <Subscription>this.location.subscribe(() => x => console.log('location : ', x));
     }
     onError(status: number): void {
         if (status === 404) {
@@ -92,16 +90,19 @@ export class PaymentComponent implements OnInit, OnDestroy {
         if (this.routeSubscription) {
             this.routeSubscription.unsubscribe();
         }
+        if (this.paypalSubs) {
+            this.paypalSubs.unsubscribe();
+        }
     }
     changePaymentMethod() {
         this.router.navigate(['checkout']);
     }
 
-    async makePayment(sum: number) {
+    makePayment(sum: number) {
         const sumUSD = (sum / 15000).toFixed(2);
         const currentOrigin = document.location.origin;
         const currentUrl = this.router.url;
-        await this.paypalService.makePayment(sumUSD, currentOrigin, currentUrl).subscribe((res: any) => {
+        this.paypalSubs = this.paypalService.makePayment(sumUSD, currentOrigin, currentUrl).subscribe((res: any) => {
             this.initiatePaypalUrl = res;
             window.location.href = this.initiatePaypalUrl.redirect_url;
         });

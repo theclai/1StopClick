@@ -1,0 +1,24 @@
+{
+    "App": {
+        "promotedProduct": {
+            "home": {
+                "title": "Promoted Products",
+                "createLabel": "Create a new Promoted Product",
+                "createOrEditLabel": "Create or edit a Promoted Product"
+            },
+            "created": "A new Promoted Product is created with identifier {{ param }}",
+            "updated": "A Promoted Product is updated with identifier {{ param }}",
+            "deleted": "A Promoted Product is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Promoted Product {{ id }}?"
+            },
+            "detail": {
+                "title": "Promoted Product"
+            },
+            "createdDate": "Created Date",
+            "duration": "Duration",
+            "status": "Status",
+            "promotedProduct": "Promoted Product"
+        }
+    }
+}

@@ -81,7 +81,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
                 this.getTotalQuantity();
                 this.getTotalPrice();
             });
-        }, 750);
+        }, 500);
         this.account = await this.accountService.identity().then((account: Account) => {
             this.setOrder(account);
             return (this.account = account);

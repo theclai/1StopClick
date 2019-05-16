@@ -1,0 +1,24 @@
+{
+    "App": {
+        "promotedProduct": {
+            "home": {
+                "title": "Promoted Products",
+                "createLabel": "Buat Promoted Product baru",
+                "createOrEditLabel": "Buat atau edit Promoted Product"
+            },
+            "created": "Promoted Product dengan id {{ param }} telah dibuat",
+            "updated": "Promoted Product dengan id {{ param }} telah diperbaharui",
+            "deleted": "Promoted Product dengan id {{ param }} telah dihapus",
+            "delete": {
+                "question": "Apakah anda yakin ingin menghapus Promoted Product {{ id }}?"
+            },
+            "detail": {
+                "title": "Promoted Product"
+            },
+            "createdDate": "Created Date",
+            "duration": "Duration",
+            "status": "Status",
+            "promotedProduct": "Promoted Product"
+        }
+    }
+}

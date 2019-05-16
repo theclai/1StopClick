@@ -66,7 +66,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
                 },
                 (res: HttpErrorResponse) => this.onError(res.status)
             );
-        }, 500);
+        }, 150);
     }
 
     setAccount(account: any) {

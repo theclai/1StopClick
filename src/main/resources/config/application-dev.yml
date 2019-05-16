@@ -105,7 +105,8 @@ jhipster:
                 token-validity-in-seconds-for-remember-me: 2592000
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: onestopclick@yahoo.com
-        base-url: http://ec2-13-229-72-86.ap-southeast-1.compute.amazonaws.com
+        base-url: http://ec2-3-0-145-186.ap-southeast-1.compute.amazonaws.com
+        
     metrics:
         logs: # Reports metrics in the logs
             enabled: false

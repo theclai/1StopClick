@@ -122,7 +122,7 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
             host: 'localhost',
             port: 9000,
             proxy: {
-                target: 'http://localhost:9001'
+                target: 'http://localhost:9060'
             },
             socket: {
                 clients: {

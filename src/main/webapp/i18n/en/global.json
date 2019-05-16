@@ -17,6 +17,7 @@
                 "shipment": "Shipment",
                 "shoppingCart": "Shopping Cart",
                 "productDiscount": "Product Discount",
+                "promotedProduct": "Promoted Product",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

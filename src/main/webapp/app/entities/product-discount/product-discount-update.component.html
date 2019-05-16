@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-    <div class="col-8">
+    <div class="col-6">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
             <h2 id="jhi-product-discount-heading" jhiTranslate="App.productDiscount.home.createOrEditLabel">Create or edit a Product Discount</h2>
             <div>
@@ -11,13 +11,18 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="App.productDiscount.discountValue" for="field_discountValue">Discount Value</label>
-                    <input type="number" class="form-control" name="discountValue" id="field_discountValue" required
+                    <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Rp. </span>
+                      </div>
+                    <input type="number" class="form-control" name="discountValue" id="field_discountValue" required oninput="this.value = Math.abs(this.value)"
                         [(ngModel)]="productDiscount.discountValue" #discValue="ngModel" />
                         <div *ngIf="discValue.dirty && discValue.invalid">
                             <small class="form-text text-danger" *ngIf="discValue.errors.required">
                                 Discount Value is required and must be in number.
                             </small>
                         </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="App.productDiscount.discountUnit" for="field_discountUnit">Discount Unit</label>
@@ -33,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="App.productDiscount.voucherCode" for="field_voucherCode">Voucher Code</label>
-                    <input type="text" class="form-control" name="voucherCode" id="field_voucherCode" oninput="this.value = this.value.toUpperCase()"
+                    <input type="text" class="form-control" name="voucherCode" id="field_voucherCode" [disabled]="productDiscount.id" oninput="this.value = this.value.toUpperCase()"
                         [(ngModel)]="productDiscount.voucherCode" #voucherCode="ngModel" required/>
                         <div *ngIf="voucherCode.dirty && voucherCode.invalid">
                             <small class="form-text text-danger" *ngIf="voucherCode.errors.required">
@@ -43,18 +48,28 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="App.productDiscount.minimumOrderValue" for="field_minimumOrderValue">Minimum Order Value</label>
-                    <input type="number" class="form-control" name="minimumOrderValue" id="field_minimumOrderValue"
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Rp. </span>
+                          </div>
+                    <input type="number" class="form-control" name="minimumOrderValue" id="field_minimumOrderValue" oninput="this.value = Math.abs(this.value)"
                         [(ngModel)]="productDiscount.minimumOrderValue" #minOrder="ngModel" required/>
                         <div *ngIf="minOrder.dirty && minOrder.invalid">
                             <small class="form-text text-danger" *ngIf="minOrder.errors.required">
                                 Minimum Order Value is required and must be in number.
                             </small>
                         </div>
+                        </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="App.productDiscount.maximumDiscountValue" for="field_maximumDiscountValue">Maximum Discount Value</label>
-                    <input type="number" class="form-control" name="maximumDiscountValue" id="field_maximumDiscountValue"
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Rp. </span>
+                          </div>
+                    <input type="number" class="form-control" name="maximumDiscountValue" id="field_maximumDiscountValue" oninput="this.value = Math.abs(this.value)"
                         [(ngModel)]="productDiscount.maximumDiscountValue" />
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="App.productDiscount.isRedemAllowed" for="field_isRedemAllowed">Is Redem Allowed</label>
@@ -69,7 +84,14 @@
                 </button>
                 <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-                </button>
+                </button><br>
+                
+                <div [hidden]="!isExists" style="margin-top: 5px;">
+                    <div class="alert alert-danger "
+                    [hidden]="!isExists">
+                    Voucher Code is already exist!
+                </div>
+                </div>
             </div>
         </form>
     </div>

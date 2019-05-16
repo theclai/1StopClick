@@ -159,6 +159,38 @@ import { RouterModule } from '@angular/router';
             {
                 path: 'shopping-cart',
                 loadChildren: './shopping-cart/shopping-cart.module#AppShoppingCartModule'
+            },
+            {
+                path: 'promoted-product',
+                loadChildren: './promoted-product/promoted-product.module#AppPromotedProductModule'
+            },
+            {
+                path: 'promoted-product',
+                loadChildren: './promoted-product/promoted-product.module#AppPromotedProductModule'
+            },
+            {
+                path: 'promoted-product',
+                loadChildren: './promoted-product/promoted-product.module#AppPromotedProductModule'
+            },
+            {
+                path: 'promoted-product',
+                loadChildren: './promoted-product/promoted-product.module#AppPromotedProductModule'
+            },
+            {
+                path: 'promoted-product',
+                loadChildren: './promoted-product/promoted-product.module#AppPromotedProductModule'
+            },
+            {
+                path: 'promoted-product',
+                loadChildren: './promoted-product/promoted-product.module#AppPromotedProductModule'
+            },
+            {
+                path: 'promoted-product',
+                loadChildren: './promoted-product/promoted-product.module#AppPromotedProductModule'
+            },
+            {
+                path: 'promoted-product',
+                loadChildren: './promoted-product/promoted-product.module#AppPromotedProductModule'
             }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])
