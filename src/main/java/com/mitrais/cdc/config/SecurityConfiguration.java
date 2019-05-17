@@ -123,7 +123,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.POST, "/api/shopping-carts")
             .antMatchers(HttpMethod.PUT, "/api/shopping-carts")
             .antMatchers(HttpMethod.GET, "/api/shopping-carts/**")
-
+            .antMatchers(HttpMethod.GET, "/api/promoted-products")
             ;
     }
 

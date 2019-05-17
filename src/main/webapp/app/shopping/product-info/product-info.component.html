@@ -20,16 +20,25 @@
 </div><br>
 <hr/>
 <div class="row">
-  <div class="col-8" style="padding-left: 40px;">
+  <div class="col-9" style="padding-left: 40px;">
     <h5>Product Review</h5>
   </div>
-  <div class="col-4">
+  <div class="col-3">
     <h5>Promoted</h5>
-    <div style=" align-content: center">
-      <ngb-carousel *ngIf="myCarouselImages">
-        <ng-template ngbSlide *ngFor="let image of myCarouselImages">
-          <img [src]="image" alt="Random first slide" style="height: 300px; width: 250px;">
-        </ng-template>
+    <div style="width: 60%;">
+      <ngb-carousel *ngIf="promotedProduct">
+          <ng-template ngbSlide *ngFor="let p of promotedProduct">
+              <div class="card" >
+              <img class="card-img-top" [src]="p.promotedProduct.imageUrl" alt="{{p.promotedProduct.productName}}"  (click)="productDetail(p.promotedProduct.id)">
+              <div class="card-body" style="margin-bottom: 10px; margin-top: -10px;">
+                  <small class="card-title">{{p.promotedProduct.productName}} <span class="badge badge-pill badge-primary">{{p.promotedProduct.category.categoryName}}</span></small><hr/>
+                  <button class="btn btn-primary btn-sm" (click)="addToCart(p.promotedProduct)" >Purchase</button>
+                  <small class="card-text" style="color: chocolate">{{p.promotedProduct.price | currency:'Rp. '}}</small>
+              </div>
+            </div>
+
+          </ng-template>
+         
       </ngb-carousel>
     </div>
   </div>

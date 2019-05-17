@@ -1,3 +1,4 @@
+import { PromotedProductService } from './../../entities/promoted-product/promoted-product.service';
 import { IUser } from './../../core/user/user.model';
 import { AccountService, LoginModalService, StateStorageService } from 'app/core';
 import { ShoppingCart } from './../../shared/model/shopping-cart.model';
@@ -13,6 +14,7 @@ import { OrderItem, OrderItemStatus, IOrderItem } from 'app/shared/model/order-i
 import { IShoppingCart } from 'app/shared/model/shopping-cart.model';
 import { NgbModalRef, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
+import { IPromotedProduct, PromotedStatus } from 'app/shared/model/promoted-product.model';
 
 @Component({
     selector: 'jhi-product-info',
@@ -38,6 +40,8 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
         'https://images-na.ssl-images-amazon.com/images/I/81xLbzSlFWL._SY606_.jpg',
         'http://kissfmmedan.com/wp-content/uploads/2018/09/pubg-hero.jpg'
     ];
+    promotedSubscription: Subscription;
+    promotedProduct: IPromotedProduct[];
 
     constructor(
         private router: ActivatedRoute,
@@ -48,7 +52,8 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
         private accountService: AccountService,
         private stateStorageService: StateStorageService,
         private loginModalService: LoginModalService,
-        private config: NgbCarouselConfig
+        private config: NgbCarouselConfig,
+        private promotedProductService: PromotedProductService
     ) {
         this.product = [];
         this.shoppingCart = {};
@@ -57,7 +62,8 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
         this.user = {};
         this.config.showNavigationArrows = true;
         this.config.pauseOnHover = true;
-        this.config.interval = 10000;
+        this.config.interval = 5000;
+        this.promotedProduct = [];
     }
 
     async ngOnInit() {
@@ -68,6 +74,16 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
             this.setAccount(account);
             return (this.account = account);
         });
+
+        this.promotedSubscription = this.promotedProductService
+            .query()
+            .subscribe((res: HttpResponse<IPromotedProduct[]>) => this.AllPromotedCategory(res.body));
+    }
+    AllPromotedCategory(data: IPromotedProduct[]): void {
+        for (let i = 0; i < data.length; i++) {
+            this.promotedProduct.push(data[i]);
+        }
+        this.promotedProduct = this.promotedProduct.filter(x => x.status === PromotedStatus.ACTIVE);
     }
     setAccount(account: any) {
         if (!(account === null)) {
@@ -206,6 +222,14 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
     protected existingShoppingCart(data: IOrderItem[]) {
         for (let i = 0; i < data.length; i++) {
             this.orderItem.push(data[i]);
+        }
+    }
+    productDetail(productID) {
+        if (productID !== this.productID) {
+            this.route.navigate(['product-info', productID]);
+            setTimeout(() => {
+                window.location.reload();
+            }, 100);
         }
     }
 }

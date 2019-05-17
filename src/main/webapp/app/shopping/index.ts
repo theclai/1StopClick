@@ -8,4 +8,6 @@ export * from './purchase-confirmation/purchase-confirmation.component';
 export * from './purchase-confirmation/purchase-confirmation.route';
 export * from './payment/payment.component';
 export * from './payment/payment.route';
+export * from './my-orders/my-orders.component';
+export * from './my-orders/my-orders.route';
 export * from './shopping.route';

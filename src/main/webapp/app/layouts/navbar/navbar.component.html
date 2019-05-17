@@ -182,6 +182,12 @@
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
                     <li *ngSwitchCase="true">
+                        <a class="dropdown-item" routerLink="my-order" routerLinkActive="active" (click)="collapseNavbar()">
+                            <fa-icon icon="shopping-bag" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.account.myOrder">My Orders</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="true">
                         <a class="dropdown-item" routerLink="settings" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="wrench" fixedWidth="true"></fa-icon>
                             <span jhiTranslate="global.menu.account.settings">Settings</span>

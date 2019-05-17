@@ -1,3 +1,5 @@
+import { IUser } from 'app/core/user/user.model';
+import { AccountService } from 'app/core';
 import { ShoppingCartService } from 'app/entities/shopping-cart';
 import { ProductOrderService } from './../../entities/product-order/product-order.service';
 import { PaypalService } from './paypal.service';
@@ -32,6 +34,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
     orderItem: IOrderItem[];
     locationSubscription: Subscription;
     paypalSubs: Subscription;
+    account: Account;
+    user: IUser[];
+    tempUser: any = {};
 
     constructor(
         private invoiceService: InvoiceService,
@@ -39,7 +44,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
         private router: Router,
         private paypalService: PaypalService,
         private productOrderService: ProductOrderService,
-        private shoppingCartService: ShoppingCartService
+        private shoppingCartService: ShoppingCartService,
+        private accountService: AccountService
     ) {
         this.initiatePaypalUrl = {};
         this.afterPayment = {};
@@ -47,8 +53,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
         this.invoice = {};
         this.productOrder = {};
         this.orderItem = [];
+        this.user = [];
     }
-    ngOnInit() {
+    async ngOnInit() {
         this.invoiceId = this.route.snapshot.paramMap.get('invoiceId');
         this.invoiceSubscription = this.invoiceService.find(this.invoiceId).subscribe(
             (res: HttpResponse<IInvoice>) => {
@@ -63,6 +70,17 @@ export class PaymentComponent implements OnInit, OnDestroy {
                 this.completePayment(this.paymentId, this.payerId);
             }
         });
+        this.account = await this.accountService.identity().then((account: Account) => {
+            this.setAccount(account);
+            return (this.account = account);
+        });
+    }
+    setAccount(account: any) {
+        if (!(account === null)) {
+            this.tempUser.login = account.login;
+            this.tempUser.email = account.email;
+            this.tempUser.id = account.id;
+        }
     }
     onError(status: number): void {
         if (status === 404) {
@@ -118,9 +136,17 @@ export class PaymentComponent implements OnInit, OnDestroy {
     async updateInvoiceToComplete() {
         const newDateString = moment().format('DD/MM/YYYY');
         const dateMoment = moment(newDateString, 'DD/MM/YYYY');
+        this.user = [
+            {
+                id: this.tempUser.id,
+                login: this.tempUser.login,
+                email: this.tempUser.email
+            }
+        ];
         this.productOrder.placeDate = dateMoment;
         this.productOrder.status = Orderstatus.COMPLETED;
         this.productOrder.orderItems = this.orderItem;
+        this.productOrder.users = this.user;
         this.invoice.status = InvoiceStatus.PAID;
         this.afterSuccessPayment = true;
         setTimeout(() => {
@@ -137,14 +163,26 @@ export class PaymentComponent implements OnInit, OnDestroy {
     async cancelOrder() {
         const newDateString = moment().format('DD/MM/YYYY');
         const dateMoment = moment(newDateString, 'DD/MM/YYYY');
+        this.user = [
+            {
+                id: this.tempUser.id,
+                login: this.tempUser.login,
+                email: this.tempUser.email
+            }
+        ];
         this.invoice.status = InvoiceStatus.CANCELLED;
         this.productOrder.status = Orderstatus.CANCELLED;
         this.productOrder.placeDate = dateMoment;
+        this.productOrder.users = this.user;
         await this.productOrderService.update(this.productOrder).subscribe();
         await this.invoiceService.update(this.invoice).subscribe(x => {
             setTimeout(() => {
                 this.router.navigate(['checkout']);
             }, 750);
         });
+    }
+
+    myOrder() {
+        this.router.navigate(['my-order']);
     }
 }

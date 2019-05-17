@@ -87,15 +87,6 @@ export class NavbarComponent implements OnInit {
     async logout() {
         this.collapseNavbar();
         this.loginService.logout();
-        // const cartId = localStorage.getItem('cartId');
-        /*  if (cartId) {
-            await this.shoppingCartService.find(cartId).subscribe((res: HttpResponse<IShoppingCart>) => {
-                this.shoppingCart(res.body);
-            });
-        }
-        if (this.userInCart) {
-            localStorage.removeItem('cartId');
-        } */
         localStorage.removeItem('anonymCartId');
         localStorage.removeItem('cartId');
         this.router.navigate(['']);

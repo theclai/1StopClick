@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h3 class="modal-title" style="font-weight:bold" >Detail</h3>
+    <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="activeModal.dismiss('closed')"><span aria-hidden="true">x</span>
+</div>
+<div class="modal-body" style="widows: 900px;">
+    <ng-container *ngIf="invoice as detail">
+      <ng-container *ngFor="let invoice of detail">
+        <p>Payment ID: {{invoice.id}}</p>
+        <p>Payment Date : {{invoice.paymentDate | date:'medium'}}</p>
+        <p>Payment Amount : {{invoice.paymentAmount | currency:'Rp. '}}</p>
+        <p>Payment Method : {{invoice.paymentMethod}}</p>
+        <p>Payment Status : {{invoice.status}}</p>
+        <p>Detail : {{invoice.detail}}</p>
+        <p></p>
+      </ng-container>
+      <ng-container *ngIf = "products">
+        <h4 style="font-weight: bold">Product List</h4><br>
+        <div class="progress" *ngIf="stillWaiting">
+            <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        <table class="table table-hover"> 
+        <tbody>
+           <tr *ngFor="let x of products" >
+            <td>
+               <img style="width: 35px; height: 35px; border-radius: 100%;" [src]="x.imageUrl">
+            </td>
+            <td>
+              <small>{{x.productName}}
+              <span class="badge badge-pill badge-primary">{{x.category.categoryName}}</span></small> 
+            </td>
+            <td>
+              <small>{{x.price | currency:'Rp. '}}</small>
+            </td>
+            </tr>
+         </tbody>
+        </table>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="products?.length < 1 && !stillWaiting">
+        No data found
+    </ng-container>  
+  </div>

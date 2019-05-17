@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+    <h3 style="font-weight:bold" jhiTranslate="home.myOrder">My Orders</h3>
+    <ng-container *ngIf="productOrder as myorder">
+        <p *ngIf="!isEmpty" > You have {{quantity}} orders</p>
+        <table class="table table-hover" *ngIf="!isEmpty">
+            <thead>
+                <tr>
+                  <th scope="col" class="text-left">Order ID</th>
+                  <th scope="col" class="text-left">Date</th>
+                  <th scope="col" class="text-center">Order Status</th>
+                  <th scope="col" class="text-center">Voucher</th>
+                  <th scope="col" class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let x of myorder" >
+                  <td class="text-justify">{{x.id}}</td>
+                  <td class="text-justify">{{x.placeDate | date}}</td>
+                  <td class="text-center">{{x.status}}</td>
+                  <td class="text-center">{{x.code}}</td>
+                  <td class="text-justify">
+                    <button class="btn btn-info btn-sm" (click)="viewDetail(x.id)" >View Detail</button>
+                    <ng-container *ngIf="x.status === ('App.Orderstatus.PENDING' | translate)">
+                        <button class="btn btn-warning btn-sm" (click)="redirectToPayment(x.id)">Continue to Payment</button>
+                    </ng-container>
+                    <ng-container *ngIf="x.status === ('App.Orderstatus.COMPLETED' | translate)">
+                        <button class="btn btn-success btn-sm" (click)="redirectToInvoice(x.id)">View Invoice</button>
+                    </ng-container>
+                  </td>
+                  </tr>
+              </tbody>
+              
+        </table>
+    </ng-container>
+    <h6 *ngIf="isEmpty" >You have no order so far...</h6>
+    <button [hidden]="!isEmpty" class="btn btn-info " routerLink="">Shop now</button>
+  </div>
+  </div>

@@ -7,6 +7,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { PurchaseConfirmationComponent } from './purchase-confirmation/purchase-confirmation.component';
 import { PaymentComponent } from './payment/payment.component';
 import { FacebookShareComponent } from './product-info/facebook-share/facebook-share.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { DetailComponent } from './my-orders/detail/detail.component';
 
 @NgModule({
     imports: [AppSharedModule, RouterModule.forChild(shoppingState)],
@@ -16,8 +18,11 @@ import { FacebookShareComponent } from './product-info/facebook-share/facebook-s
         CheckoutComponent,
         PurchaseConfirmationComponent,
         PaymentComponent,
-        FacebookShareComponent
+        FacebookShareComponent,
+        MyOrdersComponent,
+        DetailComponent
     ],
+    entryComponents: [DetailComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppShoppingModule {}

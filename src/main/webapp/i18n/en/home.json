@@ -25,6 +25,7 @@
         "addCart": "Add to Cart",
         "personalInfo": "Personal Info",
         "orderSummary": "Order Summary",
-        "thankyou": "Thank you for your purchase!"
+        "thankyou": "Thank you for your purchase!",
+        "myOrder": "My Orders"
     }
 }

@@ -25,6 +25,7 @@
         "addCart": "Tambah ke Keranjang",
         "personalInfo": "Informasi Nasabah",
         "orderSummary": "Detail Pesanan",
-        "thankyou": "Terimakasih atas pesanan anda!"
+        "thankyou": "Terimakasih atas pesanan anda!",
+        "myOrder": "Pesanan Saya"
     }
 }

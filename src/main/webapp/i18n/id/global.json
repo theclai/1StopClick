@@ -27,7 +27,8 @@
                 "sessions": "Sesi",
                 "login": "Masuk",
                 "logout": "Keluar",
-                "register": "Daftar"
+                "register": "Daftar",
+                "myOrder": "Pesanan Saya"
             },
             "admin": {
                 "main": "Administrasi",
