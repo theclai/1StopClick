@@ -12,6 +12,8 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { IProductOrder, Orderstatus } from 'app/shared/model/product-order.model';
 import * as moment from 'moment';
 import { IOrderItem } from 'app/shared/model/order-item.model';
+import { OwnedProductService } from 'app/entities/owned-product';
+import { IOwnedProduct } from 'app/shared/model/owned-product.model';
 
 @Component({
     selector: 'jhi-payment',
@@ -37,6 +39,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
     account: Account;
     user: IUser[];
     tempUser: any = {};
+    ownedProduct: IOwnedProduct;
+    ownedProductSubs: Subscription;
 
     constructor(
         private invoiceService: InvoiceService,
@@ -45,12 +49,14 @@ export class PaymentComponent implements OnInit, OnDestroy {
         private paypalService: PaypalService,
         private productOrderService: ProductOrderService,
         private shoppingCartService: ShoppingCartService,
-        private accountService: AccountService
+        private accountService: AccountService,
+        private ownedProductService: OwnedProductService
     ) {
         this.initiatePaypalUrl = {};
         this.afterPayment = {};
         this.afterSuccessPayment = false;
         this.invoice = {};
+        this.ownedProduct = {};
         this.productOrder = {};
         this.orderItem = [];
         this.user = [];
@@ -102,6 +108,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
         if (this.invoiceSubscription) {
             this.invoiceSubscription.unsubscribe();
         }
+        if (this.ownedProductSubs) {
+            this.ownedProductSubs.unsubscribe();
+        }
         if (this.productOrderSubscription) {
             this.productOrderSubscription.unsubscribe();
         }
@@ -150,6 +159,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
         this.invoice.status = InvoiceStatus.PAID;
         this.afterSuccessPayment = true;
         setTimeout(() => {
+            this.createOwnedProduct();
             this.router.navigate(['checkout/purchase-confirmation', this.invoiceId]);
         }, 1000);
         const cartId = localStorage.getItem('cartId');
@@ -184,5 +194,27 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
     myOrder() {
         this.router.navigate(['my-order']);
+    }
+    protected createOwnedProduct() {
+        const userTemp: IUser = {
+            id: this.tempUser.id,
+            login: this.tempUser.name,
+            email: this.tempUser.email
+        };
+        const productTemp = this.orderItem.map(x => x.product);
+        this.ownedProductService.query({}).subscribe((res: HttpResponse<IOwnedProduct[]>) => {
+            this.ownedProduct = res.body.find(x => x.user.id === userTemp.id);
+            if (!(this.ownedProduct === undefined)) {
+                for (let i = 0; i < productTemp.length; i++) {
+                    this.ownedProduct.products.push(productTemp[i]);
+                }
+                this.ownedProductSubs = this.ownedProductService.update(this.ownedProduct).subscribe();
+            } else {
+                this.ownedProduct = {};
+                this.ownedProduct.products = productTemp;
+                this.ownedProduct.user = userTemp;
+                this.ownedProductSubs = this.ownedProductService.create(this.ownedProduct).subscribe();
+            }
+        });
     }
 }

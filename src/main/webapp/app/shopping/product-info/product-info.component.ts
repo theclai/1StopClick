@@ -15,6 +15,8 @@ import { IShoppingCart } from 'app/shared/model/shopping-cart.model';
 import { NgbModalRef, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { IPromotedProduct, PromotedStatus } from 'app/shared/model/promoted-product.model';
+import { OwnedProductService } from 'app/entities/owned-product';
+import { IOwnedProduct } from 'app/shared/model/owned-product.model';
 
 @Component({
     selector: 'jhi-product-info',
@@ -42,6 +44,8 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
     ];
     promotedSubscription: Subscription;
     promotedProduct: IPromotedProduct[];
+    ownedProduct: IOwnedProduct;
+    ownedItem: boolean;
 
     constructor(
         private router: ActivatedRoute,
@@ -53,16 +57,19 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
         private stateStorageService: StateStorageService,
         private loginModalService: LoginModalService,
         private config: NgbCarouselConfig,
-        private promotedProductService: PromotedProductService
+        private promotedProductService: PromotedProductService,
+        private ownedProductService: OwnedProductService
     ) {
         this.product = [];
         this.shoppingCart = {};
         this.orderItem = [];
         this.quantity = [1];
         this.user = {};
+        this.ownedItem = false;
         this.config.showNavigationArrows = true;
         this.config.pauseOnHover = true;
         this.config.interval = 5000;
+        this.ownedProduct = {};
         this.promotedProduct = [];
     }
 
@@ -90,6 +97,16 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
             this.user.login = account.login;
             this.user.email = account.email;
             this.user.id = account.id;
+
+            this.ownedProductService.query({}).subscribe((res: HttpResponse<IOwnedProduct[]>) => {
+                this.ownedProduct = res.body.find(x => x.user.id === this.user.id);
+                const productIsOwned = this.ownedProduct.products.find(x => x.id === this.productID);
+                if (!(productIsOwned === undefined)) {
+                    this.ownedItem = true;
+                } else {
+                    this.ownedItem = false;
+                }
+            });
         }
     }
 

@@ -15,6 +15,9 @@ import { IProductDiscount } from 'app/shared/model/product-discount.model';
 import * as moment from 'moment';
 import { InvoiceService } from 'app/entities/invoice';
 import { OrderItemService } from 'app/entities/order-item';
+import { IProduct } from 'app/shared/model/product.model';
+import { OwnedProductService } from 'app/entities/owned-product';
+import { IOwnedProduct } from 'app/shared/model/owned-product.model';
 
 @Component({
     selector: 'jhi-checkout',
@@ -55,12 +58,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     isBelowMinOrder: boolean;
     minimumOrder: number;
     voucherApplied: boolean;
+    ownedProduct: IOwnedProduct;
+    ownedProductSubs: Subscription;
 
     constructor(
         private shoppingCartService: ShoppingCartService,
         private accountService: AccountService,
         private productDiscountService: ProductDiscountService,
         private productOrderService: ProductOrderService,
+        private ownedProductService: OwnedProductService,
         private route: Router,
         private invoiceService: InvoiceService,
         private orderItemService: OrderItemService
@@ -70,6 +76,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.invoices = {};
         this.productDiscount = [];
         this.isEmpty = false;
+        this.ownedProduct = {};
         this.productOrder = {};
     }
 
@@ -129,6 +136,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         if (this.voucherSubscription) {
             this.voucherSubscription.unsubscribe();
+        }
+        if (this.ownedProductSubs) {
+            this.ownedProductSubs.unsubscribe();
         }
         if (this.deleteSubscription) {
             this.deleteSubscription.unsubscribe();
@@ -276,11 +286,34 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             localStorage.removeItem('anonymCartId');
             const statusPayment = body.status;
             if (statusPayment === Orderstatus.COMPLETED) {
+                this.createOwnedProduct();
                 this.route.navigate(['checkout/purchase-confirmation', this.invoiceId]);
             } else if (statusPayment === Orderstatus.PENDING) {
                 this.route.navigate(['checkout/payment', this.invoiceId]);
             }
         }, 1000);
+    }
+    protected createOwnedProduct() {
+        const userTemp: IUser = {
+            id: this.order.loginId,
+            login: this.order.name,
+            email: this.order.email
+        };
+        const productTemp = this.orderItem.map(x => x.product);
+        this.ownedProductService.query({}).subscribe((res: HttpResponse<IOwnedProduct[]>) => {
+            this.ownedProduct = res.body.find(x => x.user.id === userTemp.id);
+            if (!(this.ownedProduct === undefined)) {
+                for (let i = 0; i < productTemp.length; i++) {
+                    this.ownedProduct.products.push(productTemp[i]);
+                }
+                this.ownedProductSubs = this.ownedProductService.update(this.ownedProduct).subscribe();
+            } else {
+                this.ownedProduct = {};
+                this.ownedProduct.products = productTemp;
+                this.ownedProduct.user = userTemp;
+                this.ownedProductSubs = this.ownedProductService.create(this.ownedProduct).subscribe();
+            }
+        });
     }
     async updateOrderItems(body: IProductOrder) {
         for (let i = 0; i < this.orderItem.length; i++) {

@@ -18,6 +18,7 @@
                 "shoppingCart": "Shopping Cart",
                 "productDiscount": "Product Discount",
                 "promotedProduct": "Promoted Product",
+                "ownedProduct": "Owned Product",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -28,7 +29,8 @@
                 "login": "Masuk",
                 "logout": "Keluar",
                 "register": "Daftar",
-                "myOrder": "Pesanan Saya"
+                "myOrder": "Pesanan Saya",
+                "myProducts": "Produk Saya"
             },
             "admin": {
                 "main": "Administrasi",

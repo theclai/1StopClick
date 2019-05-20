@@ -5,11 +5,18 @@
       </div>
       <div class="col-4" style="margin-left:-30px;">
         <h4>{{p.productName}} <span class="badge badge-pill badge-primary">{{p.category.categoryName}}</span></h4>
-        <h5 class="card-text" style="color: chocolate">{{p.price | currency:'Rp. '}}</h5>
-        <select [(ngModel)]="selectedQuantity">
+        <ng-container *ngIf="!ownedItem">
+          <h5 class="card-text" style="color: chocolate">{{p.price | currency:'Rp. '}}</h5>
+          <select [(ngModel)]="selectedQuantity">
             <option [value]="q" *ngFor="let q of quantity">{{q}}</option>
-        </select>
-        <button class="btn btn-primary btn-sm" (click)="addToCart(p)" jhiTranslate="home.addCart">Add to cart</button><br><br>
+          </select>
+          <button class="btn btn-primary btn-sm" (click)="addToCart(p)" jhiTranslate="home.addCart">Add to cart</button><br><br>
+        </ng-container>
+        <ng-container *ngIf="ownedItem">
+            <h6><fa-icon icon="check" fixedWidth="true"></fa-icon>You already purchased this product</h6>
+            <button class="btn btn-success btn-sm" routerLink="/my-product">
+              My Product</button><br><br>
+          </ng-container>
         <jhi-facebook-share></jhi-facebook-share><br>
         <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
           Lorem ipsum Lorem ipsum Lorem ipsum 

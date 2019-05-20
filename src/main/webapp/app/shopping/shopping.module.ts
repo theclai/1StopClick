@@ -9,6 +9,8 @@ import { PaymentComponent } from './payment/payment.component';
 import { FacebookShareComponent } from './product-info/facebook-share/facebook-share.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { DetailComponent } from './my-orders/detail/detail.component';
+import { DownloadComponent } from './my-orders/download/download.component';
+import { MyProductsComponent } from './my-products/my-products.component';
 
 @NgModule({
     imports: [AppSharedModule, RouterModule.forChild(shoppingState)],
@@ -20,9 +22,11 @@ import { DetailComponent } from './my-orders/detail/detail.component';
         PaymentComponent,
         FacebookShareComponent,
         MyOrdersComponent,
-        DetailComponent
+        DetailComponent,
+        DownloadComponent,
+        MyProductsComponent
     ],
-    entryComponents: [DetailComponent],
+    entryComponents: [DetailComponent, DownloadComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppShoppingModule {}

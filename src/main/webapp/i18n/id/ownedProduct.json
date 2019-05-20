@@ -1,0 +1,22 @@
+{
+    "App": {
+        "ownedProduct": {
+            "home": {
+                "title": "Owned Products",
+                "createLabel": "Buat Owned Product baru",
+                "createOrEditLabel": "Buat atau edit Owned Product"
+            },
+            "created": "Owned Product dengan id {{ param }} telah dibuat",
+            "updated": "Owned Product dengan id {{ param }} telah diperbaharui",
+            "deleted": "Owned Product dengan id {{ param }} telah dihapus",
+            "delete": {
+                "question": "Apakah anda yakin ingin menghapus Owned Product {{ id }}?"
+            },
+            "detail": {
+                "title": "Owned Product"
+            },
+            "user": "User",
+            "product": "Product"
+        }
+    }
+}

@@ -10,4 +10,6 @@ export * from './payment/payment.component';
 export * from './payment/payment.route';
 export * from './my-orders/my-orders.component';
 export * from './my-orders/my-orders.route';
+export * from './my-products/my-products.component';
+export * from './my-products/my-products.route';
 export * from './shopping.route';

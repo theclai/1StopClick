@@ -26,6 +26,7 @@
         "personalInfo": "Informasi Nasabah",
         "orderSummary": "Detail Pesanan",
         "thankyou": "Terimakasih atas pesanan anda!",
-        "myOrder": "Pesanan Saya"
+        "myOrder": "Pesanan Saya",
+        "myProducts": "Produk Saya"
     }
 }

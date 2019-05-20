@@ -3,7 +3,7 @@ import { ProductOrderService } from 'app/entities/product-order/product-order.se
 import { AccountService } from 'app/core/auth/account.service';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { IUser } from 'app/core';
-import { IProductOrder } from 'app/shared/model/product-order.model';
+import { IProductOrder, Orderstatus } from 'app/shared/model/product-order.model';
 import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { InvoiceService } from 'app/entities/invoice';
@@ -26,6 +26,10 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
     quantity: number;
     productOrderSubscription: Subscription;
     invoice: IInvoice[];
+    selectedStatus = 'ALL';
+    status: any[];
+    filteredProductOrder: IProductOrder[];
+    statusCaption = '';
     constructor(
         private accountService: AccountService,
         private productOrderService: ProductOrderService,
@@ -34,8 +38,10 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
         private detailModalService: DetailModalService
     ) {
         this.productOrder = [];
+        this.filteredProductOrder = [];
         this.user = {};
         this.invoice = [];
+        this.status = ['ALL', Orderstatus.COMPLETED, Orderstatus.PENDING, Orderstatus.CANCELLED];
     }
 
     ngOnDestroy() {
@@ -55,16 +61,19 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
         }, 200);
     }
     generateProductOrder(data: IProductOrder[]) {
-        console.log(data);
         for (let j = 0; j < data.length; j++) {
             const temp = data[j].users;
             if (temp.find(x => x.id === this.user.id)) {
                 this.productOrder.push(data[j]);
             }
         }
-        console.log('product order after filter : ', this.productOrder);
-        this.quantity = this.productOrder.length;
-        if (this.quantity === 0) {
+        this.filteredProductOrder = this.productOrder;
+        this.getQuantity();
+        this.setStatusCaption();
+    }
+    protected getQuantity() {
+        this.quantity = this.filteredProductOrder.length;
+        if (this.quantity === 0 && (this.selectedStatus === 'ALL' || this.selectedStatus === null)) {
             this.isEmpty = true;
         } else {
             this.isEmpty = false;
@@ -95,5 +104,32 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
     viewDetail(productOrderId: string) {
         this.modalRef = this.detailModalService.open();
         this.modalRef.componentInstance.productOrderId = productOrderId;
+    }
+    viewDownload(productOrderId: string) {
+        this.modalRef = this.detailModalService.openDownload();
+        this.modalRef.componentInstance.productOrderId = productOrderId;
+    }
+
+    filterByStatus() {
+        this.filteredProductOrder = this.productOrder;
+        if (!(this.selectedStatus.toUpperCase() === 'ALL')) {
+            this.filteredProductOrder = this.filteredProductOrder.filter(x => x.status.toUpperCase() === this.selectedStatus.toUpperCase());
+        }
+        this.getQuantity();
+        this.setStatusCaption();
+    }
+    protected setStatusCaption() {
+        if (this.selectedStatus === Orderstatus.CANCELLED) {
+            this.statusCaption = 'cancelled';
+        }
+        if (this.selectedStatus === Orderstatus.COMPLETED) {
+            this.statusCaption = 'completed';
+        }
+        if (this.selectedStatus === Orderstatus.PENDING) {
+            this.statusCaption = 'pending';
+        }
+        if (this.selectedStatus === 'ALL' || this.selectedStatus === null) {
+            this.statusCaption = '';
+        }
     }
 }

@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <h3 style="font-weight:bold" jhiTranslate="home.myProducts">My Products</h3>
+
+      <div class="row">
+        <div class="col-8">
+            <p *ngIf="!isEmpty" > You owned {{quantity}} products</p> 
+        </div>
+      </div>
+      <div class="row">
+    <ng-container *ngIf="products as myProducts">
+       
+        <table class="table table-hover" *ngIf="!isEmpty">
+            <thead>
+                <tr>
+                  <th>#</th>
+                  <th scope="col" class="text-left">Product Name</th>
+                  <th scope="col" class="text-left">Category</th>
+                  <th scope="col" class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let x of myProducts" >
+                  <td>
+                        <img style="
+                          width: 60px;
+                          height: 60px;
+                          border-radius: 100%;
+                      " [src]="x.imageUrl">
+                      </td>
+                  <td class="text-justify">{{x.productName}}</td>
+                  <td class="text-justify"><span class="badge badge-pill badge-primary">{{x.category.categoryName}}</span></td>
+                  <td class="text-center"><a [href]="x.imageUrl" target="blank" class="btn btn-success btn-sm">
+                      <fa-icon icon="download" fixedWidth="true"></fa-icon>Download</a>
+                  </td>
+                </tr>
+              </tbody>
+              
+        </table>
+    </ng-container>
+  </div>
+    <h6 *ngIf="isEmpty" >You have no product so far...</h6>
+    <button [hidden]="!isEmpty" class="btn btn-info " routerLink="">Shop now</button>
+  </div>
+  </div>

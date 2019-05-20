@@ -1,9 +1,24 @@
 <div class="row">
     <div class="col-2"></div>
     <div class="col-8">
-    <h3 style="font-weight:bold" jhiTranslate="home.myOrder">My Orders</h3>
-    <ng-container *ngIf="productOrder as myorder">
-        <p *ngIf="!isEmpty" > You have {{quantity}} orders</p>
+        <h3 style="font-weight:bold" jhiTranslate="home.myOrder">My Orders</h3>
+
+      <div class="row">
+        <div class="col-8">
+            <p *ngIf="!isEmpty" > You have {{quantity}} {{statusCaption | lowercase}} orders</p> 
+        </div>
+        <div class="col" >
+            <div style="margin-bottom: 10px;" *ngIf="!isEmpty">
+                <p >Filter by Order Status   <select [(ngModel)]="selectedStatus" (change)="filterByStatus()">
+                    <option [value]="q" *ngFor="let q of status">{{q}}</option>
+                  </select>
+                </p>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+    <ng-container *ngIf="filteredProductOrder as myorder">
+       
         <table class="table table-hover" *ngIf="!isEmpty">
             <thead>
                 <tr>
@@ -21,12 +36,21 @@
                   <td class="text-center">{{x.status}}</td>
                   <td class="text-center">{{x.code}}</td>
                   <td class="text-justify">
-                    <button class="btn btn-info btn-sm" (click)="viewDetail(x.id)" >View Detail</button>
+                    <button class="btn btn-info btn-sm" (click)="viewDetail(x.id)" >
+                        <fa-icon icon="info" fixedWidth="true"></fa-icon>View Detail
+                    </button>
                     <ng-container *ngIf="x.status === ('App.Orderstatus.PENDING' | translate)">
-                        <button class="btn btn-warning btn-sm" (click)="redirectToPayment(x.id)">Continue to Payment</button>
+                        <button class="btn btn-warning btn-sm" (click)="redirectToPayment(x.id)">
+                            <fa-icon icon="money-check" fixedWidth="true"></fa-icon>Continue to Payment
+                        </button>
                     </ng-container>
                     <ng-container *ngIf="x.status === ('App.Orderstatus.COMPLETED' | translate)">
-                        <button class="btn btn-success btn-sm" (click)="redirectToInvoice(x.id)">View Invoice</button>
+                        <button class="btn btn-success btn-sm" (click)="redirectToInvoice(x.id)">
+                            <fa-icon icon="receipt" fixedWidth="true"></fa-icon>View Invoice
+                          </button>
+                        <button class="btn btn-success btn-sm" (click)="viewDownload(x.id)">
+                            <fa-icon icon="download" fixedWidth="true"></fa-icon>Download
+                          </button>
                     </ng-container>
                   </td>
                   </tr>
@@ -34,6 +58,7 @@
               
         </table>
     </ng-container>
+  </div>
     <h6 *ngIf="isEmpty" >You have no order so far...</h6>
     <button [hidden]="!isEmpty" class="btn btn-info " routerLink="">Shop now</button>
   </div>
