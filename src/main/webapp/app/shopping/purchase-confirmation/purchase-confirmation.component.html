@@ -42,12 +42,15 @@
     <div class="col-6">
       <ng-container *ngIf = "products">
       <h3 style="font-weight: bold">Products</h3>
+      <div *ngIf="reviewSuccess" class="alert alert-success">
+        Your review for <span style="font-weight:bold">{{notifReview}}</span> is successfully submitted!
+      </div>
       <table class="table table-hover" style="margin-top:20px;">
           <thead>
               <tr>
                 <th scope="col" class="text-center">#</th>
                 <th scope="col" class="text-left">Product Name</th>
-                <th scope="col" class="text-center">Price</th>
+                <th scope="col" class="text-center">Rate</th>
                 <th scope="col" class="text-center">Download Link</th>
               </tr>
             </thead>
@@ -61,7 +64,17 @@
                       " [src]="x.imageUrl">
                       </td>
                   <td class="text-justify">{{x.productName}} <span class="badge badge-pill badge-primary">{{x.category.categoryName}}</span></td>
-                  <td class="text-center">{{x.price | currency:'Rp. '}}</td>
+                  <td class="text-center">
+                    <!-- <ng-container  *ngIf="!dataReview || !(x.id === dataReview.product.id)">
+                        <button class="btn btn-warning" (click)="openReview(x.id)">Write a Review</button> 
+                    </ng-container>
+                    <ng-container *ngIf="dataReview && (x.id === dataReview.product.id)">
+                        <button class="btn btn-success btn-sm" disabled>
+                          <fa-icon icon="check" fixedWidth="true"></fa-icon>
+                          You rate {{dataReview.rating}} stars</button> 
+                    </ng-container> -->
+                    <button class="btn btn-warning" (click)="openReview(x.id)">Write a Review</button> 
+                  </td>
                   <td class="text-center"><a [href]="x.imageUrl" target="blank">Download</a></td>
                   </tr>
             </tbody>

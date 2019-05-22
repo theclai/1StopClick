@@ -124,6 +124,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.PUT, "/api/shopping-carts")
             .antMatchers(HttpMethod.GET, "/api/shopping-carts/**")
             .antMatchers(HttpMethod.GET, "/api/promoted-products")
+            .antMatchers(HttpMethod.GET, "/api/product-reviews")
             ;
     }
 

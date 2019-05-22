@@ -50,7 +50,6 @@ export class MyProductsComponent implements OnInit, OnDestroy {
         const own1 = this.ownedProduct[0];
         this.products = own1.products;
         this.getQuantity();
-        console.log(this.products);
     }
     protected getQuantity() {
         this.quantity = this.products.length;

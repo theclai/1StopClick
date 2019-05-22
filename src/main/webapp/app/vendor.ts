@@ -47,7 +47,8 @@ import {
     faDownload,
     faMoneyCheck,
     faClipboardList,
-    faCheck
+    faCheck,
+    faStar
 } from '@fortawesome/free-solid-svg-icons';
 
 // Adds the SVG icon to the library so you can use it in your page
@@ -92,4 +93,5 @@ library.add(faMoneyCheck);
 library.add(faDownload);
 library.add(faClipboardList);
 library.add(faCheck);
+library.add(faStar);
 // jhipster-needle-add-element-to-vendor - JHipster will add new menu items here

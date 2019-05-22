@@ -187,8 +187,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
         await this.productOrderService.update(this.productOrder).subscribe();
         await this.invoiceService.update(this.invoice).subscribe(x => {
             setTimeout(() => {
-                this.router.navigate(['checkout']);
-            }, 750);
+                this.router.navigate(['']);
+            }, 1000);
         });
     }
 

@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppSharedModule } from 'app/shared';
 import { RouterModule } from '@angular/router';
@@ -11,9 +12,13 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { DetailComponent } from './my-orders/detail/detail.component';
 import { DownloadComponent } from './my-orders/download/download.component';
 import { MyProductsComponent } from './my-products/my-products.component';
+import { ReviewComponent } from './my-products/review/review.component';
+import { TwitterShareComponent } from './product-info/twitter-share/twitter-share.component';
+import { LinkedInShareComponent } from './product-info/linked-in-share/linked-in-share.component';
+import { ShareButtonModule } from '@ngx-share/button';
 
 @NgModule({
-    imports: [AppSharedModule, RouterModule.forChild(shoppingState)],
+    imports: [AppSharedModule, HttpClientModule, ShareButtonModule, RouterModule.forChild(shoppingState)],
     declarations: [
         ProductInfoComponent,
         ShoppingCartComponent,
@@ -24,9 +29,12 @@ import { MyProductsComponent } from './my-products/my-products.component';
         MyOrdersComponent,
         DetailComponent,
         DownloadComponent,
-        MyProductsComponent
+        MyProductsComponent,
+        ReviewComponent,
+        TwitterShareComponent,
+        LinkedInShareComponent
     ],
-    entryComponents: [DetailComponent, DownloadComponent],
+    entryComponents: [DetailComponent, DownloadComponent, ReviewComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppShoppingModule {}

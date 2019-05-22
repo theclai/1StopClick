@@ -1,14 +1,22 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 
 @Component({
     selector: 'jhi-facebook-share',
-    templateUrl: './facebook-share.component.html',
+    template: `
+        <div
+            class="fb-like"
+            [attr.data-href]="url"
+            data-layout="button_count"
+            data-action="like"
+            data-show-faces="true"
+            data-share="true"
+        ></div>
+    `,
     styles: []
 })
 export class FacebookShareComponent implements AfterViewInit {
-    url;
+    @Input() url = location.href;
     constructor() {
-        this.url = document.location.href;
         // for testing in localhost
         // this.url = 'http://ec2-18-136-126-56.ap-southeast-1.compute.amazonaws.com/#/product-info/5cbe7623a8dd0c126f92cd9f';
 

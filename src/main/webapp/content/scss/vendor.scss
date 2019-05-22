@@ -7,7 +7,10 @@ eg $input-color: red;
 // Override Boostrap variables
 @import 'bootstrap-variables';
 // Import Bootstrap source files from node_modules
-@import '~bootstrap/scss/bootstrap'; /* 
+@import '~bootstrap/scss/bootstrap';
+
+@import '~@ngx-share/button/themes/default/default-theme';
+/* 
 @import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
 @import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
 @import '~animate.css/animate.min.css'; */

@@ -1,7 +1,7 @@
 {
     "name": "1-stop-click",
     "version": "0.0.0",
-    "description": "Description for 1stopClick",
+    "description": "One Stop Clicking is a digital content marketplace, which provide kinds of downloadable content, such as movie, book, music, and mobile/desktop application",
     "private": true,
     "license": "UNLICENSED",
     "cacheDirectories": [
@@ -9,6 +9,7 @@
     ],
     "dependencies": {
         "@angular/animations": "^7.2.15",
+        "@angular/cdk": "^7.3.7",
         "@angular/common": "7.2.4",
         "@angular/compiler": "7.2.4",
         "@angular/core": "7.2.4",
@@ -16,10 +17,13 @@
         "@angular/platform-browser": "7.2.4",
         "@angular/platform-browser-dynamic": "7.2.4",
         "@angular/router": "7.2.4",
-        "@fortawesome/angular-fontawesome": "0.3.0",
-        "@fortawesome/fontawesome-svg-core": "1.2.14",
-        "@fortawesome/free-solid-svg-icons": "5.7.1",
+        "@fortawesome/angular-fontawesome": "^0.3.0",
+        "@fortawesome/fontawesome-svg-core": "^1.2.14",
+        "@fortawesome/free-brands-svg-icons": "^5.8.2",
+        "@fortawesome/free-solid-svg-icons": "^5.7.1",
         "@ng-bootstrap/ng-bootstrap": "4.0.2",
+        "@ngx-share/button": "^7.1.2",
+        "@ngx-share/core": "^7.1.2",
         "@ngx-translate/core": "11.0.1",
         "@ngx-translate/http-loader": "4.0.0",
         "animate.css": "^3.7.0",

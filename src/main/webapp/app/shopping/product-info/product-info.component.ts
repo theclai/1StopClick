@@ -4,7 +4,7 @@ import { AccountService, LoginModalService, StateStorageService } from 'app/core
 import { ShoppingCart } from './../../shared/model/shopping-cart.model';
 import { ShoppingCartService } from './../../entities/shopping-cart/shopping-cart.service';
 import { OrderItemService } from 'app/entities/order-item/order-item.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'app/entities/product';
 import { Subscription, Observable } from 'rxjs';
@@ -17,13 +17,24 @@ import * as moment from 'moment';
 import { IPromotedProduct, PromotedStatus } from 'app/shared/model/promoted-product.model';
 import { OwnedProductService } from 'app/entities/owned-product';
 import { IOwnedProduct } from 'app/shared/model/owned-product.model';
+import { ProductReviewService } from 'app/entities/product-review';
+import { IProductReview } from 'app/shared/model/product-review.model';
+import { faFacebookF } from '@fortawesome/free-brands-svg-icons/faFacebookF';
+import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter';
+import { faLinkedin } from '@fortawesome/free-brands-svg-icons/faLinkedin';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 
 @Component({
     selector: 'jhi-product-info',
     templateUrl: './product-info.component.html',
-    styles: []
+    styleUrls: ['product-info.scss']
 })
 export class ProductInfoComponent implements OnInit, OnDestroy {
+    fbIcon = faFacebookF;
+    tweetIcon = faTwitter;
+    linkedInIcon = faLinkedin;
+    whatsappIcon = faWhatsapp;
+    @Input() rating: number;
     productID: any;
     product: IProduct[];
     productSubscription: Subscription;
@@ -46,6 +57,8 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
     promotedProduct: IPromotedProduct[];
     ownedProduct: IOwnedProduct;
     ownedItem: boolean;
+    productReview: IProductReview[];
+    productReviewSub: Subscription;
 
     constructor(
         private router: ActivatedRoute,
@@ -58,9 +71,11 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
         private loginModalService: LoginModalService,
         private config: NgbCarouselConfig,
         private promotedProductService: PromotedProductService,
-        private ownedProductService: OwnedProductService
+        private ownedProductService: OwnedProductService,
+        private productReviewService: ProductReviewService
     ) {
         this.product = [];
+        this.productReview = [];
         this.shoppingCart = {};
         this.orderItem = [];
         this.quantity = [1];
@@ -85,6 +100,19 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
         this.promotedSubscription = this.promotedProductService
             .query()
             .subscribe((res: HttpResponse<IPromotedProduct[]>) => this.AllPromotedCategory(res.body));
+        setTimeout(() => {
+            this.productReviewSub = this.productReviewService
+                .query()
+                .subscribe((res: HttpResponse<IProductReview[]>) => this.generateProductReview(res.body));
+        }, 700);
+    }
+    generateProductReview(data: IProductReview[]): void {
+        for (let j = 0; j < data.length; j++) {
+            const temp = data[j].product;
+            if (temp.id === this.productID) {
+                this.productReview.push(data[j]);
+            }
+        }
     }
     AllPromotedCategory(data: IPromotedProduct[]): void {
         for (let i = 0; i < data.length; i++) {
@@ -116,6 +144,9 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
         }
         if (this.shoppingCartSubscription) {
             this.shoppingCartSubscription.unsubscribe();
+        }
+        if (this.productReviewSub) {
+            this.productReviewSub.unsubscribe();
         }
     }
 

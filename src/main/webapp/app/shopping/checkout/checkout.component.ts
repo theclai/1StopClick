@@ -266,8 +266,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.createInvoice(body);
         this.updateOrderItems(body);
         setTimeout(() => {
-            // this.deleteSubscription = this.shoppingCartService.delete(this.cartId).subscribe();
-            // localStorage.removeItem('cartId');
+            this.deleteSubscription = this.shoppingCartService.delete(this.cartId).subscribe();
+            localStorage.removeItem('cartId');
             localStorage.removeItem('anonymCartId');
             const statusPayment = body.status;
             if (statusPayment === Orderstatus.COMPLETED) {

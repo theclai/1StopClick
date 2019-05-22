@@ -10,14 +10,36 @@
           <select [(ngModel)]="selectedQuantity">
             <option [value]="q" *ngFor="let q of quantity">{{q}}</option>
           </select>
-          <button class="btn btn-primary btn-sm" (click)="addToCart(p)" jhiTranslate="home.addCart">Add to cart</button><br><br>
+          <button class="btn btn-primary btn-sm" (click)="addToCart(p)" jhiTranslate="home.addCart">Add to cart</button><hr>
         </ng-container>
         <ng-container *ngIf="ownedItem">
             <h6><fa-icon icon="check" fixedWidth="true"></fa-icon>You already purchased this product</h6>
             <button class="btn btn-success btn-sm" routerLink="/my-product">
-              My Product</button><br><br>
+              My Product</button><hr>
           </ng-container>
-        <jhi-facebook-share></jhi-facebook-share><br>
+          <small>Share this product </small><br>
+          <small>
+          <share-button button="facebook" theme="default" [icon] = "fbIcon" [size]="-4" [showText]="false"></share-button>
+          <share-button button="twitter" theme="default" [icon]="tweetIcon" [size]="-4" [showText]="false"></share-button>
+          <share-button button="linkedin" theme="default" [icon]="linkedInIcon" [size]="-4" [showText]="false"></share-button> 
+          <share-button button="whatsapp" theme="default" [icon]="whatsappIcon" [size]="-4" [showText]="false"></share-button> 
+
+        </small><br>      
+<!-- 
+        
+          <table class="table" style="width: 50%">
+            <tr>
+              <td style="align-content: center">
+                <jhi-facebook-share></jhi-facebook-share>
+              </td>
+              <td style="justify-content: center;">
+                <jhi-twitter-share></jhi-twitter-share>
+              </td>
+              <td style="align-content: left;">
+                <jhi-linked-in-share></jhi-linked-in-share>
+              </td>
+            </tr>
+          </table> -->
         <p>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
           Lorem ipsum Lorem ipsum Lorem ipsum 
           Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
@@ -29,6 +51,34 @@
 <div class="row">
   <div class="col-9" style="padding-left: 40px;">
     <h5>Product Review</h5>
+    <ng-container *ngIf="productReview">
+        <div class="card bg-light mb-3" *ngFor="let x of productReview">
+            <div class="card-body" style="margin-bottom: -10px;">
+                <p>
+                    <fieldset class="rating" style="margin-top: -40px;" > 
+                        <input type="radio" [value]="x.rating" [checked]="x.rating===5"  />
+                        <label title="Rocks!" >5 stars</label>
+                      
+                        <input type="radio" [value]="x.rating" [checked]="x.rating===4" />
+                        <label title="Pretty good" >4 stars</label>
+                      
+                        <input type="radio" [value]="x.rating" [checked]="x.rating===3" />
+                        <label title="Meh" >3 stars</label>
+                      
+                        <input type="radio" [value]="x.rating" [checked]="x.rating===2" />
+                        <label title="Kinda bad" >2 stars</label>
+                      
+                        <input type="radio" [value]="x.rating" [checked]="x.rating===1" />
+                        <label title="Sucks big time">1 star</label>
+                      </fieldset>
+                </p><br>
+                from <span style="font-weight: bold">{{x.user.login}}</span><span style="opacity: 0.5"> {{x.date | date}} </span>
+                <P>{{x.review}}</P>
+            </div>
+    </ng-container>
+    <ng-container *ngIf="productReview.length < 1">
+      <p style="font-style: italic">There are currently no review for this product</p>
+    </ng-container>
   </div>
   <div class="col-3">
     <h5>Promoted</h5>
